@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Season by Season | Guildford Baseball &amp; Softball Club History</title>
+  <meta name="description" content="Every season of Guildford baseball since 1992: results, records, play-off runs and the Hall of Fame.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollcraft.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/concept.css">
+  <style>
+    .intro { padding: clamp(8.5rem, 16vh, 11rem) 0 clamp(3.5rem, 7vw, 5.5rem); }
+    .intro h1 { margin: 0 0 1.4rem; font-size: clamp(3.6rem, 8vw, 8.4rem); }
+    .intro h1 .gold { color: var(--sc-accent); }
+    .intro__row { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: end; justify-content: space-between; }
+    .intro__lede { margin: 0; font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; max-width: 38rem; color: var(--sc-ink-soft); }
+    .intro__links { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+
+    /* ------------------------------------------------------ highlights rail -- */
+    .run__stage { display: flex; align-items: center; }
+    .rail { display: flex; align-items: center; gap: clamp(1.25rem, 3vw, 3rem); padding-inline: var(--sc-gutter); width: max-content; }
+    .rail > * { flex: none; }
+    .rail__lead { width: clamp(16rem, 26vw, 24rem); }
+    .rail__lead h2 { margin: 0 0 1rem; font-size: clamp(3.4rem, 6.4vw, 6.8rem); }
+    .rail__lead p { margin: 0; color: var(--sc-ink-soft); max-width: 22rem; line-height: 1.5; }
+    .season { display: block; width: clamp(15rem, 22vw, 21rem); color: var(--sc-ink); }
+    .season--photo { width: clamp(17rem, 27vw, 26rem); }
+    .season figure { margin: 0 0 1.1rem; }
+    .season img { width: 100%; height: clamp(11rem, 30vh, 17rem); object-fit: cover; border-radius: var(--r); box-shadow: var(--sc-e2); }
+    .season figcaption { margin-top: .5rem; font-size: .76rem; color: var(--sc-ink-soft); }
+    .season h3 { margin: 0 0 .5rem; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3.6rem, 6vw, 5.6rem); line-height: .85; color: var(--sc-accent); }
+    .season p { margin: 0 0 .9rem; font-size: 1rem; line-height: 1.45; }
+    .season .go { font-weight: 700; font-size: .86rem; text-decoration: underline; text-decoration-color: color-mix(in oklab, var(--sc-accent) 85%, transparent); text-underline-offset: .3em; text-decoration-thickness: 2px; }
+    .season--type { border-top: 3px solid var(--sc-accent); padding-top: 1.1rem; }
+    .season--type h3 { font-size: clamp(5rem, 9vw, 8.4rem); }
+    @media (hover: hover) and (pointer: fine) { .season:hover h3 { color: #ffc65a; } }
+    .rail__note { width: clamp(15rem, 22vw, 20rem); }
+    .rail__note p { margin: 0 0 1rem; font-size: 1.3rem; line-height: 1.3; font-weight: 600; }
+    @media (prefers-reduced-motion: no-preference) {
+      .rail > * { --s: clamp(0, calc(var(--sc-p, 0) * 8.5 - var(--i, 0) + 1.6), 1); opacity: max(.55, var(--s)); transform: translateY(calc((1 - var(--s)) * 26px)); }
+    }
+
+    /* ------------------------------------------------------- record books -- */
+    .books { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
+    .books__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 3rem; margin-bottom: 2.4rem; }
+    .books h2 { margin: 0; font-size: clamp(3rem, 5.6vw, 5.6rem); color: var(--cardinal); }
+    .books__head p { margin: 0; color: var(--sc-ink-soft); max-width: 30rem; }
+    .yr-list { list-style: none; margin: 0; padding: 0; }
+    .yr { border-top: 1px solid var(--sc-hairline); }
+    .yr:last-child { border-bottom: 1px solid var(--sc-hairline); }
+    .yr a { display: grid; grid-template-columns: clamp(5rem, 9vw, 8rem) minmax(0, 1.4fr) minmax(0, 1fr) auto; gap: 1.6rem; align-items: baseline; padding-block: 1.1rem; color: var(--sc-ink); }
+    .yr b { font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(2.1rem, 3.2vw, 3rem); line-height: .85; color: var(--cardinal); }
+    .yr .head { font-weight: 600; line-height: 1.45; }
+    .yr .teams { font-size: .9rem; line-height: 1.45; color: var(--sc-ink-soft); }
+    .yr .go { font-weight: 700; font-size: .85rem; color: var(--sc-accent); white-space: nowrap; }
+    @media (hover: hover) and (pointer: fine) { .yr a:hover { background: rgba(167,19,47,.05); } .yr a:hover .go .arrow { transform: translateX(4px); } }
+    .yr a:focus-visible { outline: 3px solid var(--sc-accent); outline-offset: 2px; }
+
+    /* ------------------------------------------------------- hall of fame -- */
+    .hof { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
+    .hof h2 { margin: 0 0 2.6rem; font-size: clamp(3rem, 5.6vw, 5.6rem); }
+    .hof__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 4vw, 4rem); }
+    .inductee { display: grid; grid-template-columns: clamp(8rem, 13vw, 12rem) 1fr; gap: 1.6rem; align-items: start; }
+    .inductee img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r); box-shadow: var(--sc-e2); }
+    .inductee h3 { margin: 0 0 .35rem; font-size: clamp(1.9rem, 2.8vw, 2.6rem); }
+    .inductee .tag { display: block; margin-bottom: .8rem; font-weight: 700; font-size: .76rem; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-accent); }
+    .inductee p { margin: 0; line-height: 1.55; color: var(--sc-ink-soft); }
+    .hof .link { display: inline-block; margin-top: 2.4rem; }
+
+    .cta { padding-block: clamp(4rem, 8vw, 6.5rem); }
+    .cta h2 { margin: 0 0 1.2rem; font-size: clamp(3.2rem, 6.4vw, 6.4rem); }
+    .cta p { margin: 0 0 2rem; font-size: 1.15rem; max-width: 34rem; line-height: 1.5; color: var(--sc-ink-soft); }
+    .cta__row { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; }
+
+    @media (max-width: 860px) {
+      .season, .season--photo, .rail__lead, .rail__note { width: 76vw; }
+      .season img { height: 34vh; }
+      .yr a { grid-template-columns: 4.6rem 1fr; gap: .4rem 1rem; }
+      .yr .teams, .yr .go { grid-column: 2; }
+      .hof__grid { grid-template-columns: 1fr; }
+      .inductee { grid-template-columns: 7rem 1fr; }
+    }
+  </style>
+</head>
+<body class="cx">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="sc-grain" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Main">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks logo">
+          <div class="nav__logo-text">Guildford Baseball &amp; Softball Club<span>Est. 1992</span></div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="roster.html">Roster</a></li>
+          <li><a href="juniors.html">Juniors</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="join.html" class="btn btn--primary nav__cta">Try it free</a>
+        <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav__mobile">
+    <a href="about.html">About</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="roster.html">Roster</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="history.html">History</a>
+    <a href="contact.html">Contact</a>
+    <a href="join.html" class="btn btn--primary">Try it free</a>
+  </div>
+
+<main id="main">
+
+  <section class="page-hero page-hero--banner" aria-labelledby="h1">
+    <div class="container">
+      <span class="overline overline--light">Club Archive</span>
+      <h1 id="h1">Season by season.</h1>
+      <p>Every year on the diamond since 1992: results, records, and the moments that shaped the club.</p>
+      <div class="hero-links"><a class="link" href="#books">All seasons</a><a class="link" href="#hof">Hall of Fame</a></div>
+    </div>
+  </section>
+
+  <!-- =================================================== HIGHLIGHTS RAIL -->
+  <section id="highlights" data-sc-act="pan" data-sc-span="3" aria-labelledby="run-h">
+    <div data-sc-stage class="run__stage g-700">
+      <div class="rail" data-sc-pan="0.05">
+        <div class="rail__lead" style="--i:0">
+          <h2 class="sc-display" id="run-h">Some highlights.</h2>
+          <p>Six seasons that shaped the club. Each one links to its full write-up.</p>
+        </div>
+        <a class="season season--type" href="seasons/1992.html" style="--i:1">
+          <h3>1992</h3>
+          <p>Formed from a merger with the Wokingham Millers. First game in April, at Waltham Abbey. It rained. They lost.</p>
+          <span class="go">Read 1992</span>
+        </a>
+        <a class="season season--photo" href="seasons/2011.html" style="--i:2">
+          <figure><img src="assets/v2/kit-2011.webp" alt="Will Frawley in the cardinal and gold jersey" width="900" height="1035" loading="lazy" style="object-position: 50% 10%"><figcaption>The kit today. Will Frawley, #11.</figcaption></figure>
+          <h3>2011</h3>
+          <p>Cardinal and gold replace navy, white and red. The first team goes 16&ndash;4.</p>
+          <span class="go">Read 2011</span>
+        </a>
+        <a class="season season--type" href="seasons/2015.html" style="--i:3">
+          <h3>2015</h3>
+          <p>A National Play-off Final, reached with a ninth-inning walk-off in the semi.</p>
+          <span class="go">Read 2015</span>
+        </a>
+        <a class="season season--type" href="seasons/2017.html" style="--i:4">
+          <h3>2017</h3>
+          <p>Three teams for the first time. Sixteen debuts in one season, a club record.</p>
+          <span class="go">Read 2017</span>
+        </a>
+        <a class="season season--photo" href="seasons/2021.html" style="--i:5">
+          <figure><img src="assets/v2/s2021-goldcats.webp" alt="Two Guildford teams, the Millers and the Gold Cats, playing each other" width="750" height="398" loading="lazy"><figcaption>Millers v Gold Cats, 2021</figcaption></figure>
+          <h3>2021</h3>
+          <p>The Gold Cats take the field: fifteen players, every one from the junior programme.</p>
+          <span class="go">Read 2021</span>
+        </a>
+        <a class="season season--photo" href="seasons/2025.html" style="--i:6">
+          <figure><img src="assets/v2/s2025-cardiff.webp" alt="A Guildford fielder at a base during the 2025 play-off against Cardiff" width="1000" height="969" loading="lazy"><figcaption>Play-offs v Cardiff, 2025</figcaption></figure>
+          <h3>2025</h3>
+          <p>Runners-up, and the only team to split a series with the Kent Bucs.</p>
+          <span class="go">Read 2025</span>
+        </a>
+        <div class="rail__note" style="--i:7">
+          <p>Every season since 2007 is written up below.</p>
+          <a class="link" href="#books">All seasons</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== RECORD BOOKS -->
+  <section id="books" class="books on-paper" aria-labelledby="books-h">
+    <div class="cx-wrap">
+      <div class="books__head" data-sc-in data-sc-stagger="70">
+        <h2 class="sc-display" id="books-h">The record books.</h2>
+        <p>Results, standings and highlights for every season on record. Earlier years are thin because the club's early archive is.</p>
+      </div>
+      <ol class="yr-list" data-sc-in data-sc-stagger="30">
+        <li class="yr"><a href="seasons/2025.html"><b>2025</b><span class="head">Runners-up in the regular season. Semi-final exit to Cardiff Merlins.</span><span class="teams">Mavericks: runners-up, semi-final. Millers: BBF Division 5.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2024.html"><b>2024</b><span class="head">The Millers reach the play-offs for the first time.</span><span class="teams">Mavericks: 13&ndash;15. Millers: play-offs.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2023.html"><b>2023</b><span class="head">The first season at Kings College. Millers go 22&ndash;7; three teams competing.</span><span class="teams">Mavericks: winning record. Millers: 22&ndash;7, 2nd in pool.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2022.html"><b>2022</b><span class="head">Mavericks go 18&ndash;7. Lewis Bawden throws a no-hitter against Richmond.</span><span class="teams">Mavericks: 18&ndash;7 (AA). Millers: development year.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2021.html"><b>2021</b><span class="head">The return to play. The Gold Cats are made up entirely of junior graduates.</span><span class="teams">All three teams back after COVID.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2020.html"><b>2020</b><span class="head">Shortened to five weeks by COVID. Just getting everyone playing.</span><span class="teams">Millers: 5&ndash;5. August and September only.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2019.html"><b>2019</b><span class="head">Full game-by-game results on record.</span><span class="teams">Mavericks: 9&ndash;11 (AA). Millers: 7&ndash;15 (Single-A).</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2018.html"><b>2018</b><span class="head">Both teams reach the play-offs. Yasu Minowa wins MVP for the second year running.</span><span class="teams">Mavericks: 8&ndash;14, play-offs. Millers: play-offs.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2017.html"><b>2017</b><span class="head">Three teams for the first time. The Millers reach the National Final.</span><span class="teams">Millers: National Final. Gold Cats: first season.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2016.html"><b>2016</b><span class="head">The 25th anniversary. The Millers are founded and reach the play-offs in year one.</span><span class="teams">Mavericks: winning record (AA). Millers: play-offs.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2015.html"><b>2015</b><span class="head">10&ndash;4, a walk-off semi, unbeaten London toppled, National Final runners-up.</span><span class="teams">Mavericks: 10&ndash;4, National Final.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2014.html"><b>2014</b><span class="head">A move to Christ's College. Heather Armstead enters the Hall of Fame.</span><span class="teams">Mavericks: single team (AA), play-offs.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2013.html"><b>2013</b><span class="head">Winning records for both teams, despite losing their home diamond.</span><span class="teams">Mavericks I: semi-final. Mavericks II: winning record.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2012.html"><b>2012</b><span class="head">Mavericks I go unbeaten in the regular season, only the second time in club history.</span><span class="teams">Mavericks II: 6&ndash;4.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2011.html"><b>2011</b><span class="head">Two teams for the first time in a decade, and the new cardinal and gold kit.</span><span class="teams">Mavericks I: 16&ndash;4, 1st in Pool B. Mavericks II: 5&ndash;8.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2010.html"><b>2010</b><span class="head">The junior programme relaunches as the Broadwater Bobcats.</span><span class="teams">Mavericks: BBF Single-A South.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2009.html"><b>2009</b><span class="head">A 24-player squad in BBF A South.</span><span class="teams">Mavericks: BBF A South.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2008.html"><b>2008</b><span class="head">Full batting stats on record. A team average of .375, led by S. Lin at .688.</span><span class="teams">Mavericks: BBF A South, Division 2.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/2007.html"><b>2007</b><span class="head">The earliest season on record online. The Mavericks reach the Final Four.</span><span class="teams">Mavericks: Final Four.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+        <li class="yr"><a href="seasons/1992.html"><b>1992</b><span class="head">Year one. The Wokingham Millers merge with a Guildford group, and a club is born.</span><span class="teams">Home: Northmead Junior School.</span><span class="go">Read <span class="arrow" aria-hidden="true">&rarr;</span></span></a></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ====================================================== HALL OF FAME -->
+  <section id="hof" class="hof g-900 gold-rule" aria-labelledby="hof-h">
+    <div class="cx-wrap">
+      <h2 class="sc-display" id="hof-h" data-sc-in>The Hall of Fame.</h2>
+      <div class="hof__grid" data-sc-in data-sc-stagger="80">
+        <div class="inductee">
+          <img src="assets/v2/hof-heather.webp" alt="Heather Armstead" width="918" height="591" loading="lazy">
+          <div>
+            <h3>Heather Armstead</h3>
+            <span class="tag">Inducted 2014 · #84, retired</span>
+            <p>Catcher and first base from 2003 to 2014. The club's first inductee, and remembered as one of the best defensive catchers it has ever had.</p>
+          </div>
+        </div>
+        <div class="inductee">
+          <img src="assets/v2/hof-richard.webp" alt="Richard Williams" width="637" height="960" loading="lazy">
+          <div>
+            <h3>Richard Williams</h3>
+            <span class="tag">Inducted 2016 · Founder</span>
+            <p>Co-founded the club with friends in 1991, helped start the junior programme in 1993 and relaunched it in 2010. He still runs Teeball on Saturday mornings.</p>
+          </div>
+        </div>
+      </div>
+      <a class="link" href="hall-of-fame.html">Read the inductees' stories <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+
+  <section class="cta g-800" aria-labelledby="cta-h">
+    <div class="cx-wrap" data-sc-in data-sc-stagger="70">
+      <h2 class="sc-display" id="cta-h">Your season next.</h2>
+      <p>The next chapter starts on a Thursday evening at Kings College. Your first session is free.</p>
+      <div class="cta__row"><a class="btn btn--primary" href="join.html">Try a free session</a><a class="link" href="about.html">Our story</a></div>
+    </div>
+  </section>
+
+</main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks">
+          <p>Guildford's baseball club since 1992. Playing and coaching at Kings College, Southway, Guildford.</p>
+        </div>
+        <div>
+          <div class="footer__heading">Club</div>
+          <ul class="footer__links">
+            <li><a href="about.html">Our story</a></li>
+            <li><a href="join.html">Try a free session</a></li>
+            <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="roster.html">2026 Roster</a></li>
+            <li><a href="juniors.html">Junior Programme</a></li>
+            <li><a href="history.html">Season History</a></li>
+            <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+            <li><a href="news.html">Latest News</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Teams</div>
+          <ul class="footer__links">
+            <li><a href="about.html#teams">Guildford Mavericks</a></li>
+            <li><a href="about.html#teams">Guildford Millers</a></li>
+            <li><a href="about.html#teams">Gold Cats</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Contact</div>
+          <ul class="footer__links">
+            <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
+            <li><a href="contact.html">Get Directions</a></li>
+            <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+            <li><a href="docs.html">Club Docs &amp; Policies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club.</span>
+        <span class="footer__est">Est. 1992 · Guildford Mavericks</span>
+      </div>
+    </div>
+  </footer>
+
+<script src="js/lenis.min.js"></script>
+<script src="js/scrollcraft.js"></script>
+<script src="js/concept.js"></script>
+<script src="js/theme.js"></script>
+<script>
+  // The diamond in the bar: first at the highlights, second at the record books, third at the Hall of Fame, home at the end.
+  (function () {
+    var CX = window.CX, $ = CX.$;
+    function stations() { if (window.GBSC) GBSC.setStations([CX.top($('#highlights')), CX.top($('#books')) - 80, CX.top($('#hof')) - 80, document.documentElement.scrollHeight - innerHeight]); }
+    addEventListener('load', stations); addEventListener('resize', stations); setTimeout(stations, 400);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js" data-live-stack>
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Junior Baseball Guildford | Saturday Sessions for Kids | Guildford Mavericks</title>
+  <meta name="description" content="Saturday morning baseball for children in Guildford. Boys and girls aged 4 to 14: junior baseball for 8 to 14, Teeball for 4 to 7. First two sessions free. £100/season includes cap and t-shirt.">
+  <link rel="canonical" href="https://guildfordbaseball.co.uk/juniors.html">
+  <meta property="og:title" content="Junior Baseball in Guildford — Saturday Sessions for Kids">
+  <meta property="og:description" content="Boys and girls 14 and under. Saturday mornings at Kings College, Guildford. First two sessions free.">
+  <meta property="og:image" content="assets/hero-beginners.jpg">
+  <meta property="og:url" content="https://guildfordbaseball.co.uk/juniors.html">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/scrollcraft.css">
+  <link rel="stylesheet" href="css/concept.css">
+  <style>
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .session-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .session-card__icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+    .session-card h4 { margin-bottom: 0.3rem; }
+    .session-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+    @media (max-width: 768px) { .session-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .pricing-pair { grid-template-columns: 1fr !important; } }
+
+    /* Gallery */
+    .gallery-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2rem; justify-content:center; }
+    .gallery-tab { padding:0.55rem 1.25rem; border-radius:50px; font-size:0.85rem; font-weight:600; border:2px solid var(--border); color:var(--muted); cursor:pointer; background:var(--white); transition:all 0.2s; }
+    .gallery-tab.active, .gallery-tab:hover { border-color:var(--red); color:var(--red); background:rgba(200,0,37,0.05); }
+    .gallery-grid { display:none; }
+    .gallery-grid.active { display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:240px; gap:0.75rem; animation:fadeTab 0.3s ease; }
+    .gallery-item { overflow:hidden; border-radius:10px; cursor:pointer; position:relative; }
+    .gallery-item:nth-child(4n+1) { grid-column:span 2; }
+    .gallery-item:nth-child(4n) { grid-column:span 2; }
+    .gallery-item img { width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; }
+    .gallery-item::after { content:''; position:absolute; inset:0; background:rgba(15,28,46,0); transition:background 0.2s; }
+    @media (hover:hover) and (pointer:fine) {
+      .gallery-item img { transition:transform 0.3s cubic-bezier(0.25,0,0,1); }
+      .gallery-item:hover img { transform:scale(1.04); }
+      .gallery-item:hover::after { background:rgba(15,28,46,0.15); }
+    }
+    @media (max-width:900px) {
+      .gallery-grid.active { grid-template-columns:repeat(2,1fr); grid-auto-rows:200px; }
+      .gallery-item:nth-child(4n+1), .gallery-item:nth-child(4n) { grid-column:span 1; }
+    }
+    @media (max-width:600px) { .gallery-grid.active { grid-template-columns:1fr 1fr; grid-auto-rows:150px; } }
+
+    /* Lightbox */
+    .lightbox { display:none; position:fixed; inset:0; background:rgba(10,16,28,0.96); z-index:9999; align-items:center; justify-content:center; }
+    .lightbox.open { display:flex; }
+    .lightbox__img { max-width:90vw; max-height:88vh; border-radius:10px; object-fit:contain; display:block; }
+    .lightbox__close { position:absolute; top:1.25rem; right:1.5rem; color:rgba(255,255,255,0.7); font-size:2.2rem; cursor:pointer; line-height:1; background:none; border:none; transition:color 0.15s; }
+    .lightbox__close:hover { color:#fff; }
+    .lightbox__nav { position:absolute; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.6); font-size:2.5rem; cursor:pointer; background:none; border:none; padding:0.5rem; transition:color 0.15s; }
+    .lightbox__nav:hover { color:#fff; }
+    .lightbox__prev { left:1rem; }
+    .lightbox__next { right:1rem; }
+    .lightbox__counter { position:absolute; bottom:1.25rem; left:50%; transform:translateX(-50%); color:rgba(255,255,255,0.5); font-size:0.82rem; font-family:var(--font-sans); }
+
+    /* ------------------------------------------------------------ hero --
+       Split, like the site's other heroes, but with the photograph showing. */
+    .jhero { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; min-height: min(100vh, 58rem); background: #2e0813; color: #f7efe4; overflow: hidden; }
+    .jhero__text { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: 8.5rem clamp(1.5rem, 4vw, 4rem) 4rem max(1.5rem, calc((100vw - 1200px) / 2)); }
+    .jhero__text .overline { color: #f3b53c; }
+    .jhero h1 { margin: .9rem 0 1.2rem; color: #f7efe4; font-size: clamp(3rem, 6vw, 6.2rem); line-height: .92; max-width: 11ch; }
+    .jhero h1 .gold { color: #f3b53c; }
+    .jhero p { max-width: 34rem; color: rgba(247,239,228,.84); font-size: 1.1rem; line-height: 1.6; }
+    .jhero__facts { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.6rem 0 2rem; padding: 0; list-style: none; }
+    .jhero__facts li { padding: .4rem .8rem; border: 1px solid rgba(243,181,60,.45); border-radius: 100px; font-size: .82rem; font-weight: 700; color: #f7efe4; }
+    .jhero__photo { position: relative; margin: 0; overflow: hidden; }
+    .jhero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+    .jhero__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #2e0813 0%, rgba(46,8,19,0) 26%); }
+    .jhero__tag { position: absolute; z-index: 2; right: 1.2rem; bottom: 1.2rem; padding: .35rem .7rem; background: rgba(33,5,16,.84); border-radius: 3px; font-size: .76rem; font-weight: 700; }
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .jhero__photo { clip-path: inset(0 0 0 100%); }
+      html.js .jhero__photo img { transform: scale(1.14); }
+      html.js .jhero__text > * { opacity: 0; transform: translateY(18px); }
+      html.js .jhero.is-in .jhero__photo { clip-path: inset(0); transition: clip-path 1100ms cubic-bezier(.77,0,.18,1) 120ms; }
+      html.js .jhero.is-in .jhero__photo img { transform: scale(1); transition: transform 2200ms cubic-bezier(.22,1,.36,1) 120ms; }
+      html.js .jhero.is-in .jhero__text > * { opacity: 1; transform: none; transition: opacity 700ms ease, transform 700ms cubic-bezier(.22,1,.36,1); transition-delay: var(--d, 0ms); }
+    }
+    @media (max-width: 860px) {
+      .jhero { grid-template-columns: 1fr; min-height: 0; }
+      .jhero__photo { order: -1; height: 46vh; min-height: 18rem; }
+      .jhero__photo::after { background: linear-gradient(0deg, #2e0813 0%, rgba(46,8,19,0) 30%); }
+      .jhero__text { padding: 1.4rem 1.25rem 3rem; }
+      .jhero h1 { font-size: clamp(2.6rem, 12vw, 3.6rem); }
+    }
+
+    /* ------------------------------------------------- Saturday morning --
+       A clock runs from 9:30 to midday as you scroll; the session plays out beside it. */
+    .sat__stage { display: grid; grid-template-columns: minmax(15rem, 1fr) minmax(0, 1.25fr) minmax(0, 1.2fr); gap: clamp(1.5rem, 3.5vw, 3.5rem); align-items: center;
+                  padding: 5.5rem max(1.5rem, calc((100vw - 1260px) / 2)) 2.5rem; background: radial-gradient(90% 90% at 20% 50%, #5a0f1d 0%, #420b18 55%, #2e0813 100%); color: #f7efe4; }
+    .clock { position: relative; width: 100%; max-width: 20rem; margin-inline: auto; }
+    .clock svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .clock__face { fill: #fbf6ee; stroke: #f3b53c; stroke-width: 6; }
+    .clock__tick { stroke: #420b18; stroke-width: 3; stroke-linecap: round; }
+    .clock__tick--hr { stroke-width: 6; }
+    .clock__num { font-family: var(--sc-font-display); font-weight: 900; font-size: 26px; fill: #420b18; text-anchor: middle; dominant-baseline: central; }
+    .clock__arc { fill: none; stroke: #f3b53c; stroke-width: 10; stroke-linecap: round; opacity: .9; }
+    .clock__hand { stroke: #2e0813; stroke-linecap: round; }
+    .clock__hand--h { stroke-width: 10; } .clock__hand--m { stroke-width: 6; }
+    .clock__pin { fill: #a7132f; stroke: #fbf6ee; stroke-width: 3; }
+    .clock__read { margin: 1.3rem 0 0; text-align: center; }
+    .clock__read b { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(2.4rem, 3.6vw, 3.4rem); line-height: 1; color: #f3b53c; }
+    .clock__read span { display: block; margin-top: .4rem; min-height: 1.4em; font-size: .9rem; font-weight: 600; color: #e3d0c3; }
+    .sat__copy h2 { margin: 0 0 1.8rem; font-size: clamp(2.4rem, 3.8vw, 3.8rem); color: #f7efe4; }
+    .sat__phases { list-style: none; margin: 0; padding: 0; }
+    .sat__phase { position: relative; padding: 1rem 0 1rem 1.4rem; border-left: 3px solid rgba(247,239,228,.16); opacity: .42; transition: opacity 300ms ease, border-color 300ms ease; }
+    .sat__phase.is-on { opacity: 1; border-left-color: #f3b53c; }
+    .sat__phase small { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #f3b53c; }
+    .sat__phase h3 { margin: .25rem 0 .35rem; font-size: clamp(1.5rem, 2.2vw, 2rem); color: #f7efe4; }
+    .sat__phase p { margin: 0; font-size: .98rem; line-height: 1.5; color: #e3d0c3; }
+    .sat__photos { position: relative; margin: 0; height: min(70vh, 38rem); border-radius: 6px; overflow: hidden; box-shadow: 0 24px 60px rgba(10,2,5,.45); background: #2e0813; }
+    .sat__photos img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .sat__photos img:not(:first-child) { clip-path: inset(100% 0 0 0); }
+    .sat__tee { position: absolute; z-index: 3; right: -1rem; bottom: 1.2rem; width: 42%; padding: .45rem .45rem 0; background: #fbf6ee; border-radius: 2px; color: #3a2320;
+                box-shadow: 0 14px 34px rgba(10,2,5,.5); transform: rotate(4deg) translateY(140%); opacity: 0; }
+    .sat__tee img { position: static; display: block; width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; clip-path: none !important; }
+    .sat__tee span { display: block; padding: .4rem .1rem .5rem; font-size: .72rem; font-weight: 700; line-height: 1.3; }
+    @media (max-width: 960px) {
+      .sat__stage { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; align-items: start; gap: 1rem; padding: 5rem 1.25rem 1.5rem; }
+      .sat__clock { grid-column: 1; grid-row: 1; display: flex; align-items: center; gap: .9rem; }
+      .clock { width: 5.6rem; margin: 0; flex: none; }
+      .clock__num { display: none; }
+      .clock__read { margin: 0; text-align: left; }
+      .clock__read b { font-size: 2rem; }
+      .clock__read span { font-size: .78rem; min-height: 0; }
+      .sat__copy { grid-column: 1; grid-row: 3; }
+      .sat__copy h2 { display: none; }
+      .sat__phase { display: none; padding-top: .2rem; }
+      .sat__phase.is-on { display: block; }
+      .sat__photos { grid-column: 1; grid-row: 2; height: 40vh; }
+      .sat__tee { width: 34%; right: .6rem; bottom: .6rem; }
+      .sat__tee span { display: none; }
+    }
+    /* Reduced motion, or no JavaScript: the three stages side by side. */
+    .sat--static, html.no-js .sat { height: auto !important; }
+    .sat--static .sat__stage, html.no-js .sat__stage { position: relative; height: auto; min-height: 0; grid-template-columns: 1fr; padding-block: 4.5rem; }
+    .sat--static .sat__clock, html.no-js .sat__clock, .sat--static .sat__photos, html.no-js .sat__photos { display: none; }
+    .sat--static .sat__copy h2, html.no-js .sat__copy h2 { display: block; }
+    .sat--static .sat__phases, html.no-js .sat__phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.6rem; }
+    .sat--static .sat__phase, html.no-js .sat__phase { display: block; opacity: 1; border-left-color: #f3b53c; }
+    .sat__still { display: none; }
+    .sat--static .sat__still, html.no-js .sat__still { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; margin-bottom: .9rem; }
+
+    /* ---------------------------------------------------------------- FAQ --
+       Cards on cream, so every question reads clearly. */
+    .jfaq { background: var(--cream); }
+    .jfaq .accordion { border-top: 0; max-width: 820px; margin-inline: auto; }
+    .jfaq .accordion__item { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--cardinal); border-radius: 10px; margin-bottom: .75rem; padding: 0 1.3rem; box-shadow: 0 2px 10px rgba(66,11,24,.06); }
+    .jfaq .accordion__item.open { border-left-color: var(--gold-hi); }
+    .jfaq .accordion__trigger { color: var(--maroon-800); font-weight: 700; }
+    .jfaq .accordion__body p { color: #4a3531; font-size: 1rem; line-height: 1.65; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks logo">
+          <div class="nav__logo-text">Guildford Baseball &amp; Softball Club<span>Est. 1992</span></div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="roster.html">Roster</a></li>
+          <li><a href="juniors.html">Juniors</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="join.html" class="btn btn--primary btn--pulse nav__cta">Try it free</a>
+        <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav__mobile">
+    <a href="about.html">About</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="roster.html">Roster</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="history.html">History</a>
+    <a href="contact.html">Contact</a>
+    <a href="join.html" class="btn btn--primary">Try it free</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="jhero" aria-labelledby="h1">
+    <div class="jhero__text">
+      <span class="overline" style="--d:80ms">Junior Programme &bull; Ages 4 to 14</span>
+      <h1 id="h1" style="--d:160ms">Saturday morning baseball for kids <span class="gold">in Guildford.</span></h1>
+      <p style="--d:300ms">Boys and girls, beginners to experienced. Safe, structured, and genuinely fun — coached by experienced Mavericks players.</p>
+      <ul class="jhero__facts" style="--d:400ms"><li>Juniors 8 to 14</li><li>Teeball 4 to 7</li><li>First two sessions free</li></ul>
+      <div class="btn-group" style="--d:480ms">
+        <a href="join.html" class="btn btn--primary">Register Your Child &rarr;</a>
+        <a href="#saturday" class="btn btn--outline">What to Expect &darr;</a>
+      </div>
+    </div>
+    <figure class="jhero__photo">
+      <img src="assets/v2/jr/jr-hero.webp" alt="A junior player in the Guildford jersey, number 7, running the bases" width="1800" height="2700" fetchpriority="high">
+      <figcaption class="jhero__tag">Saturday morning at Kings College</figcaption>
+    </figure>
+  </section>
+
+  <!-- Quick facts -->
+  <div class="stat-bar">
+    <div class="container">
+      <div class="stat-bar__inner">
+        <div class="stat-bar__item">
+          <span class="stat-bar__num">4–14</span>
+          <span class="stat-bar__label">Ages</span>
+        </div>
+        <div class="stat-bar__item">
+          <span class="stat-bar__num">Sat</span>
+          <span class="stat-bar__label">Morning Sessions</span>
+        </div>
+        <div class="stat-bar__item">
+          <span class="stat-bar__num">£100</span>
+          <span class="stat-bar__label">Per Season</span>
+        </div>
+        <div class="stat-bar__item">
+          <span class="stat-bar__num">2</span>
+          <span class="stat-bar__label">Free Sessions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- What to expect -->
+  <section class="section section--white" id="what-to-expect">
+    <div class="container">
+      <div class="grid-2" style="align-items: center; gap: 5rem;">
+        <div>
+          <div class="section-header fade-up">
+            <span class="overline">The Programme</span>
+            <h2><span class="heading-underline">What your child will experience</span></h2>
+          </div>
+          <p class="fade-up" style="color: var(--muted); margin-bottom: 1.2rem;">
+            Our junior programme introduces children to baseball through structured, fun sessions designed to build confidence alongside skills. No pressure, no elite selection — just a safe environment where kids can try something new.
+          </p>
+          <p class="fade-up" style="color: var(--muted); margin-bottom: 1.2rem;">
+            "Our aim is not only to introduce new players to our club and the sport, but to provide an opportunity for children to have fun and be active. They don't need to be the fastest or the strongest — baseball rewards those who can out-think their opponents."
+          </p>
+        </div>
+        <div class="fade-in">
+          <img src="assets/news/junior-pre-season-training-2024.jpg" alt="Junior baseball pre-season training at Guildford" style="border-radius: 16px; box-shadow: var(--shadow-lg);" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo Gallery -->
+  <section class="section" id="junior-gallery" style="background:var(--offwhite);">
+    <div class="container">
+      <div class="section-header section-header--center fade-up">
+        <span class="overline">A Typical Saturday</span>
+        <h2><span class="heading-underline">Life on the diamond</span></h2>
+        <p style="color:var(--muted);">Action from recent sessions and tournaments at Kings College.</p>
+      </div>
+
+      <div class="gallery-tabs fade-up">
+        <button class="gallery-tab active" data-gallery="may26">Sat 2 May 2026</button>
+        <button class="gallery-tab" data-gallery="open26">Opening Day 18 Apr 2026</button>
+        <button class="gallery-tab" data-gallery="jun25">Jun 2025</button>
+      </div>
+
+      <!-- Sat 2 May 2026 — 25 photos -->
+      <div class="gallery-grid active" id="gallery-may26">
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_ed462efebe3c4c86afa8161833c5f26c~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_ed462efebe3c4c86afa8161833c5f26c~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center top;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_1ba1722545d34c22b8c48fda143e0819~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_1ba1722545d34c22b8c48fda143e0819~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center top;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_bc67d515d958449ea76ee97287b4d1b9~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_bc67d515d958449ea76ee97287b4d1b9~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_2a3057e8362a43dea8a9e7e1ff640b35~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_2a3057e8362a43dea8a9e7e1ff640b35~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_a5c25ffa939a49ff8d65fdf68a6ca2d9~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_a5c25ffa939a49ff8d65fdf68a6ca2d9~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_6d315536a7514e048fa521e6a41697fa~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_6d315536a7514e048fa521e6a41697fa~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_cfa7235f74484e16a34627a85eeb259b~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_cfa7235f74484e16a34627a85eeb259b~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_94be2e810db740e7b65331b66fea049b~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_94be2e810db740e7b65331b66fea049b~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center top;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_cae2f935d2f74565b40f50e923e9b8d0~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_cae2f935d2f74565b40f50e923e9b8d0~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center top;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_9d036c94731344fcb755869f63b48e33~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_9d036c94731344fcb755869f63b48e33~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_8d14ced1a704486ebc22eb60d6462c10~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_8d14ced1a704486ebc22eb60d6462c10~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_a8d56f7141d94295b105f01683baaa02~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_a8d56f7141d94295b105f01683baaa02~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center top;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_2063e6ffcefb464581bbbdc9e5142678~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_2063e6ffcefb464581bbbdc9e5142678~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_b38ebfefa5b146f3be4643a8036e97fd~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_b38ebfefa5b146f3be4643a8036e97fd~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_f46f70ab2f294b9a8e77dc46177e4fb7~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_f46f70ab2f294b9a8e77dc46177e4fb7~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center top;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_1ecb9a56b9de4655b7a93dec13396edd~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_1ecb9a56b9de4655b7a93dec13396edd~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center top;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_ca2c3838ff4d48918320ec05797f8a1d~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_ca2c3838ff4d48918320ec05797f8a1d~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_0c13b8b3b98649388745b7456a22d76e~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_0c13b8b3b98649388745b7456a22d76e~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_e3f8a7447e9445c7b3872d9c1395fc69~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_e3f8a7447e9445c7b3872d9c1395fc69~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_a4331324a74c4a82918a0b3debc6e0d1~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_a4331324a74c4a82918a0b3debc6e0d1~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_ea64d43552a045b09da4cb7f55e3908a~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_ea64d43552a045b09da4cb7f55e3908a~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center 65%;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_e7b05fc6a5444cd9883429d6e06e1470~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_e7b05fc6a5444cd9883429d6e06e1470~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026" style="object-position:center 20%;"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_1f5b63a8e8874e7094c6e021bf1df2bf~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_1f5b63a8e8874e7094c6e021bf1df2bf~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_e49b173c690a4b51baf8a6a540bbcb8f~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_e49b173c690a4b51baf8a6a540bbcb8f~mv2.jpg" loading="lazy" alt="Junior baseball session 2 May 2026"></div>
+      </div>
+
+      <!-- Opening Day 18 Apr 2026 — 22 photos -->
+      <div class="gallery-grid" id="gallery-open26">
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_427cff339342498c999aa82b23641bd2~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_427cff339342498c999aa82b23641bd2~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_61f4375a536b4b89b066435b9b8b0faa~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_61f4375a536b4b89b066435b9b8b0faa~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_6a340f7138a8425ca8bc4780a3bbed2a~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_6a340f7138a8425ca8bc4780a3bbed2a~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_6485b4e1f5504f8abd39291a8b9ec40a~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_6485b4e1f5504f8abd39291a8b9ec40a~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_4c369e00b9de449eadcd6bf38260271c~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_4c369e00b9de449eadcd6bf38260271c~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_d788548123894ffb9148814ada4ad2f5~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_d788548123894ffb9148814ada4ad2f5~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_723779d9149f4fce93f70e90447d7196~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_723779d9149f4fce93f70e90447d7196~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_718bff421973454d981ea320fd9567fe~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_718bff421973454d981ea320fd9567fe~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_4fe800cb085e4dbd9966a1f1d8110a76~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_4fe800cb085e4dbd9966a1f1d8110a76~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_5f1a208b7a394e7aa3ae31313f249443~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_5f1a208b7a394e7aa3ae31313f249443~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_1131f449ee8e45b28a0c0567887a3bb9~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_1131f449ee8e45b28a0c0567887a3bb9~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_1481351bc16d4b5bbc257589307a9044~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_1481351bc16d4b5bbc257589307a9044~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_125e1a8c4b1d4eb99174c17df78d4846~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_125e1a8c4b1d4eb99174c17df78d4846~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_89ae5a82813b44d785360edb86e9a9e6~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_89ae5a82813b44d785360edb86e9a9e6~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_69ed57d77cf6422a96cf2c42d56397ac~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_69ed57d77cf6422a96cf2c42d56397ac~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_62b1723b3b6e43b2bd1f042d6fdd163e~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_62b1723b3b6e43b2bd1f042d6fdd163e~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_9efb9bfa45a7472783091a97d4511615~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_9efb9bfa45a7472783091a97d4511615~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_d4143336482347b3a6d9776bf1ecd4e3~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_d4143336482347b3a6d9776bf1ecd4e3~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_007dd6193b624e12a762aa0aa3b9bba3~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_007dd6193b624e12a762aa0aa3b9bba3~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_237b7af1ec834eaca2714c8d558ce685~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_237b7af1ec834eaca2714c8d558ce685~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_c64151dcc59f4b88916678e4c2522692~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_c64151dcc59f4b88916678e4c2522692~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_83a664a0a4b346668cb29c2b05b02515~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_83a664a0a4b346668cb29c2b05b02515~mv2.jpg" loading="lazy" alt="Opening Day 18 Apr 2026"></div>
+      </div>
+
+      <!-- Game Session Jun 2025 — 13 photos -->
+      <div class="gallery-grid" id="gallery-jun25">
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_ace4a8666e6d446492642b637e449dde~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_ace4a8666e6d446492642b637e449dde~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_8bee765ee3564b75bfea10eb11c5e624~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_8bee765ee3564b75bfea10eb11c5e624~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_aa11df945be040b7b4f0460436478932~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_aa11df945be040b7b4f0460436478932~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_abecdcc66bfe45fa9727bb3fb41d48db~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_abecdcc66bfe45fa9727bb3fb41d48db~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_36ebc4b9d7a945979de468446dfb0ca9~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_36ebc4b9d7a945979de468446dfb0ca9~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_edf12777b8d94207a244720aa57b7955~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_edf12777b8d94207a244720aa57b7955~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_7719f25cb67b4d9c9ea65208ff86f889~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_7719f25cb67b4d9c9ea65208ff86f889~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_0f45cc8f5b894cd1b38637bfd7672411~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_0f45cc8f5b894cd1b38637bfd7672411~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_5e25c4cd83404a918670ccbeccae2385~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_5e25c4cd83404a918670ccbeccae2385~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_6a325d3eefdb4d39823ac821cab9bb2e~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_6a325d3eefdb4d39823ac821cab9bb2e~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_92f0d5c920dc46359496806b563ad5c3~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_92f0d5c920dc46359496806b563ad5c3~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_e152429fc445483789dd3a572fdfebb6~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_e152429fc445483789dd3a572fdfebb6~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+        <div class="gallery-item"><img src="https://static.wixstatic.com/media/cf8537_413a7dec021a489f878855d832239506~mv2.jpg/v1/fill/w_600,h_450,q_85/cf8537_413a7dec021a489f878855d832239506~mv2.jpg" loading="lazy" alt="Junior game session Jun 2025"></div>
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+      <button class="lightbox__close" id="lb-close" aria-label="Close">&times;</button>
+      <button class="lightbox__nav lightbox__prev" id="lb-prev" aria-label="Previous">&#8249;</button>
+      <img class="lightbox__img" id="lb-img" src="" alt="">
+      <button class="lightbox__nav lightbox__next" id="lb-next" aria-label="Next">&#8250;</button>
+      <div class="lightbox__counter" id="lb-counter"></div>
+    </div>
+  </section>
+
+  <script>
+    // Gallery tabs
+    document.querySelectorAll('.gallery-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.gallery-grid').forEach(g => g.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('gallery-' + tab.dataset.gallery).classList.add('active');
+        currentItems = getItems();
+      });
+    });
+
+    // Lightbox
+    let currentIndex = 0;
+    let currentItems = [];
+
+    function getItems() {
+      const activeGrid = document.querySelector('.gallery-grid.active');
+      return activeGrid ? [...activeGrid.querySelectorAll('.gallery-item img')] : [];
+    }
+
+    function openLightbox(index) {
+      currentItems = getItems();
+      currentIndex = index;
+      const lb = document.getElementById('lightbox');
+      const img = document.getElementById('lb-img');
+      img.src = currentItems[currentIndex].src.replace('w_600,h_450,q_85', 'w_1400,h_1050,q_90');
+      document.getElementById('lb-counter').textContent = (currentIndex + 1) + ' / ' + currentItems.length;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+      currentIndex = (currentIndex + dir + currentItems.length) % currentItems.length;
+      const img = document.getElementById('lb-img');
+      img.src = currentItems[currentIndex].src.replace('w_600,h_450,q_85', 'w_1400,h_1050,q_90');
+      document.getElementById('lb-counter').textContent = (currentIndex + 1) + ' / ' + currentItems.length;
+    }
+
+    document.querySelectorAll('.gallery-item').forEach((item, i) => {
+      item.addEventListener('click', () => {
+        currentItems = getItems();
+        const activeItems = [...document.querySelector('.gallery-grid.active').querySelectorAll('.gallery-item')];
+        openLightbox(activeItems.indexOf(item));
+      });
+    });
+
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lb-next').addEventListener('click', () => navigate(1));
+    document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+  </script>
+
+  <!-- A Typical Saturday -->
+<section id="saturday" class="sat" data-sc-act="pin" data-sc-span="3.2" aria-labelledby="sat-h">
+    <div data-sc-stage class="sat__stage">
+      <div class="sat__clock" aria-hidden="true">
+        <div class="clock">
+          <svg viewBox="0 0 300 300">
+            <circle class="clock__face" cx="150" cy="150" r="140"/>
+            <line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(0 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(6 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(12 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(18 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(24 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(30 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(36 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(42 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(48 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(54 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(60 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(66 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(72 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(78 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(84 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(90 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(96 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(102 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(108 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(114 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(120 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(126 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(132 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(138 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(144 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(150 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(156 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(162 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(168 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(174 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(180 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(186 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(192 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(198 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(204 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(210 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(216 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(222 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(228 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(234 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(240 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(246 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(252 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(258 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(264 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(270 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(276 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(282 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(288 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(294 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(300 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(306 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(312 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(318 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(324 150 150)"/><line class="clock__tick clock__tick--hr" x1="150" y1="22" x2="150" y2="44" transform="rotate(330 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(336 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(342 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(348 150 150)"/><line class="clock__tick" x1="150" y1="26" x2="150" y2="36" transform="rotate(354 150 150)"/><text class="clock__num" x="192.0" y="77.3">1</text><text class="clock__num" x="222.7" y="108.0">2</text><text class="clock__num" x="234.0" y="150.0">3</text><text class="clock__num" x="222.7" y="192.0">4</text><text class="clock__num" x="192.0" y="222.7">5</text><text class="clock__num" x="150.0" y="234.0">6</text><text class="clock__num" x="108.0" y="222.7">7</text><text class="clock__num" x="77.3" y="192.0">8</text><text class="clock__num" x="66.0" y="150.0">9</text><text class="clock__num" x="77.3" y="108.0">10</text><text class="clock__num" x="108.0" y="77.3">11</text><text class="clock__num" x="150.0" y="66.0">12</text>
+            <path class="clock__arc" data-arc d=""/>
+            <line class="clock__hand clock__hand--h" data-hand-h x1="150" y1="150" x2="150" y2="84"/>
+            <line class="clock__hand clock__hand--m" data-hand-m x1="150" y1="162" x2="150" y2="46"/>
+            <circle class="clock__pin" cx="150" cy="150" r="9"/>
+          </svg>
+        </div>
+        <p class="clock__read"><b data-clock-time>9:30am</b><span data-clock-note>Sessions start</span></p>
+      </div>
+      <div class="sat__copy">
+        <span class="overline">A Typical Saturday</span>
+        <h2 class="sc-display" id="sat-h">What happens at a session.</h2>
+        <ol class="sat__phases">
+          <li class="sat__phase is-on"><img class="sat__still" src="assets/v2/jr/jr-warmup.webp" alt="" loading="lazy"><small>First</small><h3>Warm-up &amp; games</h3><p>Fun warm-up games that build coordination and team spirit — no boring laps.</p></li>
+          <li class="sat__phase"><img class="sat__still" src="assets/v2/jr/jr-skills.webp" alt="" loading="lazy"><small>Then</small><h3>Skills stations</h3><p>Throwing, catching, batting and fielding, coached in small groups by Mavericks players.</p></li>
+          <li class="sat__phase"><img class="sat__still" src="assets/v2/jr/jr-game.webp" alt="" loading="lazy"><small>To finish</small><h3>Practice game</h3><p>A practice game where the kids put their skills to use — always the favourite part.</p></li>
+        </ol>
+      </div>
+      <figure class="sat__photos" aria-hidden="true">
+        <img src="assets/v2/jr/jr-warmup.webp" alt="" width="1200" height="900" style="object-position: 50% 60%">
+        <img src="assets/v2/jr/jr-skills.webp" alt="" width="1200" height="1800" style="object-position: 50% 35%">
+        <img src="assets/v2/jr/jr-game.webp" alt="" width="1200" height="1800" style="object-position: 50% 40%">
+        <div class="sat__tee"><img src="assets/v2/jr/jr-teeball.webp" alt="" width="1200" height="1800" style="object-position: 50% 55%"><span>Teeball, ages 4 to 7: 9:30 to 11am</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Membership & Teeball — combined -->
+  <section class="section section--white" id="teeball" style="padding-top:0;">
+    <div class="container">
+      <div class="section-header section-header--center fade-up">
+        <span class="overline">Membership</span>
+        <h2><span class="heading-underline">Choose your programme</span></h2>
+        <p style="color:var(--muted);">First two sessions are always free — no kit, no commitment. Just turn up on a Saturday morning.</p>
+      </div>
+
+      <!-- Shared benefits row -->
+      <div class="fade-up" style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.6rem; margin-bottom:2.5rem;">
+        <span style="display:inline-flex; align-items:center; gap:0.4rem; background:var(--white); border:1px solid var(--border); border-radius:100px; padding:0.4rem 0.9rem; font-size:0.83rem;"><span style="color:var(--red); font-weight:700;">✓</span> All equipment provided</span>
+        <span style="display:inline-flex; align-items:center; gap:0.4rem; background:var(--white); border:1px solid var(--border); border-radius:100px; padding:0.4rem 0.9rem; font-size:0.83rem;"><span style="color:var(--red); font-weight:700;">✓</span> First two sessions free</span>
+        <span style="display:inline-flex; align-items:center; gap:0.4rem; background:var(--white); border:1px solid var(--border); border-radius:100px; padding:0.4rem 0.9rem; font-size:0.83rem;"><span style="color:var(--red); font-weight:700;">✓</span> Saturday mornings, Kings College</span>
+        <span style="display:inline-flex; align-items:center; gap:0.4rem; background:var(--white); border:1px solid var(--border); border-radius:100px; padding:0.4rem 0.9rem; font-size:0.83rem;"><span style="color:var(--red); font-weight:700;">✓</span> Experienced Mavericks coaches</span>
+        <span style="display:inline-flex; align-items:center; gap:0.4rem; background:var(--white); border:1px solid var(--border); border-radius:100px; padding:0.4rem 0.9rem; font-size:0.83rem;"><span style="color:var(--red); font-weight:700;">✓</span> Boys and girls welcome</span>
+      </div>
+
+      <!-- Two pricing cards side by side -->
+      <div class="fade-up" style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:780px; margin-inline:auto;">
+
+        <!-- Junior card -->
+        <div class="pricing-card pricing-card--featured" style="display:flex; flex-direction:column;">
+          <div>
+            <div style="display:inline-block; background:var(--red); color:var(--white); font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:100px; margin-bottom:1rem;">Ages 8–14</div>
+            <h3>Junior Baseball</h3>
+            <div class="pricing-card__price">£100<span>/season</span></div>
+            <ul class="pricing-card__features">
+              <li>Full season Saturday sessions</li>
+              <li>Club cap &amp; t-shirt included</li>
+              <li>All equipment at sessions</li>
+              <li>Tournaments &amp; competitions</li>
+              <li>Pathway to adult teams</li>
+            </ul>
+          </div>
+          <a href="join.html" class="btn btn--primary" style="width:100%; justify-content:center; margin-top:auto; padding-top:1.25rem;">
+            Register Free Trial &rarr;
+          </a>
+          <p style="color:rgba(255,255,255,0.55); font-size:0.78rem; text-align:center; margin-top:0.65rem;">No payment needed to try</p>
+        </div>
+
+        <!-- Teeball card -->
+        <div class="pricing-card" style="background:var(--navy); display:flex; flex-direction:column;">
+          <div>
+            <div style="display:inline-block; background:var(--gold); color:var(--navy); font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; padding:0.25rem 0.75rem; border-radius:100px; margin-bottom:1rem;">Ages 4–7</div>
+            <h3 style="color:var(--white);">Teeball</h3>
+            <div class="pricing-card__price" style="color:var(--gold);">£25<span style="color:rgba(255,255,255,0.5);">/season</span></div>
+            <ul class="pricing-card__features">
+              <li>Ball on tee — every child hits</li>
+              <li>Saturdays, 9:30 to 11am</li>
+              <li>All equipment provided</li>
+              <li>Teeball tournaments included</li>
+              <li>Managed by Richard Williams</li>
+            </ul>
+          </div>
+          <a href="join.html" class="btn btn--outline" style="width:100%; justify-content:center; margin-top:auto; padding-top:1.25rem; border-color:rgba(255,255,255,0.3); color:var(--white);">
+            Register Your Child &rarr;
+          </a>
+          <p style="color:rgba(255,255,255,0.4); font-size:0.78rem; text-align:center; margin-top:0.65rem;">Perfect stepping stone to junior baseball</p>
+        </div>
+
+      </div>
+
+      <p style="text-align:center; color:var(--muted); font-size:0.83rem; margin-top:1.5rem;">Brothers and sisters: £25 off each additional child (not Teeball). Each child also registers with BBF Sport80 (£12.50) for insurance and competitions.<br>Not sure which programme? <a href="contact.html" style="color:var(--red);">Get in touch</a> and we'll help you find the right fit.</p>
+    </div>
+  </section>
+
+  <!-- 2026 Junior Schedule -->
+  <section class="section section--white" id="junior-schedule">
+    <div class="container">
+      <div class="section-header section-header--center fade-up">
+        <span class="overline">2026 Junior Programme</span>
+        <h2><span class="heading-underline">Schedule &amp; Key Dates</span></h2>
+        <p style="color:var(--muted);">Regular season sessions are Saturdays 9:30am–12:00pm at Kings College, Guildford unless stated otherwise.</p>
+      </div>
+      <div class="fade-up" style="max-width:720px; margin-inline:auto; margin-top:2.5rem;">
+        <div class="table-scroll">
+          <table class="fixture-table">
+            <thead>
+              <tr><th>Date</th><th>Event</th><th>Location</th><th>Time</th></tr>
+            </thead>
+            <tbody>
+              <tr style="opacity:0.75;">
+                <td>Sun 8 Mar</td>
+                <td><em>Indoor Pre-Season Training</em></td>
+                <td>Christs College, Guildford</td>
+                <td>1:00–3:00pm</td>
+              </tr>
+              <tr style="opacity:0.75;">
+                <td>Sun 22 Mar</td>
+                <td><em>Indoor Pre-Season Training</em></td>
+                <td>Christs College, Guildford</td>
+                <td>1:00–3:00pm</td>
+              </tr>
+              <tr style="opacity:0.75;">
+                <td>Sun 5 Apr</td>
+                <td><em>Easter Sunday — No session</em></td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr class="home">
+                <td>Sat 18 Apr</td>
+                <td><strong>&#127381; Season Starts</strong></td>
+                <td>Kings College, Guildford</td>
+                <td>9:30am–12:00pm</td>
+              </tr>
+              <tr>
+                <td>Sat 9 May</td>
+                <td>U13 / U11 / Teeball Tournament</td>
+                <td>Univ of Greenwich, Avery Hill</td>
+                <td>10:00am–2:00pm</td>
+              </tr>
+              <tr>
+                <td>Sat 13 Jun</td>
+                <td>U13 / U11 / Teeball Tournament</td>
+                <td>Roundshaw Playing Fields, Wallington</td>
+                <td>10:00am–2:00pm</td>
+              </tr>
+              <tr class="home">
+                <td>Sat 27 Jun</td>
+                <td>U13 / U11 / Teeball Tournament <span class="fixture-badge" style="font-size:0.7rem;">Home</span></td>
+                <td>Kings College, Guildford</td>
+                <td>10:00am–2:00pm</td>
+              </tr>
+              <tr>
+                <td>Sat 4 Jul</td>
+                <td>U13 / U11 / Teeball Tournament</td>
+                <td>Waterhall Rd, Brighton</td>
+                <td>10:00am–2:00pm</td>
+              </tr>
+              <tr>
+                <td><span class="fixture-badge away" style="font-size:0.75rem;">TBC</span> Sept</td>
+                <td>Youth National Baseball Championships (YNBCs)</td>
+                <td>Farnham Park, Slough</td>
+                <td>All day</td>
+              </tr>
+              <tr>
+                <td><span class="fixture-badge away" style="font-size:0.75rem;">TBC</span></td>
+                <td>End of Regular Training &amp; Games</td>
+                <td>Kings College, Guildford</td>
+                <td>9:30am–12:00pm</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="color:var(--muted); font-size:0.82rem; margin-top:1rem; text-align:center;">TBC dates will be confirmed nearer the start of the season. Regular Saturday sessions continue throughout the season on all other dates.</p>
+        <div style="text-align:center; margin-top:1.5rem;">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Kings+College+School+Guildford+Surrey" target="_blank" rel="noopener" class="btn btn--outline-dark">
+            Get Directions to Kings College &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coaches -->
+  <section class="section section--white" id="coaches">
+    <div class="container">
+      <div class="section-header section-header--center fade-up">
+        <span class="overline">Meet the Team</span>
+        <h2><span class="heading-underline">Junior Coaches</span></h2>
+        <p style="color: var(--muted);">Your child will be coached by experienced club members who have played and coached baseball for years.</p>
+      </div>
+      <div class="committee-grid stagger-parent" style="max-width: 860px; margin-inline: auto; margin-top: 2.5rem;">
+        <div class="committee-card stagger-child fade-up">
+          <div class="committee-card__avatar" style="background: var(--red);">MB</div>
+          <h4>Michael Burdett</h4>
+          <span class="committee-card__role">Head Coach &amp; Junior Programme Manager</span>
+        </div>
+        <div class="committee-card stagger-child fade-up">
+          <div class="committee-card__avatar" style="background: var(--navy);">BK</div>
+          <h4>Brian Kendal</h4>
+          <span class="committee-card__role">Junior Coach</span>
+        </div>
+        <div class="committee-card stagger-child fade-up">
+          <div class="committee-card__avatar" style="background: var(--navy);">RW</div>
+          <h4>Richard Williams</h4>
+          <span class="committee-card__role">Teeball Manager</span>
+        </div>
+        <div class="committee-card stagger-child fade-up">
+          <div class="committee-card__avatar" style="background: var(--navy);">R</div>
+          <h4>Reece</h4>
+          <span class="committee-card__role">Junior Coach</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section jfaq" id="faq">
+    <div class="container" style="max-width: 780px;">
+      <div class="section-header section-header--center fade-up">
+        <span class="overline">Parent FAQ</span>
+        <h2>Questions before your child comes along</h2>
+      </div>
+      <div class="accordion fade-up">
+        <div class="accordion__item">
+          <button class="accordion__trigger">What age can my child start? <span class="accordion__icon">+</span></button>
+          <div class="accordion__body"><p>The junior baseball programme is open to boys and girls aged 8 to 14. For children aged 4 to 7, we run a separate <a href="#teeball" style="color:var(--red);">Teeball programme</a> — a simplified, non-pitching version of baseball that's perfect for younger children. Feel free to ask our club assistant about the right fit for your child.</p></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger">Does my child need any equipment? <span class="accordion__icon">+</span></button>
+          <div class="accordion__body"><p>No kit or equipment is needed for the first session — just comfortable sports clothing and trainers. The club provides everything: bats, gloves, helmets, and balls. Once your child joins, their membership includes a club cap and t-shirt.</p></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger">What experience do they need? <span class="accordion__icon">+</span></button>
+          <div class="accordion__body"><p>None at all. The sessions are designed to take complete beginners through the fundamentals step by step. Experienced young players are also welcome — sessions are grouped by age and ability where numbers allow.</p></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger">Is it safe? Who are the coaches? <span class="accordion__icon">+</span></button>
+          <div class="accordion__body"><p>Safety is our priority. Coaches are experienced club members, many of whom have been with the Mavericks for years. All sessions follow BBF junior guidelines. Parents are welcome to stay and watch at all times.</p></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger">What time are Saturday sessions? <span class="accordion__icon">+</span></button>
+          <div class="accordion__body"><p>Saturdays from 9:30am to midday for ages 8 to 14, and 9:30 to 11am for Teeball, at Kings College from April to September. Indoor pre-season sessions run in March at Christs College, Larch Avenue.</p></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger">Can my child progress to the adult teams later? <span class="accordion__icon">+</span></button>
+          <div class="accordion__body"><p>Absolutely — that's the idea. Many of our current adult players came through the junior programme. Once a junior reaches the right age and ability, they're welcomed into adult training and eventually the Millers or Mavericks squad.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section cta-section--navy">
+    <div class="container fade-up">
+      <h2>First two sessions are free.</h2>
+      <p>Let your child try baseball on a Saturday morning — no payment, no kit, no commitment needed.</p>
+      <div class="btn-group" style="justify-content: center;">
+        <a href="join.html" class="btn btn--outline">Register for a Free Trial &rarr;</a>
+        <a href="contact.html" class="btn btn--outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks">
+          <p>Guildford's only baseball and softball club, playing and coaching since 1992 at Kings College, Surrey.</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.883v2.27h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a>
+            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Twitter/X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__heading">Club</div>
+          <ul class="footer__links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="join.html">Join the Club</a></li>
+            <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="juniors.html">Junior Programme</a></li>
+            <li><a href="history.html">Season History</a></li>
+            <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+            <li><a href="news.html">Latest News</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Teams</div>
+          <ul class="footer__links">
+            <li><a href="about.html#teams">Guildford Mavericks</a></li>
+            <li><a href="about.html#teams">Guildford Millers</a></li>
+            <li><a href="about.html#teams">Gold Cats</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Contact</div>
+          <ul class="footer__links">
+            <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
+            <li><a href="contact.html">Get Directions</a></li>
+            <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved.</span>
+        <span class="footer__est">Est. 1992 &mdash; Guildford Mavericks</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <script src="js/main.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { var st = document.getElementById('saturday'); st.removeAttribute('data-sc-act'); st.classList.add('sat--static'); }
+  </script>
+  <script src="js/scrollcraft.js"></script>
+  <script src="js/concept.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var CX = window.CX, $ = CX.$, $$ = CX.$$;
+
+    /* hero entrance */
+    var jh = $('.jhero');
+    Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(function (r) { setTimeout(r, 900); })])
+      .then(function () { requestAnimationFrame(function () { requestAnimationFrame(function () { jh.classList.add('is-in'); }); }); });
+
+    /* Saturday morning: 9:30 to midday across the pinned scroll */
+    var sat = $('#saturday'); if (sat.classList.contains('sat--static')) return;
+    var hH = $('[data-hand-h]'), hM = $('[data-hand-m]'), arc = $('[data-arc]'), tEl = $('[data-clock-time]'), nEl = $('[data-clock-note]');
+    var phases = $$('.sat__phase', sat), photos = $$('.sat__photos > img', sat), tee = $('.sat__tee', sat);
+    var CUT = [0, 0.34, 0.67];                        // warm-up, skills, game
+    function pt(deg, r) { var a = (deg - 90) * Math.PI / 180; return (150 + r * Math.cos(a)).toFixed(1) + ' ' + (150 + r * Math.sin(a)).toFixed(1); }
+    var lastNote = '';
+    function frame() {
+      var p = CX.pinned(sat), mins = 150 * CX.ramp(p, 0.04, 0.92);
+      var t = 9 * 60 + 30 + mins, h = t / 60;
+      hM.setAttribute('transform', 'rotate(' + ((t % 60) * 6).toFixed(2) + ' 150 150)');
+      hH.setAttribute('transform', 'rotate(' + ((h % 12) * 30).toFixed(2) + ' 150 150)');
+      var a0 = 9.5 * 30, a1 = (h % 12 || 12) * 30; if (a1 < a0) a1 += 360;
+      arc.setAttribute('d', a1 - a0 < 0.5 ? '' : 'M' + pt(a0, 122) + ' A122 122 0 ' + (a1 - a0 > 180 ? 1 : 0) + ' 1 ' + pt(a1, 122));
+      var read, note;
+      if (mins < 2) { read = '9:30am'; note = 'Sessions start'; }
+      else if (mins >= 148) { read = 'Midday'; note = 'Juniors finish'; }
+      else if (mins >= 86 && mins < 108) { read = '11:00am'; note = 'Teeball finishes'; }
+      else { var hh = Math.floor(h), mm = Math.floor(t % 60); read = (hh > 12 ? hh - 12 : hh) + ':' + (mm < 10 ? '0' : '') + mm + (hh >= 12 ? 'pm' : 'am'); note = mins < 88 ? 'Juniors and Teeball' : 'Juniors, ages 8 to 14'; }
+      tEl.textContent = read;
+      if (note !== lastNote) { nEl.textContent = note; lastNote = note; }
+      var on = p < CUT[1] ? 0 : p < CUT[2] ? 1 : 2;
+      phases.forEach(function (ph, i) { ph.classList.toggle('is-on', i === on); });
+      photos.forEach(function (im, i) {
+        if (!i) { im.style.transform = 'scale(' + (1.08 - 0.08 * CX.ramp(p, 0, CUT[1])).toFixed(4) + ')'; return; }
+        var w = CX.ease(CX.ramp(p, CUT[i] - 0.06, CUT[i] + 0.04));
+        im.style.clipPath = 'inset(' + ((1 - w) * 100).toFixed(2) + '% 0 0 0)';
+        im.style.transform = 'scale(' + (1.08 - 0.08 * CX.ramp(p, CUT[i], (CUT[i + 1] || 1))).toFixed(4) + ')';
+      });
+      var te = CX.easeOut(CX.ramp(mins, 80, 92)) * (1 - CX.ramp(mins, 114, 124));
+      tee.style.opacity = te.toFixed(3);
+      tee.style.transform = 'rotate(' + (4 - 2 * te).toFixed(2) + 'deg) translateY(' + ((1 - te) * 40).toFixed(1) + '%)';
+      sat.setAttribute('data-sc-verify-state', p.toFixed(2));
+      sat.setAttribute('data-sc-verify-hold', String(p <= 0.04 || p >= 0.92));
+    }
+    CX.frames.push(function (y) { var tp = CX.top(sat); if (y > tp - innerHeight && y < tp + sat.offsetHeight + innerHeight) frame(); });
+    frame();
+  })();
+  </script>
+<script src="js/theme.js" defer></script>
+</body>
+</html>

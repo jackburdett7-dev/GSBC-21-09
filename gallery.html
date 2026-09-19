@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js" data-live-stack>
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Gallery | Guildford Baseball & Softball Club</title>
+  <meta name="description" content="Photos from Guildford Mavericks games, training sessions, and club events going back to 2018.">
+  <link rel="canonical" href="https://guildfordbaseball.co.uk/gallery.html">
+  <meta property="og:title" content="Gallery | Guildford Mavericks">
+  <meta property="og:description" content="Photos from games, training and club events.">
+  <meta property="og:image" content="assets/banner.jpg">
+  <meta property="og:url" content="https://guildfordbaseball.co.uk/gallery.html">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/scrollcraft.css">
+  <link rel="stylesheet" href="css/concept.css">
+  <style>
+    .year-section { border-bottom: 1px solid #eef0f3; }
+    .year-section:last-child { border-bottom: none; }
+
+    .year-trigger {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 0; text-align: left; gap: 1rem;
+    }
+    .year-trigger__left { display: flex; align-items: center; gap: 1rem; }
+    .year-trigger__num {
+      font-family: var(--font-serif); font-size: 2rem;
+      font-weight: 700; color: var(--navy); line-height: 1;
+    }
+    .year-trigger__count {
+      font-size: 0.8rem; color: var(--muted); font-family: var(--font-sans);
+      background: var(--off-white); border-radius: 50px;
+      padding: 0.2rem 0.65rem; border: 1px solid #e5e7eb;
+    }
+    .year-trigger__arrow {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--off-white); border: 1px solid #e5e7eb;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 0.9rem; color: var(--navy);
+      transition: background 0.2s, transform 0.3s;
+    }
+    .year-section.open .year-trigger__arrow { background: var(--navy); color: #fff; transform: rotate(180deg); }
+    .year-trigger:hover .year-trigger__arrow { background: var(--navy); color: #fff; }
+
+    .year-body { max-height: 0; overflow: hidden; transition: max-height 0.45s ease; }
+    .year-body__inner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      padding-bottom: 2rem;
+    }
+    @media (max-width: 900px) { .year-body__inner { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .year-body__inner { grid-template-columns: 1fr; } }
+
+    .gallery-item {
+      border-radius: 8px; overflow: hidden; position: relative;
+      cursor: pointer; background: var(--navy);
+      aspect-ratio: 4 / 3;
+    }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease, opacity 0.3s ease; }
+    .gallery-item:hover img { transform: scale(1.04); opacity: 0.82; }
+    .gallery-item__caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(15,28,46,0.88));
+      color: rgba(255,255,255,0.9); font-size: 0.75rem;
+      font-family: var(--font-sans); padding: 1.5rem 0.75rem 0.6rem;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .gallery-item:hover .gallery-item__caption { opacity: 1; }
+
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,15,25,0.96); align-items: center;
+      justify-content: center; flex-direction: column; padding: 1rem;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: min(90vw,1100px); max-height: 85vh; object-fit: contain; border-radius: 8px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); }
+    #lightbox-caption { color: rgba(255,255,255,0.55); font-size: 0.82rem; margin-top: 0.85rem; font-family: var(--font-sans); text-align: center; }
+    #lightbox-close { position: fixed; top: 1.25rem; right: 1.5rem; background: none; border: none; color: rgba(255,255,255,0.55); font-size: 2rem; cursor: pointer; line-height: 1; z-index: 10000; transition: color 0.15s; }
+    #lightbox-close:hover { color: #fff; }
+    #lightbox-prev, #lightbox-next {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: white; font-size: 1.5rem; width: 48px; height: 48px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s; z-index: 10000;
+    }
+    #lightbox-prev { left: 1rem; }
+    #lightbox-next { right: 1rem; }
+    #lightbox-prev:hover, #lightbox-next:hover { background: rgba(200,0,37,0.75); }
+
+
+    /* ------------------------------------------------------ the print table --
+       Seasons dealt onto the table as you scroll, oldest first. */
+    .reel { background: #2e0813; }
+    .reel__stage { background: radial-gradient(110% 90% at 66% 55%, #5a0f1d 0%, #420b18 52%, #2e0813 100%); color: #f7efe4; --pw: clamp(10.5rem, 15.5vw, 16.5rem); }
+    .reel__side { position: absolute; z-index: 40; left: max(1.5rem, calc((100vw - 1200px) / 2)); top: 50%; translate: 0 -50%; width: min(24rem, 27vw); }
+    .reel__h { margin: 0 0 1.6rem; font-size: clamp(2.8rem, 4.6vw, 4.6rem); color: #f7efe4; }
+    .reel__now { display: flex; flex-direction: column; }
+    .reel__year { margin: 0; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(5.5rem, 10.5vw, 9.5rem); line-height: .8; color: #f3b53c; font-variant-numeric: tabular-nums; }
+    .reel__cap { margin: .9rem 0 1.6rem; min-height: 2.9em; font-weight: 600; line-height: 1.45; color: #e3d0c3; }
+    .reel__year.tick, .reel__cap.tick { animation: reel-tick 380ms cubic-bezier(.22,1,.36,1); }
+    @keyframes reel-tick { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .reel__table { position: absolute; left: calc(max(1.5rem, (100vw - 1200px) / 2) + min(24rem, 27vw) + 2.5rem); right: 3%; top: 10%; bottom: 5%; }
+    .print { position: absolute; left: calc(15% + var(--xn) * 72%); top: calc(18% + var(--yn) * 64%); width: calc(var(--pw) * var(--w, 1)); padding: .5rem .5rem 0;
+             background: #fbf6ee; border-radius: 2px; color: #3a2320; text-decoration: none; transform: translate(-50%, -50%) rotate(var(--r)); will-change: transform;
+             box-shadow: 0 calc(3px + 30px * var(--lift, 0)) calc(9px + 42px * var(--lift, 0)) rgba(10, 2, 5, calc(.38 + .14 * var(--lift, 0))); }
+    .print img { display: block; width: 100%; height: auto; }
+    .print__cap { display: block; padding: .45rem .15rem .55rem; font-size: .7rem; font-weight: 700; line-height: 1.25; letter-spacing: .02em; }
+    .print:focus-visible { outline: 3px solid #f3b53c; outline-offset: 3px; }
+    @media (hover: hover) and (pointer: fine) { .reel:not(.is-dealing) .print:hover { z-index: 30 !important; } }
+    @media (max-width: 860px) {
+      .reel__stage { --pw: 40vw; }
+      .reel__side { top: 5.4rem; translate: none; left: 1.25rem; right: 1.25rem; width: auto; }
+      .reel__h { font-size: 2.3rem; margin-bottom: .9rem; }
+      .reel__now { flex-direction: row; align-items: center; gap: 1rem; }
+      .reel__year { font-size: 4rem; }
+      .reel__cap { margin: 0; min-height: 0; font-size: .9rem; }
+      .reel__side .link { display: none; }
+      .reel__table { left: 2%; right: 2%; top: 40%; bottom: 3%; }
+      .print { left: calc(25% + var(--xn) * 50%); top: calc(18% + var(--yn) * 64%); }
+    }
+    /* Reduced motion, or no JavaScript: the same prints, laid out as a grid. */
+    .reel--static, html.no-js .reel { height: auto !important; }
+    .reel--static .reel__stage, html.no-js .reel__stage { position: relative; height: auto; min-height: 0; padding: clamp(4rem, 8vw, 6rem) max(1.5rem, calc((100vw - 1200px) / 2)); }
+    .reel--static .reel__side, html.no-js .reel__side { position: static; translate: none; width: auto; max-width: 40rem; margin-bottom: 2.2rem; }
+    .reel--static .reel__now, html.no-js .reel__now { display: none; }
+    .reel--static .reel__table, html.no-js .reel__table { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: 1.6rem; align-items: start; }
+    .reel--static .print, html.no-js .print { position: static; width: auto; transform: rotate(calc(var(--r) * .4)); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks logo">
+          <div class="nav__logo-text">Guildford Baseball &amp; Softball Club<span>Est. 1992</span></div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="roster.html">Roster</a></li>
+          <li><a href="juniors.html">Juniors</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="join.html" class="btn btn--primary btn--pulse nav__cta">Try it free</a>
+        <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav__mobile">
+    <a href="about.html">About</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="roster.html">Roster</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="history.html">History</a>
+    <a href="contact.html">Contact</a>
+    <a href="join.html" class="btn btn--primary">Try it free</a>
+  </div>
+
+  <div class="page-hero page-hero--banner">
+    <div class="container fade-up">
+      <span class="overline">The Club in Pictures</span>
+      <h1>Gallery</h1>
+      <p>Games, training, awards nights and moments from over 30 years of Guildford baseball.</p>
+    </div>
+  </div>
+
+  <!-- ======================================================= PRINT TABLE -->
+  <section id="reel" class="reel" data-sc-act="pin" data-sc-span="3.2" aria-labelledby="reel-h">
+    <div data-sc-stage class="reel__stage">
+      <div class="reel__side">
+        <p class="cx-label">2018 to 2025</p>
+        <h2 class="sc-display reel__h" id="reel-h">Seasons in pictures.</h2>
+        <div class="reel__now" aria-hidden="true">
+          <p class="reel__year" data-reel-year>2018</p>
+          <p class="reel__cap" data-reel-cap>Junior Programme · 2018</p>
+        </div>
+        <a class="link" href="#archive">Open the archive <span class="arrow" aria-hidden="true">&darr;</span></a>
+      </div>
+      <div class="reel__table">
+        <a class="print" href="#year-2018" data-year="2018" data-caption="Junior Programme · 2018" style="--xn:0.0;--yn:0.1;--r:-7deg;--w:1;z-index:1"><img src="assets/v2/reel/2018-juniors-2018.webp" alt="Junior Programme · 2018" width="640" height="484" decoding="async"><span class="print__cap">Junior Programme · 2018</span></a>
+        <a class="print" href="#year-2020" data-year="2020" data-caption="Indoor training · 2020" style="--xn:0.45;--yn:0.0;--r:4deg;--w:0.95;z-index:2"><img src="assets/v2/reel/2020-indoor-training.webp" alt="Indoor training · 2020" width="640" height="613" decoding="async"><span class="print__cap">Indoor training · 2020</span></a>
+        <a class="print" href="#year-2020" data-year="2020" data-caption="Mavericks v Croydon · August 2020" style="--xn:0.95;--yn:0.1;--r:-3deg;--w:1;z-index:3"><img src="assets/v2/reel/2020-2020-croydon.webp" alt="Mavericks v Croydon · August 2020" width="640" height="425" decoding="async"><span class="print__cap">Mavericks v Croydon · August 2020</span></a>
+        <a class="print" href="#year-2021" data-year="2021" data-caption="Millers v Jets · May 2021" style="--xn:0.08;--yn:0.62;--r:5deg;--w:0.9;z-index:4"><img src="assets/v2/reel/2021-millers-v-jets.webp" alt="Millers v Jets · May 2021" width="640" height="599" decoding="async"><span class="print__cap">Millers v Jets · May 2021</span></a>
+        <a class="print" href="#year-2021" data-year="2021" data-caption="Mavericks v London · August 2021" style="--xn:0.6;--yn:0.5;--r:-6deg;--w:0.85;z-index:5"><img src="assets/v2/reel/2021-mavs-v-london.webp" alt="Mavericks v London · August 2021" width="640" height="661" decoding="async"><span class="print__cap">Mavericks v London · August 2021</span></a>
+        <a class="print" href="#year-2022" data-year="2022" data-caption="Millers v Brighton · April 2022" style="--xn:1.0;--yn:0.72;--r:6deg;--w:0.95;z-index:6"><img src="assets/v2/reel/2022-millers-v-brighton.webp" alt="Millers v Brighton · April 2022" width="640" height="556" decoding="async"><span class="print__cap">Millers v Brighton · April 2022</span></a>
+        <a class="print" href="#year-2022" data-year="2022" data-caption="Mavericks v Croydon · August 2022" style="--xn:0.28;--yn:0.25;--r:3deg;--w:0.95;z-index:7"><img src="assets/v2/reel/2022-mavs-v-croydon.webp" alt="Mavericks v Croydon · August 2022" width="640" height="585" decoding="async"><span class="print__cap">Mavericks v Croydon · August 2022</span></a>
+        <a class="print" href="#year-2023" data-year="2023" data-caption="Millers v Richmond · June 2023" style="--xn:0.75;--yn:0.3;--r:-4deg;--w:0.85;z-index:8"><img src="assets/v2/reel/2023-millers-v-richmond.webp" alt="Millers v Richmond · June 2023" width="640" height="660" decoding="async"><span class="print__cap">Millers v Richmond · June 2023</span></a>
+        <a class="print" href="#year-2023" data-year="2023" data-caption="Millers v Mustangs · June 2023" style="--xn:0.05;--yn:0.98;--r:-2deg;--w:1;z-index:9"><img src="assets/v2/reel/2023-2023-mustangs.webp" alt="Millers v Mustangs · June 2023" width="640" height="398" decoding="async"><span class="print__cap">Millers v Mustangs · June 2023</span></a>
+        <a class="print" href="#year-2024" data-year="2024" data-caption="Mavericks at Oxford · August 2024" style="--xn:0.5;--yn:0.95;--r:5deg;--w:1.05;z-index:10"><img src="assets/v2/reel/2024-mavs-at-oxford.webp" alt="Mavericks at Oxford · August 2024" width="640" height="456" decoding="async"><span class="print__cap">Mavericks at Oxford · August 2024</span></a>
+        <a class="print" href="#year-2024" data-year="2024" data-caption="Millers v Bracknell · Play-off, September 2024" style="--xn:0.92;--yn:0.95;--r:-5deg;--w:0.9;z-index:11"><img src="assets/v2/reel/2024-2024-playoffs.webp" alt="Millers v Bracknell · Play-off, September 2024" width="640" height="623" decoding="async"><span class="print__cap">Millers v Bracknell · Play-off, September 2024</span></a>
+        <a class="print" href="#year-2025" data-year="2025" data-caption="Mavericks, Cardiff play-off · 2025" style="--xn:0.3;--yn:0.6;--r:-3deg;--w:0.95;z-index:12"><img src="assets/v2/reel/2025-cardiff-playoff.webp" alt="Mavericks, Cardiff play-off · 2025" width="640" height="620" decoding="async"><span class="print__cap">Mavericks, Cardiff play-off · 2025</span></a>
+        <a class="print" href="#year-2025" data-year="2025" data-caption="Mavericks at Tonbridge · June 2025" style="--xn:0.62;--yn:0.62;--r:2deg;--w:1.2;z-index:13"><img src="assets/v2/reel/2025-mavs-at-tonbridge.webp" alt="Mavericks at Tonbridge · June 2025" width="640" height="429" decoding="async"><span class="print__cap">Mavericks at Tonbridge · June 2025</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="archive" class="section section--white">
+    <div class="container">
+
+      <div class="section-header fade-up" style="margin-bottom: 1.5rem;">
+        <span class="label">Photo Archive</span>
+        <h2><span class="heading-underline">Moments from the diamond</span></h2>
+        <p style="color: var(--muted); margin-top: 0.5rem;">Click a year to expand. Click any photo to view full size.</p>
+      </div>
+
+      <!-- ══ 2025 (6 photos) ══ -->
+      <div class="year-section" id="year-2025">
+        <button class="year-trigger" aria-expanded="false" aria-controls="body-2025">
+          <div class="year-trigger__left">
+            <span class="year-trigger__num">2025</span>
+            <span class="year-trigger__count">6 photos</span>
+          </div>
+          <span class="year-trigger__arrow">&#9660;</span>
+        </button>
+        <div class="year-body" id="body-2025">
+          <div class="year-body__inner">
+            <div class="gallery-item" data-src="assets/gallery/2025/2025-bracknell.jpg" data-caption="Millers at Bracknell · August 2025">
+              <img src="assets/gallery/2025/2025-bracknell.jpg" alt="Millers at Bracknell, August 2025" loading="lazy">
+              <div class="gallery-item__caption">Millers at Bracknell · August 2025</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2025/cardiff-playoff.jpg" data-caption="Mavericks Cardiff Play-Off · 2025">
+              <img src="assets/gallery/2025/cardiff-playoff.jpg" alt="Mavericks Cardiff Play-Off 2025" loading="lazy">
+              <div class="gallery-item__caption">Mavericks Cardiff Play-Off · 2025</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2025/millers-v-hurricanes.jpg" data-caption="Millers v Hurricanes · May 2025">
+              <img src="assets/gallery/2025/millers-v-hurricanes.jpg" alt="Millers v Hurricanes, May 2025" loading="lazy">
+              <div class="gallery-item__caption">Millers v Hurricanes · May 2025</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2025/mavs-at-tonbridge.jpg" data-caption="Mavericks at Tonbridge · June 2025">
+              <img src="assets/gallery/2025/mavs-at-tonbridge.jpg" alt="Mavericks at Tonbridge, June 2025" loading="lazy">
+              <div class="gallery-item__caption">Mavericks at Tonbridge · June 2025</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2025/mavs-at-brighton.jpg" data-caption="Mavericks at Brighton · April 2025">
+              <img src="assets/gallery/2025/mavs-at-brighton.jpg" alt="Mavericks at Brighton, April 2025" loading="lazy">
+              <div class="gallery-item__caption">Mavericks at Brighton · April 2025</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2025/awards-2025.jpg" data-caption="Club Awards Night · 2025">
+              <img src="assets/gallery/2025/awards-2025.jpg" alt="Club Awards Night 2025" loading="lazy">
+              <div class="gallery-item__caption">Club Awards Night · 2025</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 2024 (6 photos) ══ -->
+      <div class="year-section" id="year-2024">
+        <button class="year-trigger" aria-expanded="false" aria-controls="body-2024">
+          <div class="year-trigger__left">
+            <span class="year-trigger__num">2024</span>
+            <span class="year-trigger__count">6 photos</span>
+          </div>
+          <span class="year-trigger__arrow">&#9660;</span>
+        </button>
+        <div class="year-body" id="body-2024">
+          <div class="year-body__inner">
+            <div class="gallery-item" data-src="assets/gallery/2024/2024-playoffs.jpg" data-caption="Millers v Bracknell · Play-off, September 2024">
+              <img src="assets/gallery/2024/2024-playoffs.jpg" alt="Millers v Bracknell play-off, September 2024" loading="lazy">
+              <div class="gallery-item__caption">Millers v Bracknell · Play-off, Sep 2024</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2024/millers-v-hastings.jpg" data-caption="Millers v Hastings · May 2024">
+              <img src="assets/gallery/2024/millers-v-hastings.jpg" alt="Millers v Hastings, May 2024" loading="lazy">
+              <div class="gallery-item__caption">Millers v Hastings · May 2024</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2024/mavs-at-oxford.jpg" data-caption="Mavericks at Oxford · August 2024">
+              <img src="assets/gallery/2024/mavs-at-oxford.jpg" alt="Mavericks at Oxford, August 2024" loading="lazy">
+              <div class="gallery-item__caption">Mavericks at Oxford · August 2024</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2024/mavs-v-bristol.jpg" data-caption="Mavericks v Bristol · August 2024">
+              <img src="assets/gallery/2024/mavs-v-bristol.jpg" alt="Mavericks v Bristol, August 2024" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Bristol · August 2024</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2024/mavs-v-bournemouth.jpg" data-caption="Mavericks v Bournemouth · May 2024">
+              <img src="assets/gallery/2024/mavs-v-bournemouth.jpg" alt="Mavericks v Bournemouth, May 2024" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Bournemouth · May 2024</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2024/awards-2024.jpg" data-caption="Club Awards Night · 2024">
+              <img src="assets/gallery/2024/awards-2024.jpg" alt="Club Awards Night 2024" loading="lazy">
+              <div class="gallery-item__caption">Club Awards Night · 2024</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 2023 (5 photos) ══ -->
+      <div class="year-section" id="year-2023">
+        <button class="year-trigger" aria-expanded="false" aria-controls="body-2023">
+          <div class="year-trigger__left">
+            <span class="year-trigger__num">2023</span>
+            <span class="year-trigger__count">5 photos</span>
+          </div>
+          <span class="year-trigger__arrow">&#9660;</span>
+        </button>
+        <div class="year-body" id="body-2023">
+          <div class="year-body__inner">
+            <div class="gallery-item" data-src="assets/gallery/2023/2023-mustangs.jpg" data-caption="Millers v Mustangs · June 2023">
+              <img src="assets/gallery/2023/2023-mustangs.jpg" alt="Millers v Mustangs, June 2023" loading="lazy">
+              <div class="gallery-item__caption">Millers v Mustangs · June 2023</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2023/millers-v-richmond.jpg" data-caption="Millers v Richmond · June 2023">
+              <img src="assets/gallery/2023/millers-v-richmond.jpg" alt="Millers v Richmond, June 2023" loading="lazy">
+              <div class="gallery-item__caption">Millers v Richmond · June 2023</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2023/millers-v-minotaurs.jpg" data-caption="Millers v Minotaurs · May 2023">
+              <img src="assets/gallery/2023/millers-v-minotaurs.jpg" alt="Millers v Minotaurs, May 2023" loading="lazy">
+              <div class="gallery-item__caption">Millers v Minotaurs · May 2023</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2023/mavs-v-bristol.jpg" data-caption="Mavericks v Bristol · May 2023">
+              <img src="assets/gallery/2023/mavs-v-bristol.jpg" alt="Mavericks v Bristol, May 2023" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Bristol · May 2023</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2023/awards-2023.jpg" data-caption="Club Awards Night · 2023">
+              <img src="assets/gallery/2023/awards-2023.jpg" alt="Club Awards Night 2023" loading="lazy">
+              <div class="gallery-item__caption">Club Awards Night · 2023</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 2022 (6 photos) ══ -->
+      <div class="year-section" id="year-2022">
+        <button class="year-trigger" aria-expanded="false" aria-controls="body-2022">
+          <div class="year-trigger__left">
+            <span class="year-trigger__num">2022</span>
+            <span class="year-trigger__count">6 photos</span>
+          </div>
+          <span class="year-trigger__arrow">&#9660;</span>
+        </button>
+        <div class="year-body" id="body-2022">
+          <div class="year-body__inner">
+            <div class="gallery-item" data-src="assets/gallery/2022/2022-richmond.jpg" data-caption="Millers v Richmond · July 2022">
+              <img src="assets/gallery/2022/2022-richmond.jpg" alt="Millers v Richmond, July 2022" loading="lazy">
+              <div class="gallery-item__caption">Millers v Richmond · July 2022</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2022/millers-v-brighton.jpg" data-caption="Millers v Brighton · April 2022">
+              <img src="assets/gallery/2022/millers-v-brighton.jpg" alt="Millers v Brighton, April 2022" loading="lazy">
+              <div class="gallery-item__caption">Millers v Brighton · April 2022</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2022/mavs-v-richmond.jpg" data-caption="Mavericks v Richmond · April 2022">
+              <img src="assets/gallery/2022/mavs-v-richmond.jpg" alt="Mavericks v Richmond, April 2022" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Richmond · April 2022</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2022/2022-mavs.jpg" data-caption="Millers v Mavericks · May 2022">
+              <img src="assets/gallery/2022/2022-mavs.jpg" alt="Millers v Mavericks, May 2022" loading="lazy">
+              <div class="gallery-item__caption">Millers v Mavericks · May 2022</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2022/mavs-v-croydon.jpg" data-caption="Mavericks v Croydon · August 2022">
+              <img src="assets/gallery/2022/mavs-v-croydon.jpg" alt="Mavericks v Croydon, August 2022" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Croydon · August 2022</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2022/awards-2022.jpg" data-caption="Club Awards Night · 2022">
+              <img src="assets/gallery/2022/awards-2022.jpg" alt="Club Awards Night 2022" loading="lazy">
+              <div class="gallery-item__caption">Club Awards Night · 2022</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 2021 (6 photos) ══ -->
+      <div class="year-section" id="year-2021">
+        <button class="year-trigger" aria-expanded="false" aria-controls="body-2021">
+          <div class="year-trigger__left">
+            <span class="year-trigger__num">2021</span>
+            <span class="year-trigger__count">6 photos</span>
+          </div>
+          <span class="year-trigger__arrow">&#9660;</span>
+        </button>
+        <div class="year-body" id="body-2021">
+          <div class="year-body__inner">
+            <div class="gallery-item" data-src="assets/gallery/2021/2021-awards.jpg" data-caption="Club Awards Night · 2021">
+              <img src="assets/gallery/2021/2021-awards.jpg" alt="Club Awards Night 2021" loading="lazy">
+              <div class="gallery-item__caption">Club Awards Night · 2021</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2021/millers-v-jets.jpg" data-caption="Millers v Jets · May 2021">
+              <img src="assets/gallery/2021/millers-v-jets.jpg" alt="Millers v Jets, May 2021" loading="lazy">
+              <div class="gallery-item__caption">Millers v Jets · May 2021</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2021/millers-v-goldcats.jpg" data-caption="Millers v Gold Cats · July 2021">
+              <img src="assets/gallery/2021/millers-v-goldcats.jpg" alt="Millers v Gold Cats, July 2021" loading="lazy">
+              <div class="gallery-item__caption">Millers v Gold Cats · July 2021</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2021/mavs-v-london.jpg" data-caption="Mavericks v London · August 2021">
+              <img src="assets/gallery/2021/mavs-v-london.jpg" alt="Mavericks v London, August 2021" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v London · August 2021</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2021/mavs-v-latin-boys.jpg" data-caption="Mavericks v Latin Boys · July 2021">
+              <img src="assets/gallery/2021/mavs-v-latin-boys.jpg" alt="Mavericks v Latin Boys, July 2021" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Latin Boys · July 2021</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2021/mavs-v-croydon.jpg" data-caption="Mavericks v Croydon · August 2021">
+              <img src="assets/gallery/2021/mavs-v-croydon.jpg" alt="Mavericks v Croydon, August 2021" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Croydon · August 2021</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 2020 (5 photos) ══ -->
+      <div class="year-section" id="year-2020">
+        <button class="year-trigger" aria-expanded="false" aria-controls="body-2020">
+          <div class="year-trigger__left">
+            <span class="year-trigger__num">2020</span>
+            <span class="year-trigger__count">5 photos</span>
+          </div>
+          <span class="year-trigger__arrow">&#9660;</span>
+        </button>
+        <div class="year-body" id="body-2020">
+          <div class="year-body__inner">
+            <div class="gallery-item" data-src="assets/gallery/2020/2020-richmond.jpg" data-caption="Millers v Richmond · August 2020">
+              <img src="assets/gallery/2020/2020-richmond.jpg" alt="Millers v Richmond, August 2020" loading="lazy">
+              <div class="gallery-item__caption">Millers v Richmond · August 2020</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2020/millers-v-richmond-2.jpg" data-caption="Millers v Richmond · August 2020">
+              <img src="assets/gallery/2020/millers-v-richmond-2.jpg" alt="Millers v Richmond, August 2020" loading="lazy">
+              <div class="gallery-item__caption">Millers v Richmond · August 2020</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2020/2020-croydon.jpg" data-caption="Mavericks v Croydon · August 2020">
+              <img src="assets/gallery/2020/2020-croydon.jpg" alt="Mavericks v Croydon, August 2020" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Croydon · August 2020</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2020/mavs-v-croydon-2.jpg" data-caption="Mavericks v Croydon · August 2020">
+              <img src="assets/gallery/2020/mavs-v-croydon-2.jpg" alt="Mavericks v Croydon, August 2020" loading="lazy">
+              <div class="gallery-item__caption">Mavericks v Croydon · August 2020</div>
+            </div>
+            <div class="gallery-item" data-src="assets/gallery/2020/indoor-training.jpg" data-caption="Indoor Training Session">
+              <img src="assets/gallery/2020/indoor-training.jpg" alt="Indoor training session" loading="lazy">
+              <div class="gallery-item__caption">Indoor Training</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 2018 (2 photos) ══ -->
+      <div class="year-section" id="year-2018">
+        <button class="year-trigger" aria-expanded="false" aria-controls="body-2018">
+          <div class="year-trigger__left">
+            <span class="year-trigger__num">2018</span>
+            <span class="year-trigger__count">2 photos</span>
+          </div>
+          <span class="year-trigger__arrow">&#9660;</span>
+        </button>
+        <div class="year-body" id="body-2018">
+          <div class="year-body__inner">
+            <div class="gallery-item" data-src="assets/gallery/2018/juniors-2018.jpg" data-caption="Junior Programme · 2018">
+              <img src="assets/gallery/2018/juniors-2018.jpg" alt="Junior programme 2018" loading="lazy">
+              <div class="gallery-item__caption">Junior Programme · 2018</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cta-section cta-section--navy grain">
+    <div class="container" style="position: relative; z-index: 2;">
+      <div class="fade-up">
+        <span class="label label--light" style="margin-bottom: 1.5rem; display: block;">Come and be part of it</span>
+        <h2>Want to be in the next photo?</h2>
+        <p>First training session is always free. Just show up on a Thursday evening.</p>
+        <div class="btn-group">
+          <a href="join.html" class="btn btn--outline">Try a free session</a>
+          <a href="contact.html" class="btn btn--outline">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks">
+          <p>Guildford's only baseball and softball club. Playing and coaching since 1992 at Kings College, Surrey.</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.883v2.27h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a>
+            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__heading">Club</div>
+          <ul class="footer__links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="join.html">Join the Club</a></li>
+            <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="juniors.html">Junior Programme</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="history.html">Season History</a></li>
+            <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+            <li><a href="news.html">Latest News</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Teams</div>
+          <ul class="footer__links">
+            <li><a href="about.html#teams">Guildford Mavericks</a></li>
+            <li><a href="about.html#teams">Guildford Millers</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Contact</div>
+          <ul class="footer__links">
+            <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
+            <li><a href="contact.html">Get Directions</a></li>
+            <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved.</span>
+        <span class="footer__est">Est. 1992 &mdash; Guildford Mavericks</span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="lightbox" role="dialog" aria-label="Photo viewer">
+    <button id="lightbox-close" aria-label="Close">&times;</button>
+    <button id="lightbox-prev" aria-label="Previous">&#8249;</button>
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption"></div>
+    <button id="lightbox-next" aria-label="Next">&#8250;</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <script src="js/main.js"></script>
+  <script>
+    document.querySelectorAll('.year-trigger').forEach(trigger => {
+      const section = trigger.closest('.year-section');
+      const body = section.querySelector('.year-body');
+      if (section.classList.contains('open')) body.style.maxHeight = body.scrollHeight + 'px';
+      trigger.addEventListener('click', () => {
+        const isOpen = section.classList.contains('open');
+        section.classList.toggle('open', !isOpen);
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+        body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+      });
+    });
+
+    let allItems = [], current = 0;
+    function buildList() { allItems = Array.from(document.querySelectorAll('.gallery-item')); }
+    function openLightbox(i) {
+      buildList(); current = i;
+      document.getElementById('lightbox-img').src = allItems[i].dataset.src;
+      document.getElementById('lightbox-img').alt = allItems[i].querySelector('img').alt;
+      document.getElementById('lightbox-caption').textContent = allItems[i].dataset.caption || '';
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+    function showNext() { openLightbox((current + 1) % allItems.length); }
+    function showPrev() { openLightbox((current - 1 + allItems.length) % allItems.length); }
+
+    document.addEventListener('click', e => {
+      const item = e.target.closest('.gallery-item');
+      if (item) { buildList(); openLightbox(allItems.indexOf(item)); }
+    });
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-next').addEventListener('click', showNext);
+    document.getElementById('lightbox-prev').addEventListener('click', showPrev);
+    document.getElementById('lightbox').addEventListener('click', e => { if (e.target === document.getElementById('lightbox')) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+  </script>
+  <script>
+    // Without motion the print table is an ordinary grid: take it out of the engine before it mounts.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { var r = document.getElementById('reel'); r.removeAttribute('data-sc-act'); r.classList.add('reel--static'); }
+  </script>
+  <script src="js/scrollcraft.js"></script>
+  <script src="js/concept.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var CX = window.CX, $ = CX.$, $$ = CX.$$;
+    var reel = $('#reel'), prints = $$('.print', reel), yearEl = $('[data-reel-year]'), capEl = $('[data-reel-cap]');
+
+    // A print opens its season in the archive below. Caught on the way down, so
+    // main.js's generic anchor scroll doesn't race this one.
+    document.addEventListener('click', function (e) {
+      var pr = e.target.closest && e.target.closest('#reel .print'); if (!pr) return;
+      var sec = document.getElementById('year-' + pr.dataset.year); if (!sec) return;
+      e.preventDefault(); e.stopPropagation();
+      if (!sec.classList.contains('open')) sec.querySelector('.year-trigger').click();
+      window.scrollTo({ top: CX.top(sec) - 90, behavior: CX.reduce ? 'auto' : 'smooth' });
+    }, true);
+    if (reel.classList.contains('reel--static')) return;
+
+    // Deal the prints. The first few land as the table scrolls into view, the
+    // rest while it holds; each drops in from above at an angle and settles.
+    var shown = -2;
+    function frame() {
+      var t = CX.top(reel), vh = innerHeight, travel = Math.max(1, reel.offsetHeight - vh);
+      var q = CX.clamp((scrollY - (t - 0.7 * vh)) / (travel + 0.7 * vh)), last = -1;
+      prints.forEach(function (pr, i) {
+        var a = 0.02 + i * 0.066, e = CX.easeOut(CX.ramp(q, a, a + 0.1)), side = i % 2 ? 1 : -1;
+        if (e <= 0) { pr.style.visibility = 'hidden'; return; }
+        pr.style.visibility = '';
+        // Prints never cross the words: on a desktop they come in from the top right
+        // (the words are on the left); on a phone they come up from below (the words are at the top).
+        var u = 1 - e, dx = CX.small.matches ? u * side * 10 : u * (8 + 10 * (i % 3)), dy = CX.small.matches ? u * 78 : u * -92;
+        pr.style.transform = 'translate(-50%,-50%) translate3d(' + dx.toFixed(2) + 'vw,' + dy.toFixed(2) + 'vh,0) rotate(' +
+          (parseFloat(pr.style.getPropertyValue('--r')) + u * side * 22).toFixed(2) + 'deg) scale(' + (1 + u * 0.26).toFixed(3) + ')';
+        pr.style.setProperty('--lift', u.toFixed(3));
+        if (e > 0.6) last = i;
+      });
+      reel.classList.toggle('is-dealing', q < 0.93);
+      // What the reader is shown, for the verification harness: the deal's progress
+      // and how many prints are down. The finished pile is a deliberate hold.
+      reel.setAttribute('data-sc-verify-state', q.toFixed(2) + ':' + (last + 1));
+      reel.setAttribute('data-sc-verify-hold', String(q >= 0.93));
+      if (last !== shown) {
+        var from = prints[Math.max(last, 0)], yr = from.dataset.year;
+        if (yearEl.textContent !== yr) { yearEl.textContent = yr; yearEl.classList.remove('tick'); void yearEl.offsetWidth; yearEl.classList.add('tick'); }
+        capEl.textContent = from.dataset.caption; capEl.classList.remove('tick'); void capEl.offsetWidth; capEl.classList.add('tick');
+        shown = last;
+      }
+    }
+    CX.frames.push(function (y) { var t = CX.top(reel); if (y > t - 1.3 * innerHeight && y < t + reel.offsetHeight + innerHeight) frame(); });
+    frame();
+  })();
+  </script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+<script src="js/theme.js" defer></script>
+</body>
+</html>

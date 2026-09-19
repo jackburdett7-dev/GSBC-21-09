@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | GBSC</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #0f2a35;
+      --navy-mid:  #162f3d;
+      --navy-light:#1d3a4a;
+      --cyan:      #9B1C2E;
+      --cyan-dim:  rgba(155,28,46,0.15);
+      --cyan-border: rgba(155,28,46,0.35);
+      --text:      #e8f4f8;
+      --text-muted:#7fa8b8;
+      --danger:    #f87171;
+      --success:   #34d399;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--navy);
+      min-height: 100vh;
+      color: var(--text);
+      /* Subtle dot-grid texture */
+      background-image: radial-gradient(circle, rgba(155,28,46,0.07) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ────────────────────────────────────────
+       LOGIN
+    ──────────────────────────────────────── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .login-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--cyan-border);
+      border-radius: 16px;
+      padding: 2.75rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(57,184,220,0.1);
+    }
+
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .login-brand__logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      object-fit: contain;
+      background: #fff;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+
+    .login-brand__text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .login-brand__text span {
+      display: block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-top: 0.2rem;
+    }
+
+    .login-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .login-card > p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    /* ────────────────────────────────────────
+       SHARED FIELD STYLES
+    ──────────────────────────────────────── */
+    .field { margin-bottom: 1.1rem; }
+
+    .field label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--navy);
+      border: 1.5px solid var(--cyan-border);
+      border-radius: 8px;
+      font-size: 0.925rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      appearance: none;
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2339b8dc' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.5rem;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(57,184,220,0.12);
+    }
+
+    .field textarea { min-height: 200px; resize: vertical; }
+
+    /* ────────────────────────────────────────
+       ALERTS
+    ──────────────────────────────────────── */
+    .alert {
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    .alert--error   { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+    .alert--success { background: rgba(52,211,153,0.12); color: var(--success); border: 1px solid rgba(52,211,153,0.3); }
+
+    /* ────────────────────────────────────────
+       BUTTONS
+    ──────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.75rem 1.6rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'DM Sans', sans-serif;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn:hover   { opacity: 0.9; transform: translateY(-1px); }
+    .btn:active  { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .btn--primary {
+      background: var(--cyan);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(155,28,46,0.35);
+    }
+    .btn--primary:hover { box-shadow: 0 6px 28px rgba(155,28,46,0.5); }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1.5px solid var(--cyan-border);
+    }
+    .btn--ghost:hover { color: var(--cyan); border-color: var(--cyan); }
+
+    .btn--danger {
+      background: rgba(248,113,113,0.12);
+      color: var(--danger);
+      border: 1px solid rgba(248,113,113,0.25);
+      font-size: 0.8rem;
+      padding: 0.45rem 0.9rem;
+    }
+    .btn--danger:hover { background: rgba(248,113,113,0.2); }
+
+    /* ────────────────────────────────────────
+       DASHBOARD LAYOUT
+    ──────────────────────────────────────── */
+    #dashboard { display: none; }
+
+    .admin-bar {
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--cyan-border);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .admin-bar__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .admin-bar__logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #fff;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+
+    .admin-bar__name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .admin-bar__badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--cyan);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
+      margin-left: 0.5rem;
+    }
+
+    .admin-main {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+    }
+
+    /* ────────────────────────────────────────
+       TABS — bold, impossible to miss
+    ──────────────────────────────────────── */
+    .admin-tabs {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+      background: var(--navy-mid);
+      border: 1px solid var(--cyan-border);
+      border-radius: 12px;
+      padding: 0.4rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .tab-btn:hover:not(.active) {
+      color: var(--text);
+      background: rgba(57,184,220,0.08);
+    }
+
+    .tab-btn.active {
+      background: var(--cyan);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(155,28,46,0.4);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.2s ease; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ────────────────────────────────────────
+       FORM CARD
+    ──────────────────────────────────────── */
+    .form-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--cyan-border);
+      border-radius: 16px;
+      padding: 2.25rem;
+    }
+
+    .form-card__header {
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--cyan-border);
+    }
+
+    .form-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .form-card__subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+    /* ────────────────────────────────────────
+       UPLOAD ZONE
+    ──────────────────────────────────────── */
+    .upload-zone {
+      border: 2px dashed var(--cyan-border);
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      background: var(--navy);
+    }
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+
+    .upload-zone__icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .upload-zone p { font-size: 0.875rem; color: var(--text-muted); }
+    .upload-zone strong { color: var(--cyan); }
+
+    #img-preview {
+      margin-top: 1rem;
+      max-height: 180px;
+      border-radius: 8px;
+      display: none;
+      object-fit: cover;
+      width: 100%;
+      border: 1px solid var(--cyan-border);
+    }
+
+    /* ────────────────────────────────────────
+       POSTS LIST (Manage tab)
+    ──────────────────────────────────────── */
+    .posts-list { display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .post-item {
+      background: var(--navy-mid);
+      border: 1px solid var(--cyan-border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    .post-item:hover { border-color: var(--cyan); }
+
+    .post-item__thumb {
+      width: 68px;
+      height: 50px;
+      border-radius: 7px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--navy-light);
+      border: 1px solid var(--cyan-border);
+    }
+
+    .post-item__info { flex: 1; min-width: 0; }
+
+    .post-item__title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .post-item__meta {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .post-item__cat {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--cyan);
+      border-radius: 4px;
+      padding: 0.15rem 0.45rem;
+      margin-right: 0.4rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3.5rem 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      background: var(--navy-mid);
+      border: 1px solid var(--cyan-border);
+      border-radius: 16px;
+    }
+
+    .empty-state__icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- ── LOGIN ── -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-brand">
+        <img src="../assets/logo.jpg" alt="GBSC" class="login-brand__logo">
+        <div class="login-brand__text">
+          GBSC
+          <span>Club Admin</span>
+        </div>
+      </div>
+
+      <h1>Welcome back</h1>
+      <p>Authorised club staff only.</p>
+
+      <div class="alert alert--error" id="login-error"></div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="your@email.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn btn--primary" id="login-btn" style="width:100%;margin-top:0.75rem;">
+        Sign in &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD ── -->
+  <div id="dashboard">
+
+    <div class="admin-bar">
+      <div class="admin-bar__brand">
+        <img src="../assets/logo.jpg" alt="GBSC" class="admin-bar__logo">
+        <span class="admin-bar__name">GBSC</span>
+        <span class="admin-bar__badge">Admin</span>
+      </div>
+      <button class="btn btn--ghost" id="logout-btn">Sign out</button>
+    </div>
+
+    <div class="admin-main">
+
+      <div class="admin-tabs">
+        <button class="tab-btn active" data-tab="new-post">&#43; New Post</button>
+        <button class="tab-btn" data-tab="manage">&#9776; Manage Posts</button>
+      </div>
+
+      <!-- NEW POST TAB -->
+      <div class="tab-panel active" id="tab-new-post">
+        <div class="form-card">
+          <div class="form-card__header">
+            <h2>Add a new post</h2>
+            <p class="form-card__subtitle">Posts appear on the news page immediately after publishing.</p>
+          </div>
+
+          <div class="alert alert--error"   id="post-error"></div>
+          <div class="alert alert--success" id="post-success"></div>
+
+          <div class="form-row">
+            <div class="field" style="grid-column:1/-1">
+              <label for="p-title">Title</label>
+              <input type="text" id="p-title" placeholder="e.g. 2026 Season Kicks Off">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="p-category">Category</label>
+              <select id="p-category">
+                <option>Club News</option>
+                <option>Season</option>
+                <option>Training</option>
+                <option>Juniors</option>
+                <option>Club Awards</option>
+                <option>Facilities</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="p-date">Date</label>
+              <input type="date" id="p-date">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="p-author">Author</label>
+            <input type="text" id="p-author" placeholder="e.g. Michael Burdett">
+          </div>
+
+          <div class="field">
+            <label for="p-excerpt">Excerpt <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(short summary shown on news cards)</span></label>
+            <input type="text" id="p-excerpt" placeholder="One or two sentences…">
+          </div>
+
+          <div class="field">
+            <label>Cover Image <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(optional — JPG, PNG, WEBP, max 5 MB)</span></label>
+            <div class="upload-zone" id="upload-zone">
+              <input type="file" id="p-image" accept="image/*">
+              <span class="upload-zone__icon">🖼️</span>
+              <p><strong>Click to upload</strong> or drag and drop</p>
+            </div>
+            <img id="img-preview" alt="Preview">
+          </div>
+
+          <div class="field">
+            <label for="p-content">Post content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(HTML supported — &lt;p&gt;, &lt;strong&gt;, &lt;a&gt; etc.)</span></label>
+            <textarea id="p-content" placeholder="Write your post here…"></textarea>
+          </div>
+
+          <button class="btn btn--primary" id="publish-btn" style="min-width:180px;">Publish Post &rarr;</button>
+        </div>
+      </div>
+
+      <!-- MANAGE TAB -->
+      <div class="tab-panel" id="tab-manage">
+        <div id="posts-list-wrap">
+          <div class="empty-state" id="posts-loading">
+            <span class="empty-state__icon">⏳</span>
+            Loading posts…
+          </div>
+          <div class="posts-list" id="posts-list" style="display:none;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+  (function () {
+    var SUPABASE_URL      = 'https://wajvgngjfwbdnitggakn.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhanZnbmdqZndiZG5pdGdnYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwODM2NzksImV4cCI6MjA5MTY1OTY3OX0.0-wOI9VAy6NFxnrBJEpunqPbmq2mP2D3ZEec_V5m8gk';
+
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    /* ── helpers ── */
+    function show(id)  { document.getElementById(id).style.display = ''; }
+    function hide(id)  { document.getElementById(id).style.display = 'none'; }
+    function slugify(s) {
+      return s.toLowerCase().trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+    }
+    function formatDate(d) {
+      var dt = new Date(d + 'T00:00:00');
+      var m  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      return dt.getDate() + ' ' + m[dt.getMonth()] + ' ' + dt.getFullYear();
+    }
+    function showAlert(id, msg) {
+      var el = document.getElementById(id);
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+    function hideAlerts() {
+      ['post-error','post-success','login-error'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+    }
+
+    /* ── auth state ── */
+    sb.auth.onAuthStateChange(function(event, session) {
+      if (session) {
+        hide('login-screen');
+        document.getElementById('dashboard').style.display = 'block';
+        loadPosts();
+      } else {
+        document.getElementById('login-screen').style.display = 'flex';
+        hide('dashboard');
+      }
+    });
+
+    /* ── login ── */
+    document.getElementById('login-btn').addEventListener('click', async function () {
+      hideAlerts();
+      var email    = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value;
+      var btn      = this;
+      btn.disabled = true;
+      btn.textContent = 'Signing in…';
+
+      var result = await sb.auth.signInWithPassword({ email: email, password: password });
+      if (result.error) {
+        showAlert('login-error', result.error.message);
+        btn.disabled = false;
+        btn.textContent = 'Sign in →';
+      } else {
+        await sb.auth.setSession({
+          access_token:  result.data.session.access_token,
+          refresh_token: result.data.session.refresh_token
+        });
+      }
+    });
+
+    ['email','password'].forEach(function(id) {
+      document.getElementById(id).addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') document.getElementById('login-btn').click();
+      });
+    });
+
+    /* ── logout ── */
+    document.getElementById('logout-btn').addEventListener('click', function () {
+      sb.auth.signOut();
+    });
+
+    /* ── tabs ── */
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'manage') loadPosts();
+      });
+    });
+
+    /* ── image preview ── */
+    var uploadZone = document.getElementById('upload-zone');
+    var fileInput  = document.getElementById('p-image');
+    var preview    = document.getElementById('img-preview');
+
+    fileInput.addEventListener('change', function() {
+      if (fileInput.files[0]) {
+        preview.src = URL.createObjectURL(fileInput.files[0]);
+        preview.style.display = 'block';
+      }
+    });
+
+    uploadZone.addEventListener('dragover',  function(e) { e.preventDefault(); uploadZone.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', function()  { uploadZone.classList.remove('dragover'); });
+    uploadZone.addEventListener('drop', function(e) {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) {
+        fileInput.files = e.dataTransfer.files;
+        preview.src     = URL.createObjectURL(e.dataTransfer.files[0]);
+        preview.style.display = 'block';
+      }
+    });
+
+    /* ── publish ── */
+    document.getElementById('publish-btn').addEventListener('click', async function () {
+      hideAlerts();
+      var btn      = this;
+      var title    = document.getElementById('p-title').value.trim();
+      var date     = document.getElementById('p-date').value;
+      var excerpt  = document.getElementById('p-excerpt').value.trim();
+      var content  = document.getElementById('p-content').value.trim();
+      var author   = document.getElementById('p-author').value.trim();
+      var category = document.getElementById('p-category').value;
+      var file     = fileInput.files[0];
+
+      if (!title || !date || !excerpt || !content) {
+        showAlert('post-error', 'Please fill in title, date, excerpt and content.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Publishing…';
+
+      try {
+        var imageUrl = null;
+
+        if (file) {
+          if (file.size > 5 * 1024 * 1024) {
+            showAlert('post-error', 'Image is too large. Please use an image under 5 MB.');
+            btn.disabled = false;
+            btn.textContent = 'Publish Post →';
+            return;
+          }
+
+          btn.textContent = 'Uploading image…';
+          var ext      = file.name.split('.').pop().toLowerCase();
+          var fileName = slugify(title) + '-' + Date.now() + '.' + ext;
+          var upload   = await sb.storage.from('post-images').upload(fileName, file, {
+            contentType: file.type
+          });
+
+          if (upload.error) {
+            console.error('Storage upload error:', upload.error);
+            showAlert('post-error', 'Image upload failed: ' + upload.error.message);
+            btn.disabled = false;
+            btn.textContent = 'Publish Post →';
+            return;
+          }
+
+          var urlData = sb.storage.from('post-images').getPublicUrl(fileName);
+          imageUrl    = urlData.data.publicUrl;
+        }
+
+        btn.textContent = 'Saving post…';
+        var slug   = slugify(title);
+        var insert = await sb.from('posts').insert([{
+          slug:      slug,
+          title:     title,
+          author:    author || 'Guildford Baseball',
+          date:      date,
+          category:  category,
+          excerpt:   excerpt,
+          image_url: imageUrl,
+          content:   content
+        }]);
+
+        if (insert.error) {
+          console.error('Post insert error:', insert.error);
+          throw new Error('Database error: ' + insert.error.message);
+        }
+
+        showAlert('post-success', '✓ Post published! It will appear on the site now.');
+        ['p-title','p-date','p-excerpt','p-content','p-author'].forEach(function(id) {
+          document.getElementById(id).value = '';
+        });
+        document.getElementById('p-category').selectedIndex = 0;
+        preview.style.display = 'none';
+        fileInput.value = '';
+
+      } catch (err) {
+        console.error('Publish error:', err);
+        showAlert('post-error', 'Error: ' + (err.message || 'Something went wrong.'));
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Publish Post →';
+    });
+
+    /* ── load posts (manage tab) ── */
+    async function loadPosts() {
+      var wrap    = document.getElementById('posts-list');
+      var loading = document.getElementById('posts-loading');
+      wrap.style.display = 'none';
+      loading.innerHTML  = '<span class="empty-state__icon">⏳</span>Loading posts…';
+      loading.style.display = 'block';
+
+      var result = await sb.from('posts').select('*').order('date', { ascending: false });
+      loading.style.display = 'none';
+
+      if (!result.data || result.data.length === 0) {
+        loading.innerHTML = '<span class="empty-state__icon">📭</span>No posts yet — add one in the New Post tab.';
+        loading.style.display = 'block';
+        return;
+      }
+
+      wrap.innerHTML = result.data.map(function(p) {
+        return '<div class="post-item" id="post-item-' + p.id + '">' +
+          (p.image_url
+            ? '<img class="post-item__thumb" src="' + p.image_url + '" alt="">'
+            : '<div class="post-item__thumb"></div>') +
+          '<div class="post-item__info">' +
+            '<div class="post-item__title">' + p.title + '</div>' +
+            '<div class="post-item__meta"><span class="post-item__cat">' + p.category + '</span>' + formatDate(p.date) + '</div>' +
+          '</div>' +
+          '<button class="btn btn--danger" onclick="deletePost(' + p.id + ')">Delete</button>' +
+        '</div>';
+      }).join('');
+      wrap.style.display = 'flex';
+    }
+
+    /* ── delete post ── */
+    window.deletePost = async function(id) {
+      if (!confirm('Delete this post? This cannot be undone.')) return;
+      await sb.from('posts').delete().eq('id', id);
+      var el = document.getElementById('post-item-' + id);
+      if (el) el.remove();
+    };
+
+    /* set today's date as default */
+    document.getElementById('p-date').value = new Date().toISOString().split('T')[0];
+
+  }());
+  </script>
+</body>
+</html>

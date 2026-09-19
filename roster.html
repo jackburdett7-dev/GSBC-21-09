@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 Roster | Guildford Baseball & Softball Club</title>
+  <meta name="description" content="Current season roster for the Guildford Mavericks and Guildford Millers baseball teams. 2026 BBF season.">
+  <link rel="canonical" href="https://guildfordbaseball.co.uk/roster.html">
+  <meta property="og:title" content="2026 Roster — Guildford Baseball & Softball Club">
+  <meta property="og:url" content="https://guildfordbaseball.co.uk/roster.html">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/theme.css">
+  <style>
+    .team-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .team-tab {
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 2px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition);
+      background: var(--white);
+    }
+    .team-tab.active, .team-tab:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: rgba(200,0,37,0.05);
+    }
+    .roster-section { display: none; }
+    .roster-section.active { display: block; animation: fadeTab 0.3s ease forwards; }
+    @keyframes fadeTab { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    .player-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1.25rem;
+    }
+    .player-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+    }
+    .player-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .player-card__photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: var(--navy);
+    }
+    .player-card__photo--placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.3);
+      font-family: var(--font-display);
+    }
+    .player-card__body {
+      padding: 0.75rem 0.6rem 0.85rem;
+    }
+    .player-card__num {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--red);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.15rem;
+    }
+    .player-card__name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+    .roster-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .roster-meta p { color: var(--muted); font-size: 0.85rem; margin: 0; }
+
+    /* ------------------------------------------------------ trading cards --
+       The flip is a CSS transition the browser runs on the compositor; the
+       script only adds a class when a card comes into view. */
+    .player-card.tc { background: none; box-shadow: none; overflow: visible; border-radius: 0; transition: none; perspective: 900px; }
+    .player-card.tc:hover { transform: none; box-shadow: none; }
+    .tc__tilt { transform-style: preserve-3d; transform: rotateX(var(--ty, 0deg)) rotateY(var(--tx, 0deg)); transition: transform 180ms ease-out; }
+    .tc__in { position: relative; transform-style: preserve-3d; transform: rotateY(180deg); transition: transform 700ms cubic-bezier(.3,1.25,.5,1) var(--d, 0ms); }
+    .tc.is-up .tc__in { transform: rotateY(0deg); }
+    .tc--instant .tc__in { transition: none; }
+    .tc__front, .tc__back { backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: var(--radius-lg); overflow: hidden; }
+    .tc__front { position: relative; background: var(--white); box-shadow: 0 4px 18px rgba(66,11,24,.1); }
+    .tc__front::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 200ms;
+      background: linear-gradient(115deg, rgba(255,255,255,0) 30%, rgba(255,240,205,.45) 48%, rgba(255,255,255,0) 66%); background-size: 220% 100%; background-position: var(--sx, 50%) 0; }
+    .tc.is-tilt .tc__front::after { opacity: 1; }
+    .tc__back { position: absolute; inset: 0; transform: rotateY(180deg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem;
+      background: radial-gradient(120% 80% at 50% 30%, #5a0f1d 0%, #420b18 60%, #2e0813 100%); border: 3px solid #f3b53c; color: #f3b53c; }
+    .tc__back::before { content: ""; position: absolute; inset: 8px; border: 1px solid rgba(243,181,60,.35); border-radius: calc(var(--radius-lg) - 6px); }
+    .tc__back img { width: 46%; height: auto; border-radius: 6px; }
+    .tc__back b { font-family: var(--font-hero); font-weight: 900; font-size: 2.2rem; line-height: 1; }
+    .tc__back span { font-size: .62rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(247,239,228,.7); }
+    .roster-section.active { animation: none; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks logo">
+          <div class="nav__logo-text">Guildford Baseball &amp; Softball Club<span>Est. 1992</span></div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="roster.html">Roster</a></li>
+          <li><a href="juniors.html">Juniors</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="join.html" class="btn btn--primary btn--pulse nav__cta">Try it free</a>
+        <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav__mobile">
+    <a href="about.html">About</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="roster.html">Roster</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="history.html">History</a>
+    <a href="contact.html">Contact</a>
+    <a href="join.html" class="btn btn--primary">Try it free</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="page-hero page-hero--banner">
+    <div class="container fade-up">
+      <span class="overline" style="color: var(--gold);">2026 Season</span>
+      <h1>Club Roster</h1>
+      <p>Current registered players for the Guildford Mavericks and Guildford Millers.</p>
+    </div>
+  </div>
+
+  <!-- Roster -->
+  <section class="section section--white">
+    <div class="container">
+
+      <div class="team-tabs fade-up">
+        <button class="team-tab active" data-tab="mavericks">Mavericks &nbsp;<span style="font-size:0.75rem; background:var(--red); color:#fff; padding:0.1rem 0.5rem; border-radius:50px;">Div 3</span></button>
+        <button class="team-tab" data-tab="millers">Millers &nbsp;<span style="font-size:0.75rem; background:var(--navy); color:#fff; padding:0.1rem 0.5rem; border-radius:50px;">Div 5</span></button>
+      </div>
+
+      <!-- Mavericks -->
+      <div class="roster-section active" id="tab-mavericks">
+        <div class="roster-meta">
+          <p><strong>Guildford Mavericks</strong> — BBF Division 3 South</p>
+          <p>18 players &nbsp;·&nbsp; Season 2026</p>
+        </div>
+        <div class="player-grid stagger-parent">
+
+          <div class="player-card stagger-child">
+            <div class="player-card__photo--placeholder">CW</div>
+            <div class="player-card__body">
+              <div class="player-card__num">#2</div>
+              <div class="player-card__name">Chris Ward</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/diego_ansorena.webp" alt="Diego Ansorena" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#4</div>
+              <div class="player-card__name">Diego Ansorena</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/reuben_trundle.webp" alt="Reuben Trundle" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#6</div>
+              <div class="player-card__name">Reuben Trundle</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/kimi_hope.webp" alt="Kimi Hope" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#7</div>
+              <div class="player-card__name">Kimi Hope</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/jack_burdett.webp" alt="Jack Burdett" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#9</div>
+              <div class="player-card__name">Jack Burdett</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/will_frawley.webp" alt="Will Frawley" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#11</div>
+              <div class="player-card__name">Will Frawley</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/jordi_bottomley.webp" alt="Jordi Bottomley" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#12</div>
+              <div class="player-card__name">Jordi Bottomley</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/christian_schmidt.webp" alt="Christian Schmidt" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#13</div>
+              <div class="player-card__name">Christian Schmidt</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/liam_wong.webp" alt="Liam Wong" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#18</div>
+              <div class="player-card__name">Liam Wong</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/rolyn_perez.webp" alt="Rolyn Perez" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#22</div>
+              <div class="player-card__name">Rolyn Perez</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/steve_clarke.webp" alt="Steve Clarke" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#32</div>
+              <div class="player-card__name">Steve Clarke</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/harry_thomas.webp" alt="Harry Thomas" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#33</div>
+              <div class="player-card__name">Harry Thomas</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/oliver_wong.webp" alt="Oliver Wong" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#68</div>
+              <div class="player-card__name">Oliver Wong</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/sam_beckwith.webp" alt="Sam Beckwith" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#77</div>
+              <div class="player-card__name">Sam Beckwith</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/maurice_wong.webp" alt="Maurice Wong" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#85</div>
+              <div class="player-card__name">Maurice Wong</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/ben_stobart.webp" alt="Ben Stobart" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#86</div>
+              <div class="player-card__name">Ben Stobart</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/kieran_helps.webp" alt="Kieran Helps" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#87</div>
+              <div class="player-card__name">Kieran Helps</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/lee_bessent.webp" alt="Lee Bessent" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#88</div>
+              <div class="player-card__name">Lee Bessent</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Millers -->
+      <div class="roster-section" id="tab-millers">
+        <div class="roster-meta">
+          <p><strong>Guildford Millers</strong> — BBF Division 5</p>
+          <p>21 players &nbsp;·&nbsp; Season 2026</p>
+        </div>
+        <div class="player-grid stagger-parent">
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/jake_haggerty.webp" alt="Jake Haggerty" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#3</div>
+              <div class="player-card__name">Jake Haggerty</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/pascal_barras.webp" alt="Pascal Barras" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#5</div>
+              <div class="player-card__name">Pascal Barras</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/zander_flores.webp" alt="Zander Flores" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#6</div>
+              <div class="player-card__name">Zander Flores</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <div class="player-card__photo--placeholder">IC</div>
+            <div class="player-card__body">
+              <div class="player-card__num">#8</div>
+              <div class="player-card__name">Iuean Carney</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/charlie_dallimore_crook.webp" alt="Charlie Dallimore-Crook" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#10</div>
+              <div class="player-card__name">Charlie Dallimore-Crook</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/carl_beddow.webp" alt="Carl Beddow" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#17</div>
+              <div class="player-card__name">Carl Beddow</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/rob_wheeler.webp" alt="Rob Wheeler" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#20</div>
+              <div class="player-card__name">Rob Wheeler</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/aaron_beecher.webp" alt="Aaron Beecher" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#21</div>
+              <div class="player-card__name">Aaron Beecher</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/oliver_perez.webp" alt="Oliver Perez" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#23</div>
+              <div class="player-card__name">Oliver Perez</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/phill_nathan.webp" alt="Phill Nathan" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#26</div>
+              <div class="player-card__name">Phill Nathan</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <div class="player-card__photo--placeholder">HC</div>
+            <div class="player-card__body">
+              <div class="player-card__num">#27</div>
+              <div class="player-card__name">Harriet Clewlow</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <div class="player-card__photo--placeholder">AC</div>
+            <div class="player-card__body">
+              <div class="player-card__num">#28</div>
+              <div class="player-card__name">Andrew Cochrane</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/james_muller.webp" alt="James Muller" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#30</div>
+              <div class="player-card__name">James Muller</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/michael_burdett.webp" alt="Michael Burdett" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#34</div>
+              <div class="player-card__name">Michael Burdett</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/ben_burgess.webp" alt="Ben Burgess" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#35</div>
+              <div class="player-card__name">Ben Burgess</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/kieran_gill.webp" alt="Kieran Gill" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#36</div>
+              <div class="player-card__name">Kieran Gill</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/paddy_johnston.webp" alt="Paddy Johnston" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#43</div>
+              <div class="player-card__name">Paddy Johnston</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/brian_kendal.webp" alt="Brian Kendal" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#44</div>
+              <div class="player-card__name">Brian Kendal</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/joe_sim.webp" alt="Joe Sim" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#60</div>
+              <div class="player-card__name">Joe Sim</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/max_dubov.webp" alt="Max Dubov" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#69</div>
+              <div class="player-card__name">Max Dubov</div>
+            </div>
+          </div>
+
+          <div class="player-card stagger-child">
+            <img src="assets/roster-sm/chris_locke.webp" alt="Chris Locke" class="player-card__photo" decoding="async">
+            <div class="player-card__body">
+              <div class="player-card__num">#72</div>
+              <div class="player-card__name">Chris Locke</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Join CTA -->
+  <section class="cta-section cta-section--navy">
+    <div class="container fade-up">
+      <h2>Want to be on this roster?</h2>
+      <p>We welcome new players at all levels. Come to a Thursday evening training session and meet the squad.</p>
+      <div class="btn-group" style="justify-content: center;">
+        <a href="join.html" class="btn btn--outline">Try a free session</a>
+        <a href="contact.html" class="btn btn--outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks">
+          <p>Guildford's only baseball and softball club, playing and coaching since 1992 at Kings College, Surrey.</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.883v2.27h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a>
+            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Twitter/X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__heading">Club</div>
+          <ul class="footer__links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="join.html">Join the Club</a></li>
+            <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="roster.html">2026 Roster</a></li>
+            <li><a href="juniors.html">Junior Programme</a></li>
+            <li><a href="history.html">Season History</a></li>
+            <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+            <li><a href="news.html">Latest News</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Teams</div>
+          <ul class="footer__links">
+            <li><a href="about.html#teams">Guildford Mavericks</a></li>
+            <li><a href="about.html#teams">Guildford Millers</a></li>
+            <li><a href="about.html#teams">Gold Cats</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Contact</div>
+          <ul class="footer__links">
+            <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
+            <li><a href="contact.html">Get Directions</a></li>
+            <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+            <li><a href="docs.html">Club Docs &amp; Policies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved.</span>
+        <span class="footer__est">Est. 1992 &mdash; Guildford Mavericks</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <script src="js/main.js"></script>
+  <script>
+    document.querySelectorAll('.team-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.team-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.roster-section').forEach(s => s.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !window.IntersectionObserver) return;
+    var cards = [].slice.call(document.querySelectorAll('.player-card'));
+    // Build the two faces around each card's existing content. The grid's own
+    // fade-in (main.js) is switched off here: the flip is the entrance.
+    document.querySelectorAll('.player-grid.stagger-parent').forEach(function (g) { g.classList.remove('stagger-parent'); });
+    cards.forEach(function (c) {
+      c.classList.remove('stagger-child');
+      var team = c.closest('#tab-millers') ? 'Millers' : 'Mavericks';
+      var num = (c.querySelector('.player-card__num') || {}).textContent || '';
+      var front = document.createElement('div'); front.className = 'tc__front';
+      while (c.firstChild) front.appendChild(c.firstChild);
+      var tilt = document.createElement('div'); tilt.className = 'tc__tilt';
+      var inner = document.createElement('div'); inner.className = 'tc__in';
+      inner.appendChild(front);
+      inner.insertAdjacentHTML('beforeend', '<div class="tc__back" aria-hidden="true"><img src="assets/logo.jpg" alt="" width="232" height="160"><b>' + num + '</b><span>' + team + '</span></div>');
+      tilt.appendChild(inner); c.appendChild(tilt); c.classList.add('tc');
+    });
+    // Column of each card, so a row turns over left to right.
+    function cols(grid) { return getComputedStyle(grid).gridTemplateColumns.split(' ').length || 1; }
+    function up(c, delay) { c.style.setProperty('--d', delay + 'ms'); c.classList.add('is-up'); }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var c = e.target;
+        if (e.isIntersecting) {
+          var grid = c.parentNode, i = [].indexOf.call(grid.children, c);
+          up(c, (i % cols(grid)) * 70);
+        } else if (e.boundingClientRect.top > (e.rootBounds ? e.rootBounds.bottom : innerHeight)) {
+          c.classList.add('tc--instant'); c.classList.remove('is-up');       // face-down again, off screen
+          requestAnimationFrame(function () { c.classList.remove('tc--instant'); });
+        }
+      });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    cards.forEach(function (c) { io.observe(c); });
+    // Switching team deals the new side's cards, one after another.
+    document.querySelectorAll('.team-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var list = document.querySelectorAll('#tab-' + tab.dataset.tab + ' .player-card'), k = 0;
+        list.forEach(function (c) { c.classList.add('tc--instant'); c.classList.remove('is-up'); });
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          list.forEach(function (c) {
+            c.classList.remove('tc--instant');
+            var r = c.getBoundingClientRect();
+            if (r.top < innerHeight * 0.88 && r.bottom > 0) up(c, (k++) * 40);
+          });
+        }); });
+      });
+    });
+    // A desktop pointer tilts the card under it, with a sheen across the photo.
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      cards.forEach(function (c) {
+        var tilt = c.firstChild, front = c.querySelector('.tc__front');
+        c.addEventListener('pointermove', function (e) {
+          var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          tilt.style.setProperty('--tx', ((x - 0.5) * 14).toFixed(1) + 'deg'); tilt.style.setProperty('--ty', ((0.5 - y) * 10).toFixed(1) + 'deg');
+          front.style.setProperty('--sx', (100 - x * 100).toFixed(1) + '%'); c.classList.add('is-tilt');
+        });
+        c.addEventListener('pointerleave', function () { tilt.style.setProperty('--tx', '0deg'); tilt.style.setProperty('--ty', '0deg'); c.classList.remove('is-tilt'); });
+      });
+    }
+  })();
+  </script>
+<script src="js/theme.js" defer></script>
+</body>
+</html>

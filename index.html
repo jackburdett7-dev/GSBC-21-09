@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Play Baseball in Surrey | Guildford Baseball &amp; Softball Club</title>
+  <meta name="description" content="Join Guildford's only baseball and softball club. Two adult teams, Saturday junior sessions for ages 4 to 14, and your first training session is free. Est. 1992.">
+  <meta name="robots" content="noindex">
+  <meta property="og:title" content="Play Baseball in Surrey | Guildford Baseball &amp; Softball Club">
+  <meta property="og:image" content="https://guildfordbaseball.co.uk/assets/v2/slide.webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["SportsOrganization", "SportsClub"],
+    "name": "Guildford Baseball & Softball Club",
+    "alternateName": "Guildford Mavericks",
+    "sport": "Baseball",
+    "foundingDate": "1992",
+    "description": "Guildford's baseball and softball club since 1992. Two adult BBF teams, a Saturday junior programme for ages 4 to 14, and a free first training session for new players.",
+    "location": { "@type": "Place", "name": "Kings College, Guildford",
+      "address": { "@type": "PostalAddress", "streetAddress": "Southway", "addressLocality": "Guildford", "postalCode": "GU2 8DU", "addressCountry": "GB" } },
+    "subOrganization": [
+      { "@type": "SportsTeam", "name": "Guildford Mavericks", "sport": "Baseball", "memberOf": { "@type": "SportsOrganization", "name": "British Baseball Federation Division 3 South" } },
+      { "@type": "SportsTeam", "name": "Guildford Millers", "sport": "Baseball", "memberOf": { "@type": "SportsOrganization", "name": "British Baseball Federation Division 5 South/Central" } }
+    ],
+    "email": "michael.burdett1@outlook.com",
+    "sameAs": ["https://www.facebook.com/GuildfordMavs","https://x.com/GuildfordMavs","https://www.instagram.com/guildfordmavs/","https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA"]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="preload" as="image" href="assets/v2/hero-poster.webp" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollcraft.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/concept.css">
+  <style>
+    .sec { padding-block: clamp(4rem, 8vw, 7rem); }
+    .sec__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .sec__head h2 { margin: 0; font-size: clamp(2.8rem, 5.2vw, 5.2rem); }
+    .sec__head p { margin: .8rem 0 0; max-width: 38rem; color: var(--sc-ink-soft); line-height: 1.5; }
+    .on-paper .sec__head h2 { color: var(--cardinal); }
+    .btn--outline-cx { display: inline-flex; align-items: center; gap: .5rem; padding: .9em 1.3em; border: 2px solid currentColor; border-radius: 4px; font-weight: 700; font-size: .9rem; color: var(--sc-ink); }
+    .btn--outline-cx:hover { background: color-mix(in oklab, currentColor 10%, transparent); }
+
+    /* --------------------------------------------------------------- hero --
+       v3's full-bleed composition, without its pinned pitch. On load the photo
+       settles and the headline rises out of its masks; on the way out the
+       planes separate (background slowest, pitcher fastest, headline between). */
+    .hero6 { position: relative; height: 100vh; height: 100svh; min-height: 34rem; overflow: hidden; background: #2b2622; }
+    .hero6__stage { position: absolute; inset: 0; overflow: hidden; }
+    .hero__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transition: opacity 300ms var(--sc-ease-out); }
+    .is-live .hero__poster { opacity: 0; }
+    .plane--plate { z-index: 1; } .ball--hero { z-index: 4; } .plane--pitcher { z-index: 5; }
+    .hero__scrim-top { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: radial-gradient(125% 88% at 100% 0%, rgba(46,8,19,.88) 0%, rgba(46,8,19,.7) 34%, rgba(46,8,19,.3) 52%, rgba(46,8,19,0) 66%); }
+    .hero__scrim-low { position: absolute; inset: 0; z-index: 6; pointer-events: none;
+      background: radial-gradient(100% 76% at 0% 100%, rgba(46,8,19,.92) 0%, rgba(46,8,19,.74) 36%, rgba(46,8,19,0) 64%); }
+    .hero__title { position: absolute; z-index: 3; right: var(--sc-gutter); top: clamp(6.5rem, 15vh, 9rem); text-align: right; will-change: transform; }
+    .hero__h1 { margin: 0; font-size: clamp(3.6rem, 7.4vw, 8.6rem); color: #f7efe4; }
+    .hero__h1 .ln { display: block; overflow: hidden; padding-bottom: .05em; }
+    .hero__h1 .ln > span { display: block; }
+    .hero__h1 .gold { display: inline; color: var(--sc-accent); }
+    .hero__lower { position: absolute; z-index: 7; left: var(--sc-gutter); bottom: clamp(2.2rem, 7vh, 4.5rem); width: min(26.5rem, 31vw); }
+    .hero__sub { margin: 0 0 1.25rem; font-size: 1.08rem; line-height: 1.5; font-weight: 500; }
+    .hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.2rem; }
+    .hero__label { margin: 1.4rem 0 0; padding-top: 1rem; border-top: 1px solid rgba(247,239,228,.2); font-size: .8rem; font-weight: 600; letter-spacing: .05em; color: var(--sc-ink-soft); }
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .hero6 .ln > span { transform: translateY(106%); }
+      html.js .hero6 .hero__lower > * { opacity: 0; transform: translateY(16px); }
+      html.js .hero6.is-in .ln > span { transform: none; transition: transform 1000ms cubic-bezier(.22,1,.36,1) var(--d, 0ms); }
+      html.js .hero6.is-in .hero__lower > * { opacity: 1; transform: none; transition: opacity 700ms var(--sc-ease-out) var(--d, 0ms), transform 700ms var(--sc-ease-out) var(--d, 0ms); }
+    }
+
+    /* --------------------------------------------------------- stat bar -- */
+    .stats { background: #2e0813; border-top: 4px solid var(--sc-accent); }
+    .stats__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .stat { padding: 2rem 1.5rem 1.8rem; border-right: 1px solid rgba(247,239,228,.1); }
+    .stat:last-child { border-right: 0; }
+    .stat b { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3rem, 5vw, 4.4rem); line-height: .9; color: var(--sc-accent); font-variant-numeric: lining-nums tabular-nums; }
+    .stat span { display: block; margin-top: .5rem; font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sc-ink-soft); }
+
+    /* ---------------------------------------------------------- right now --
+       v3's band: where the season stands, the next home games, and the
+       noticeboard (the live site's club news, with its pictures). */
+    .now { padding-block: clamp(3rem, 5vw, 4.4rem); }
+    .now__grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+    .now__kicker { margin: 0 0 .45rem; font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
+    .now__status { margin: 0; font-size: clamp(1.15rem, 1.6vw, 1.45rem); line-height: 1.4; font-weight: 600; text-wrap: pretty; }
+    .now__when { margin: .45rem 0 0; font-size: .92rem; color: var(--sc-ink-soft); }
+    .now__links { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.4rem; margin-top: 1.5rem; }
+    .cd { display: flex; gap: 1.4rem; margin-top: 1.3rem; }
+    .cd div { text-align: center; }
+    .cd b { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: 3rem; line-height: .9; color: var(--sc-accent); font-variant-numeric: tabular-nums; }
+    .cd span { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sc-ink-soft); }
+    .now__fx { list-style: none; margin: 1.5rem 0 1.2rem; padding: 0; }
+    .now__fx li { display: flex; gap: 1rem; padding-block: .6rem; border-top: 1px solid rgba(247,239,228,.16); font-size: .95rem; }
+    .now__fx time { flex: none; width: 7.5rem; color: var(--sc-ink-soft); }
+    .posts { list-style: none; margin: 0; padding: 0; }
+    .posts a { display: grid; grid-template-columns: 6.5rem 1fr auto; gap: 1.2rem; align-items: center; padding-block: .8rem; border-top: 1px solid rgba(247,239,228,.16); color: var(--sc-ink); }
+    .posts li:last-child a { border-bottom: 1px solid rgba(247,239,228,.16); }
+    .posts img { width: 6.5rem; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--r); background: #5a0f1d; }
+    .posts time { display: block; margin-bottom: .2rem; font-size: .78rem; color: var(--sc-ink-soft); }
+    .posts b { font-weight: 650; font-size: 1.04rem; line-height: 1.35; }
+    @media (hover: hover) and (pointer: fine) { .posts a:hover b, .posts a:hover .arrow { color: var(--sc-accent); } }
+    .now__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.4rem; }
+    .follow { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+    .follow > span { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sc-ink-soft); margin-right: .3rem; }
+    .follow a { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .9rem; border: 1px solid rgba(247,239,228,.28); border-radius: 4px; font-size: .85rem; font-weight: 600; color: var(--sc-ink); }
+    .follow a:hover { border-color: var(--sc-accent); color: var(--sc-accent); }
+    .follow svg { width: 15px; height: 15px; fill: currentColor; }
+
+    /* ------------------------------------------------------------ our club --
+       v3's tiles: the club, year one, and the season-by-season archive. */
+    .club { padding-block: clamp(4rem, 8vw, 7rem); }
+    .club .club__h { margin: 0 0 2.4rem; font-size: clamp(2.8rem, 5vw, 5rem); color: var(--cardinal); max-width: 16ch; }
+    .club__grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(1.5rem, 3vw, 2.5rem); }
+    .tile { display: block; color: inherit; border-radius: var(--r); overflow: hidden; position: relative; }
+    .tile__body { padding: 1.6rem 1.8rem 1.8rem; }
+    .tile h3 { margin: 0 0 .7rem; font-size: clamp(1.9rem, 3vw, 2.8rem); }
+    .tile p { margin: 0 0 1rem; line-height: 1.55; }
+    .tile .go { font-weight: 700; font-size: .9rem; color: #f3b53c; }
+    .tile--club { background: #2e0813; color: #f7efe4; display: flex; flex-direction: column; }
+    .tile--club img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 28%; }
+    .tile--club p { color: #e3d0c3; font-size: 1.05rem; }
+    .club__side { display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); grid-template-rows: auto 1fr; }
+    .tile--1992 { background: #5a0f1d; color: #f7efe4; padding: 1.8rem; }
+    .tile--1992 .yr { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(6rem, 11vw, 10rem); line-height: .78; color: #f3b53c; margin-bottom: 1rem; }
+    .tile--seasons { background: #fff8ee; border: 1px solid var(--sc-hairline); display: grid; grid-template-columns: 1fr 1fr; }
+    .tile--seasons img { width: 100%; height: 100%; object-fit: cover; min-height: 14rem; }
+    .tile--seasons .tile__body { align-self: center; }
+    .tile--seasons .go { color: var(--sc-accent); }
+    @media (hover: hover) and (pointer: fine) { .tile { transition: transform 180ms var(--sc-ease-out), box-shadow 180ms var(--sc-ease-out); }
+      .tile:hover { transform: translateY(-3px); box-shadow: var(--sc-e2); } }
+
+    /* ---------------------------------------------------------- 2025 season -- */
+    .s25 h2 { margin: 0 0 1.4rem; font-size: clamp(2.6rem, 4.6vw, 4.6rem); }
+    .s25__grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: .8rem; }
+    .s25__grid figure { position: relative; margin: 0; overflow: hidden; border-radius: var(--r); }
+    .s25__grid figure:first-child { grid-row: span 2; }
+    .s25__grid img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 3; }
+    .s25__grid figure:first-child img { aspect-ratio: auto; }
+    .s25__grid figcaption { position: absolute; left: .7rem; bottom: .7rem; font-size: .74rem; font-weight: 600; background: rgba(33,5,16,.84); padding: .22rem .55rem; border-radius: 3px; }
+    .s25 .link { display: inline-block; margin-top: 1.2rem; }
+
+    /* ---------------------------------------------------- get involved -- */
+    .paths { display: grid; grid-template-columns: 1fr 1.15fr; min-height: 90vh; }
+    .paths__photo { position: relative; margin: 0; overflow: hidden; min-height: 55vh; }
+    .paths__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38% 50%; }
+    .paths__photo figcaption { position: absolute; left: 1rem; bottom: 1rem; font-size: .76rem; font-weight: 600; background: rgba(46,8,19,.84); padding: .25rem .55rem; border-radius: 3px; }
+    .paths__body { padding: clamp(3.5rem, 7vw, 6rem) var(--sc-gutter); display: flex; flex-direction: column; justify-content: center; }
+    .paths__body h2 { margin: 0 0 2rem; font-size: clamp(2.8rem, 5vw, 5rem); }
+    .path { display: grid; grid-template-columns: minmax(8rem, 11rem) 1fr auto; gap: 1.4rem; align-items: start; padding-block: 1.4rem; border-top: 1px solid rgba(247,239,228,.18); color: var(--sc-ink); }
+    .path:last-of-type { border-bottom: 1px solid rgba(247,239,228,.18); }
+    .path strong { display: block; font-family: var(--sc-font-display); font-weight: 800; text-transform: uppercase; font-size: 1.7rem; line-height: .95; color: var(--sc-accent); }
+    .path small { display: block; margin-top: .35rem; font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--sc-ink-soft); }
+    .path p { margin: 0; line-height: 1.55; color: var(--sc-ink-soft); }
+    .path .go { font-weight: 700; font-size: .88rem; white-space: nowrap; padding-top: .15rem; }
+    @media (hover: hover) and (pointer: fine) { .path:hover .go { color: var(--sc-accent); } }
+    .paths__note { margin: 1.6rem 0 0; font-size: .88rem; line-height: 1.6; color: var(--sc-ink-soft); }
+
+    /* ------------------------------------------------------- the diamond -- */
+    .dia__grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; }
+    .dia h2 { margin: 0 0 1.4rem; font-size: clamp(3rem, 5.4vw, 5.4rem); }
+    .dia p { margin: 0 0 1.4rem; font-size: 1.08rem; line-height: 1.6; color: var(--sc-ink-soft); }
+    .dia__specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.6rem; margin: 1.8rem 0 2rem; }
+    .dia__specs div { border-top: 2px solid rgba(243,181,60,.55); padding-top: .6rem; }
+    .dia__specs b { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: 2.2rem; line-height: 1; color: var(--sc-accent); }
+    .dia__specs span { display: block; margin-top: .3rem; font-size: .82rem; font-weight: 600; color: var(--sc-ink-soft); }
+    .dia__ctas { display: flex; flex-wrap: wrap; gap: .9rem 1rem; }
+    .dia__map { position: relative; aspect-ratio: 4 / 3.4; border-radius: var(--r); overflow: hidden; outline: 1px solid rgba(243,181,60,.4); outline-offset: 5px; background: #2e0813; }
+    .dia__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .dia__map + p { margin: 1rem 0 0; font-size: .82rem; color: var(--sc-ink-soft); }
+    .dia__plan { position: relative; margin: 0 0 1.6rem; border-radius: var(--r); overflow: hidden; outline: 1px solid rgba(243,181,60,.4); outline-offset: 5px; background: #2e0813; }
+    .dia__plan svg { display: block; width: 100%; height: auto; aspect-ratio: 5 / 4; }
+    .dia__plan figcaption { position: absolute; left: .8rem; top: .8rem; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: rgba(26,6,12,.84); color: #f7efe4; padding: .3rem .6rem; border-radius: 3px; }
+    .dia__map { aspect-ratio: 16 / 7 !important; }
+    .dia p.cx-label, .jr p.cx-label { margin: 0 0 .9rem; font-size: .74rem; line-height: 1.6; color: var(--sc-accent); }
+
+    /* ---------------------------------------------------------- juniors -- */
+    .jr__grid { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+    .jr h2 { margin: 0 0 1.5rem; font-size: clamp(2.8rem, 5vw, 5rem); }
+    .jr p { margin: 0 0 1.1rem; font-size: 1.1rem; line-height: 1.6; max-width: 36rem; }
+    .jr .btn { margin-top: 1rem; }
+    .jr figure { margin: 0; }
+    .jr img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r); box-shadow: var(--sc-e3); }
+    .jr figcaption { margin-top: .6rem; font-size: .8rem; color: var(--sc-ink-soft); }
+
+    /* -------------------------------------------------------- committee -- */
+    .cm__grid { display: grid; grid-template-columns: 1.15fr 2fr; gap: clamp(1.5rem, 3vw, 2.5rem); align-items: stretch; }
+    .cm-lead { background: #5a0f1d; border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; }
+    .cm-lead img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+    .cm-lead div { padding: 1.4rem 1.5rem 1.6rem; }
+    .cm-lead h3 { margin: 0 0 .5rem; font-size: 2.1rem; }
+    .cm-lead ul { list-style: none; margin: 0 0 .9rem; padding: 0; }
+    .cm-lead li { font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--sc-accent); line-height: 1.7; }
+    .cm-lead p { margin: 0; font-size: .95rem; line-height: 1.55; color: var(--sc-ink-soft); }
+    .cm-rest { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.6rem); list-style: none; margin: 0; padding: 0; align-content: start; }
+    .cm-rest img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r); box-shadow: var(--sc-e2); background: #5a0f1d; }
+    .cm-rest h3 { margin: .8rem 0 .3rem; font-family: var(--sc-font-text); text-transform: none; font-weight: 700; font-size: 1.05rem; letter-spacing: 0; line-height: 1.3; }
+    .cm-rest p { margin: 0; font-size: .82rem; line-height: 1.45; color: var(--sc-ink-soft); }
+
+    /* ------------------------------------------------------------ people -- */
+    .people__stage { display: flex; align-items: center; }
+    .faces { display: flex; align-items: center; gap: clamp(1rem, 1.8vw, 1.6rem); padding-inline: var(--sc-gutter); width: max-content; }
+    .faces > * { flex: none; }
+    .faces__lead { width: clamp(17rem, 27vw, 25rem); padding-right: 1rem; }
+    .faces__lead h2 { margin: 0 0 1.1rem; font-size: clamp(3rem, 5.6vw, 5.6rem); }
+    .faces__lead p { margin: 0 0 1.4rem; color: var(--sc-ink-soft); line-height: 1.5; }
+    .faces__col { display: grid; gap: clamp(1rem, 1.8vw, 1.6rem); width: clamp(10.5rem, 14vw, 13.5rem); }
+    .face { margin: 0; }
+    .face img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r); box-shadow: var(--sc-e2); background: #5a0f1d; }
+    .face figcaption { margin-top: .5rem; font-size: .8rem; line-height: 1.25; }
+    .face figcaption b { font-family: var(--sc-font-display); font-weight: 800; font-size: 1.05rem; color: #f3b53c; margin-right: .35rem; }
+    .face figcaption small { display: block; color: var(--sc-ink-soft); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
+    .faces__note { width: clamp(15rem, 20vw, 19rem); }
+    .faces__note p { margin: 0 0 1rem; font-size: 1.3rem; line-height: 1.3; font-weight: 600; }
+    @media (prefers-reduced-motion: no-preference) {
+      .faces > * { --s: clamp(0, calc(var(--sc-p, 0) * 11 - var(--i, 0) + 2), 1); opacity: max(.5, var(--s)); transform: translateY(calc((1 - var(--s)) * 24px)); }
+    }
+
+    /* ------------------------------------------------------------ close -- */
+    .close__stage { background: #2b2622 url(assets/v2/hero-poster.webp) 72% 60% / cover; }
+    .plane--cplate { z-index: 1; } .ball--close { z-index: 2; }
+    .close__scrim { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      background: linear-gradient(90deg, rgba(46,8,19,.95) 0%, rgba(46,8,19,.9) 32%, rgba(46,8,19,.62) 45%, rgba(46,8,19,0) 60%); }
+    .close__copy { position: absolute; z-index: 4; left: var(--sc-gutter); top: 54%; translate: 0 -50%; width: min(30rem, 35vw); }
+    .close__h { margin: 0 0 1.4rem; font-size: clamp(5rem, 12vw, 12rem); }
+    .close__p { margin: 0 0 2rem; font-size: 1.2rem; line-height: 1.45; font-weight: 500; max-width: 30rem; }
+    .close__ctas { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; }
+    .shake { animation: shake 190ms var(--sc-ease-out); }
+    @keyframes shake { 0% { translate: 0 0; } 30% { translate: 3px 1px; } 60% { translate: -2px -1px; } 100% { translate: 0 0; } }
+
+    /* ------------------------------------------------- mobile join bar -- */
+    .joinbar { position: fixed; z-index: 1005; left: .75rem; right: .75rem; bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); display: none; align-items: center; gap: .8rem;
+               padding: .7rem .7rem .7rem 1rem; background: #2e0813; border: 1px solid rgba(243,181,60,.4); border-radius: 6px; box-shadow: 0 10px 30px rgba(10,2,5,.45);
+               transform: translateY(140%); transition: transform 280ms var(--sc-ease-out); }
+    .joinbar.is-on { transform: none; }
+    .joinbar p { margin: 0; flex: 1; font-size: .8rem; line-height: 1.3; }
+    .joinbar p b { display: block; font-size: .9rem; }
+    .joinbar .btn { padding: .65rem .9rem; font-size: .8rem; }
+    .joinbar button { flex: none; width: 32px; height: 32px; color: var(--sc-ink-soft); font-size: 1.1rem; }
+
+    @media (max-width: 960px) {
+      .dia__grid, .jr__grid, .cm__grid, .now__grid, .club__grid { grid-template-columns: 1fr; }
+      .paths { grid-template-columns: 1fr; min-height: 0; }
+      .paths__photo { height: 55vh; }
+      .cm-rest { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .stats__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(247,239,228,.1); }
+      .path { grid-template-columns: 1fr; gap: .5rem; }
+      .s25__grid { grid-template-columns: 1fr; grid-template-rows: none; }
+      .s25__grid figure:first-child { grid-row: auto; }
+      .s25__grid figure:first-child img { aspect-ratio: 4 / 3; }
+      .faces__lead { width: 78vw; }
+      .faces__col { width: 42vw; }
+      .close__scrim { background: linear-gradient(180deg, rgba(46,8,19,.95) 0%, rgba(46,8,19,.86) 40%, rgba(46,8,19,.2) 60%, rgba(46,8,19,0) 68%); }
+      .close__copy { top: 6.5rem; translate: none; width: auto; right: var(--sc-gutter); }
+      .close__h { font-size: clamp(4rem, 19vw, 5.6rem); margin-bottom: .9rem; }
+      .close__p { font-size: 1rem; margin-bottom: 1.2rem; }
+      .joinbar { display: flex; }
+    }
+    @media (max-width: 860px) {
+      .hero__title { z-index: 8; left: var(--sc-gutter); right: var(--sc-gutter); top: auto; bottom: 15.5rem; text-align: left; }
+      .hero__h1 { font-size: clamp(3.2rem, 15.5vw, 5rem); }
+      .hero__lower { width: auto; right: var(--sc-gutter); bottom: 1.8rem; }
+      .hero__sub { font-size: .95rem; margin-bottom: 1rem; }
+      .hero__label { display: none; }
+      .hero__scrim-top { background: linear-gradient(180deg, rgba(46,8,19,.75) 0%, rgba(46,8,19,0) 16%); }
+      .hero__scrim-low { background: linear-gradient(0deg, rgba(46,8,19,.95) 0%, rgba(46,8,19,.84) 40%, rgba(46,8,19,.35) 58%, rgba(46,8,19,0) 70%); }
+      .tile--seasons { grid-template-columns: 1fr; }
+      .posts a { grid-template-columns: 5rem 1fr; }
+      .posts img { width: 5rem; }
+      .posts .arrow { display: none; }
+    }
+    html.no-js .plane, html.no-js .ball, html.no-js .joinbar { display: none; }
+  </style>
+</head>
+<body class="cx">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="sc-grain" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Main">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks logo">
+          <div class="nav__logo-text">Guildford Baseball &amp; Softball Club<span>Est. 1992</span></div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="roster.html">Roster</a></li>
+          <li><a href="juniors.html">Juniors</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="join.html" class="btn btn--primary nav__cta">Try it free</a>
+        <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav__mobile">
+    <a href="about.html">About</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="roster.html">Roster</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="history.html">History</a>
+    <a href="contact.html">Contact</a>
+    <a href="join.html" class="btn btn--primary">Try it free</a>
+  </div>
+
+<main id="main">
+
+  <!-- ============================================================= HERO -->
+  <section id="home" class="hero6" aria-labelledby="h1">
+    <div class="hero6__stage">
+      <img class="hero__poster" src="assets/v2/hero-poster.webp" alt="A Guildford pitcher follows through, the ball in the air on its way to the batter and catcher at home plate" width="1920" height="1277" fetchpriority="high">
+      <div class="plane plane--plate" aria-hidden="true"><img src="assets/v2/hero-plate.webp" alt="" width="2560" height="1702"></div>
+      <div class="hero__scrim-top" aria-hidden="true"></div>
+      <div class="hero__title">
+        <h1 class="sc-display hero__h1" id="h1"><span class="ln"><span style="--d:120ms">Play baseball</span></span> <span class="ln"><span style="--d:230ms">in <span class="gold">Surrey.</span></span></span></h1>
+      </div>
+      <img class="ball ball--hero" src="assets/v2/hero-ball.webp" alt="" width="144" height="144" aria-hidden="true">
+      <div class="plane plane--pitcher" aria-hidden="true"><img src="assets/v2/hero-pitcher.webp" alt="" width="806" height="1228"></div>
+      <div class="hero__scrim-low" aria-hidden="true"></div>
+      <div class="hero__lower">
+        <p class="hero__sub" style="--d:480ms">Join Guildford's only baseball club: two adult teams, Saturday junior sessions, and your first training session is free.</p>
+        <div class="hero__ctas" style="--d:580ms">
+          <a class="btn btn--primary" href="join.html">Try a free session</a>
+          <a class="link" href="about.html">Our story</a>
+        </div>
+        <p class="hero__label" style="--d:680ms">Kings College, Guildford &middot; Thursday training &middot; Sunday fixtures</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= STAT BAR -->
+  <section class="stats" aria-label="The club in numbers">
+    <div class="cx-wrap stats__grid">
+      <div class="stat"><b data-sc-count="0 34">34</b><span>Years playing</span></div>
+      <div class="stat"><b>2</b><span>Adult teams</span></div>
+      <div class="stat"><b data-sc-count="0 39">39</b><span>Players on the 2026 roster</span></div>
+      <div class="stat"><b>1</b><span>Diamond of our own</span></div>
+    </div>
+  </section>
+
+  <!-- ======================================================== RIGHT NOW -->
+  <section class="now g-900" aria-labelledby="now-h">
+    <div class="cx-wrap now__grid" data-sc-in data-sc-stagger="70">
+      <div>
+        <h2 class="cx-label" id="now-h">Right now</h2>
+        <div data-fixtures>
+          <p class="now__status">The season runs from April to August, with home games on Sundays at Kings College.</p>
+          <div class="now__links"><a class="link" href="schedule.html">Fixtures &amp; results <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
+        </div>
+      </div>
+      <div>
+        <h2 class="cx-label">From the noticeboard</h2>
+        <ul class="posts" data-news><li><a href="news.html"><span></span><span><b>Club news, match reports and announcements</b></span></a></li></ul>
+        <div class="now__foot">
+          <a class="link" href="news.html">All news <span class="arrow" aria-hidden="true">&rarr;</span></a>
+          <div class="follow"><span>Follow us</span>
+          <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.69.24 2.69.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>Facebook</a>
+          <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg>Instagram</a>
+          <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24H16.17l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25H8.08l4.25 5.62 5.91-5.62zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg>X</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================= OUR CLUB -->
+  <section id="club" class="club on-paper" aria-labelledby="club-h">
+    <div class="cx-wrap">
+      <div data-sc-in>
+        <p class="cx-label">Our club</p>
+        <h2 class="sc-display club__h" id="club-h">Surrey's baseball community since 1992.</h2>
+      </div>
+      <div class="club__grid" data-sc-in data-sc-stagger="80">
+        <a class="tile tile--club" href="about.html">
+          <img src="assets/v2/club-2025.webp" alt="A Guildford catcher talks with two teammates on the field" width="1081" height="1000" loading="lazy">
+          <div class="tile__body">
+            <p>We've been building community around baseball in Guildford for over three decades, and we built our own diamond at Kings College. Whether you've never held a bat or you've played for years, you're welcome here.</p>
+            <p>The Mavericks play in the British Baseball Federation's Division 3 South and the Millers in Division 5, and the junior programme runs every Saturday morning for ages 4 to 14.</p>
+            <span class="go">Read our story <span class="arrow" aria-hidden="true">&rarr;</span></span>
+          </div>
+        </a>
+        <div class="club__side">
+          <a class="tile tile--1992" href="about.html#first">
+            <span class="yr" aria-hidden="true">1992</span>
+            <h3>Year one.</h3>
+            <p>Two small teams became the Guildford Mavericks. The first game was that April at Waltham Abbey: a loss, in the rain.</p>
+            <span class="go">How it began <span class="arrow" aria-hidden="true">&rarr;</span></span>
+          </a>
+          <a class="tile tile--seasons" href="history.html">
+            <img src="assets/v2/s2025-cardiff.webp" alt="A Guildford fielder at a base during the 2025 play-off against Cardiff" width="1000" height="969" loading="lazy">
+            <div class="tile__body">
+              <h3>Season by season.</h3>
+              <p>Every season since 2007 written up, back to the first game in 1992.</p>
+              <span class="go">Club history <span class="arrow" aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== 2025 SEASON -->
+  <section class="sec s25 g-800" aria-labelledby="s25-h">
+    <div class="cx-wrap">
+      <p class="cx-label" data-sc-in>On the diamond</p>
+      <h2 class="sc-display" id="s25-h" data-sc-in>The 2025 season.</h2>
+      <div class="s25__grid" data-sc-in data-sc-stagger="80">
+        <figure><img src="assets/v2/s2025-tonbridge.webp" alt="Mavericks at Tonbridge, June 2025" width="1491" height="1000" loading="lazy"><figcaption>Mavericks at Tonbridge</figcaption></figure>
+        <figure><img src="assets/v2/s2025-hurricanes.webp" alt="Millers v Hurricanes, May 2025" width="1069" height="1000" loading="lazy"><figcaption>Millers v Hurricanes</figcaption></figure>
+        <figure><img src="assets/v2/s2025-brighton.webp" alt="Mavericks at Brighton, April 2025" width="1214" height="1000" loading="lazy"><figcaption>Mavericks at Brighton</figcaption></figure>
+      </div>
+      <a class="link" href="gallery.html">See the full gallery <span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </div>
+  </section>
+
+  <!-- ===================================================== GET INVOLVED -->
+  <section id="involved" class="paths g-700" aria-labelledby="paths-h">
+    <figure class="paths__photo" data-sc-reveal="right" data-sc-reveal-at="0.02 0.3">
+      <picture>
+        <source media="(max-width: 860px)" srcset="assets/v2/slide-m.webp">
+        <img src="assets/v2/slide.webp" alt="A Guildford fielder takes the throw as the runner slides into the base, dirt flying" width="2400" height="1467" loading="lazy">
+      </picture>
+      <figcaption>Guildford in the field</figcaption>
+    </figure>
+    <div class="paths__body" data-sc-in data-sc-stagger="70">
+      <p class="cx-label">Get involved</p>
+      <h2 class="sc-display" id="paths-h">There's a team for you.</h2>
+      <a class="path" href="join.html"><span><strong>Brand new</strong><small>Rookie &middot; Millers</small></span><p>Start with a free session on a Thursday evening. Rookie membership (&pound;125) gets you training and a place in the Millers, our BBF Division 5 team for players finding their feet.</p><span class="go">Try a free session <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+      <a class="path" href="join.html"><span><strong>Played before</strong><small>Mavericks &middot; Div 3</small></span><p>The Mavericks play in BBF Division 3 South, with Thursday training and Sunday games at Kings College. If you've played before, come and try out.</p><span class="go">Join the Mavericks <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+      <a class="path" href="juniors.html"><span><strong>Juniors</strong><small>Ages 4 to 14</small></span><p>Saturday mornings at Kings College: junior baseball for ages 8 to 14 and Teeball for 4 to 7. The first two sessions are free and no kit is needed.</p><span class="go">Junior programme <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+      <p class="paths__note">Adult training: Thursdays, 6:30 to 8:30pm, May to August, with pre-season from January. League games: Sundays, April to August.</p>
+    </div>
+  </section>
+
+  <!-- ======================================================= THE DIAMOND -->
+  <section id="diamond" class="sec dia g-900" aria-labelledby="dia-h">
+    <div class="cx-wrap dia__grid">
+      <div data-sc-in data-sc-stagger="70">
+        <p class="cx-label">Kings College, Guildford</p>
+        <h2 class="sc-display" id="dia-h">We built our own diamond.</h2>
+        <p>A full-size diamond at Kings College: base paths 90 feet apart, a pitcher's mound 60 feet 6 inches from home plate, and a 7-metre backstop 45 feet behind home. The club raised the money and did the dirt work itself, and the ground opened for the 2023 season.</p>
+        <div class="dia__specs">
+          <div><b>90 ft</b><span>Between the bases</span></div>
+          <div><b>7 m</b><span>Backstop fence</span></div>
+          <div><b>2</b><span>Batting cages, added 2024</span></div>
+          <div><b>2023</b><span>First season at Kings College</span></div>
+        </div>
+        <div class="dia__ctas"><a class="btn btn--primary" href="about.html#ground">How it was built</a><a class="btn--outline-cx" href="contact.html">Get directions</a></div>
+      </div>
+      <div data-sc-in>
+        <figure class="dia__plan">
+          <svg viewBox="414 437 600 480" role="img" aria-label="Kings College from the air in 2021, with the diamond the club built drawn onto it: bases 90 feet apart, the mound, the dirt cut-outs and the backstop behind home plate">
+            <image href="assets/v2/field-2021-graded.webp" x="0" y="0" width="1253" height="909"/>
+            <rect x="0" y="0" width="1253" height="909" fill="#2e0813" opacity=".22"/>
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M799 659 L341 325 M799 659 L480 1099" stroke="#f7efe4" stroke-width="1.6" opacity=".9"/>
+              <path d="M799.4 737.5 L702.8 815.2 M775.5 584.1 L659.9 539.4" stroke="#f7efe4" stroke-width="1.8" opacity=".75"/>
+              <path d="M852.5 694.7 L804.2 733.5 M839.2 608.8 L781.4 586.4" stroke="#f7efe4" stroke-width="2.4"/>
+              <path d="M852.5 694.7 L886.4 667.4 L886.4 667.4 L879.7 624.5 L879.7 624.5 L839.2 608.8" stroke="#f7efe4" stroke-width="3.2"/>
+            </g>
+            <g fill="#b8733f" fill-opacity=".85" stroke="#f3b53c" stroke-width="1.1">
+              <circle cx="799" cy="659" r="24.6"/><circle cx="686" cy="676.6" r="18.9"/><path d="M775.4 667.4 L774.0 658.1 L704.0 669.0 L705.4 678.3 Z"/><path d="M662.0 559.0 L642.2 544.5 A24.6 24.6 0 0 1 676.6 539.2 Z"/><path d="M561.0 696.0 L546.4 715.8 A24.6 24.6 0 0 1 541.2 681.5 Z"/><path d="M699.0 797.0 L684.6 816.9 A24.6 24.6 0 0 0 718.8 811.5 Z"/>
+            </g>
+            <path d="M799 659 L662 559 L561 696 L699 797 Z" fill="none" stroke="#f3b53c" stroke-width="2.6" stroke-linejoin="round"/>
+            <g fill="#f7efe4"><rect x="656" y="553" width="12" height="12" transform="rotate(45 662 559)"/><rect x="555" y="690" width="12" height="12" transform="rotate(45 561 696)"/><rect x="693" y="791" width="12" height="12" transform="rotate(45 699 797)"/><path d="M794 654 h10 v6 l-5 5 l-5 -5 z"/></g>
+          </svg>
+          <figcaption>Kings College from the air, with the diamond</figcaption>
+        </figure>
+        <div class="dia__map"><iframe src="https://maps.google.com/maps?q=Kings+College,+Southway,+Guildford,+GU2+8DU&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map of Kings College, Southway, Guildford"></iframe></div>
+        <p>Kings College, Southway, Guildford GU2 8DU. Park off Park Barn Way, at the back of the school.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== JUNIORS -->
+  <section class="sec jr g-700" aria-labelledby="jr-h">
+    <div class="cx-wrap jr__grid">
+      <div data-sc-in data-sc-stagger="70">
+        <p class="cx-label">Junior programme</p>
+        <h2 class="sc-display" id="jr-h">Saturday morning baseball for kids in Guildford.</h2>
+        <p>Boys and girls aged 4 to 14: junior baseball for 8 to 14 and Teeball for 4 to 7, coached by experienced club members every Saturday morning at Kings College.</p>
+        <p>No experience or kit needed. Your child's first two sessions are free, and the &pound;100 season fee includes a club cap and t-shirt.</p>
+        <a class="btn btn--primary" href="juniors.html">Junior programme</a>
+      </div>
+      <figure data-sc-in>
+        <img src="assets/v2/juniors-2024.webp" alt="A coach and a young player grinning with their bats at junior pre-season training" width="750" height="742" loading="lazy">
+        <figcaption>Junior pre-season, 2024.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ======================================================== COMMITTEE -->
+  <section id="committee" class="sec cm g-800" aria-labelledby="cm-h">
+    <div class="cx-wrap">
+      <div class="sec__head" data-sc-in data-sc-stagger="60">
+        <div><p class="cx-label">The people</p><h2 class="sc-display" id="cm-h">The committee behind the club.</h2><p>Volunteers, coaches and club staff: the people who keep Guildford baseball running.</p></div>
+      </div>
+      <div class="cm__grid">
+        <article class="cm-lead" data-sc-in>
+          <img src="assets/v2/face-michael_burdett.webp" alt="Michael Burdett" width="720" height="720" loading="lazy">
+          <div>
+            <h3>Michael Burdett</h3>
+            <ul><li>General manager</li><li>Head coach</li><li>Junior programme manager</li><li>Treasurer and secretary</li></ul>
+            <p>Running the club day to day since 2008, from building the Kings College diamond to coaching the junior programme every Saturday.</p>
+          </div>
+        </article>
+        <ul class="cm-rest" data-sc-in data-sc-stagger="60">
+          <li><img src="assets/v2/face-ben_stobart.webp" alt="Ben Stobart" width="720" height="720" loading="lazy"><h3>Ben Stobart</h3><p>Mavericks manager and coach &middot; Facilities manager</p></li>
+          <li><img src="assets/v2/face-chris_locke.webp" alt="Chris Locke" width="720" height="720" loading="lazy"><h3>Chris Locke</h3><p>Millers manager</p></li>
+          <li><img src="assets/v2/face-charlie_dallimore_crook.webp" alt="Charlie Dallimore-Crook" width="720" height="720" loading="lazy"><h3>Charlie Dallimore-Crook</h3><p>Millers coach</p></li>
+          <li><img src="assets/v2/face-james_muller.webp" alt="James Muller" width="720" height="720" loading="lazy"><h3>James Muller</h3><p>Brand and communications &middot; Safeguarding and DBS</p></li>
+          <li><img src="assets/v2/face-ben_burgess.webp" alt="Ben Burgess" width="720" height="720" loading="lazy"><h3>Ben Burgess</h3><p>First aid coordinator</p></li>
+          <li><img src="assets/v2/face-richard_williams.webp" alt="Richard Williams batting" width="480" height="480" loading="lazy"><h3>Richard Williams</h3><p>Teeball manager &middot; Club co-founder</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== PEOPLE -->
+  <section id="people" data-sc-act="pan" data-sc-span="2.4" aria-labelledby="people-h">
+    <div data-sc-stage class="people__stage g-700">
+      <div class="faces" data-sc-pan="0.04" data-faces>
+        <div class="faces__lead" style="--i:0">
+          <h2 class="sc-display" id="people-h">39 players. Two teams.</h2>
+          <p>The Mavericks play in BBF Division 3 South and the Millers in Division 5. Top row Mavericks, bottom row Millers.</p>
+          <a class="link" href="roster.html">Meet the whole roster <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ CLOSE -->
+  <section id="homeplate" data-sc-act="pin" data-sc-span="1.3" aria-labelledby="close-h">
+    <div data-sc-stage class="close__stage">
+      <div class="plane plane--cplate" aria-hidden="true"><img src="assets/v2/hero-plate.webp" alt="" width="2560" height="1702"></div>
+      <img class="ball ball--close" src="assets/v2/hero-ball.webp" alt="" width="144" height="144" aria-hidden="true">
+      <div class="close__scrim" aria-hidden="true"></div>
+      <div class="close__copy">
+        <h2 class="sc-display close__h" id="close-h" data-sc-cue="0.02">You're up.</h2>
+        <p class="close__p" data-sc-cue="0.1">Training is free to try. No commitment, no kit and no experience needed: just come along on a Thursday evening.</p>
+        <div class="close__ctas">
+          <a class="btn btn--primary" href="join.html" data-sc-cue="0.1">Try a free session</a>
+          <a class="link" href="juniors.html" data-sc-cue="0.1">Juniors: Saturday mornings</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks">
+          <p>Guildford's only baseball and softball club. Playing and coaching since 1992 at Kings College, Southway, Guildford.</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.69.24 2.69.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="X / Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24H16.17l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25H8.08l4.25 5.62 5.91-5.62zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
+            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></a>
+            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 00.5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 002.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 002.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__heading">Club</div>
+          <ul class="footer__links">
+            <li><a href="about.html">About us</a></li>
+            <li><a href="join.html">Try a free session</a></li>
+            <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="roster.html">2026 Roster</a></li>
+            <li><a href="juniors.html">Junior Programme</a></li>
+            <li><a href="history.html">Season History</a></li>
+            <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+            <li><a href="news.html">Latest News</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Teams</div>
+          <ul class="footer__links">
+            <li><a href="about.html#teams">Guildford Mavericks</a></li>
+            <li><a href="about.html#teams">Guildford Millers</a></li>
+            <li><a href="about.html#teams">Gold Cats (from 2027)</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Contact</div>
+          <ul class="footer__links">
+            <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
+            <li><a href="contact.html">Get Directions</a></li>
+            <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+            <li><a href="docs.html">Club Docs &amp; Policies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club.</span>
+        <span class="footer__est">Est. 1992 · Guildford Mavericks</span>
+      </div>
+    </div>
+  </footer>
+
+  <aside class="joinbar" aria-label="Try a free session">
+    <p><b>First training is free.</b>Thursday evenings &middot; Kings College</p>
+    <a class="btn btn--primary" href="join.html">Try a free session</a>
+    <button type="button" aria-label="Dismiss">&times;</button>
+  </aside>
+
+<script src="js/lenis.min.js"></script>
+<script src="js/scrollcraft.js"></script>
+<script>
+  // Face columns go in BEFORE the engine mounts, so the rail is measured whole.
+  (function () {
+    var FACES = [["diego_ansorena","Diego Ansorena",4],["jake_haggerty","Jake Haggerty",3],["kimi_hope","Kimi Hope",7],["zander_flores","Zander Flores",6],["will_frawley","Will Frawley",11],["charlie_dallimore_crook","Charlie Dallimore-Crook",10],["liam_wong","Liam Wong",18],["aaron_beecher","Aaron Beecher",21],["steve_clarke","Steve Clarke",32],["phill_nathan","Phill Nathan",26],["harry_thomas","Harry Thomas",33],["michael_burdett","Michael Burdett",34],["maurice_wong","Maurice Wong",85],["brian_kendal","Brian Kendal",44],["ben_stobart","Ben Stobart",86],["max_dubov","Max Dubov",69],["lee_bessent","Lee Bessent",88],["chris_locke","Chris Locke",72]];
+    function face(f, team) { return '<figure class="face"><img src="assets/v2/face-' + f[0] + '.webp" alt="' + f[1] + '" width="720" height="720" loading="lazy"><figcaption><b>#' + f[2] + '</b>' + f[1] + '<small>' + team + '</small></figcaption></figure>'; }
+    var html = '', col = 0;
+    for (var i = 0; i < FACES.length; i += 2) { col++; html += '<div class="faces__col" style="--i:' + col + '">' + face(FACES[i], 'Mavericks') + face(FACES[i + 1], 'Millers') + '</div>'; }
+    html += '<div class="faces__note" style="--i:' + (col + 1) + '"><p>Plus the juniors, every Saturday morning.</p><a class="link" href="juniors.html">Junior programme <span class="arrow" aria-hidden="true">&rarr;</span></a></div>';
+    document.querySelector('[data-faces]').insertAdjacentHTML('beforeend', html);
+  })();
+</script>
+<script src="js/concept.js"></script>
+<script src="js/theme.js"></script>
+<script>
+(function () {
+  'use strict';
+  var CX = window.CX, $ = CX.$;
+
+  /* ------------------------------------------------------------ hero --
+     Not pinned. On load the photograph settles (the pitcher a little more
+     than the background) and the headline rises; scrolling away separates the
+     planes, and on a desktop the pointer tilts them a touch. */
+  var FOOT = [734, 1476];
+  var hero = $('#home'), heroStage = $('.hero6__stage'), plate = $('.plane--plate'), pitcher = $('.plane--pitcher'), ball = $('.ball--hero'), title = $('.hero__title');
+  var tIn = CX.reduce ? 1 : 0, mx = 0, mxT = 0, tilting = false;
+  function heroCam() { return CX.small.matches ? CX.cover(0.55, 0.5) : CX.cover(0.5, 0.3); }
+  function heroFrame(y) {
+    var cam = heroCam(), s = cam.s, e = CX.easeOut(tIn);
+    var yy = CX.reduce ? 0 : Math.min(Math.max(y, 0), innerHeight), k = yy / innerHeight;
+    var zp = 1 + 0.07 * (1 - e) + 0.05 * k;
+    CX.place(plate, cam, CX.PIV, zp, -mx * 5 / s, yy * 0.34 / s);
+    CX.place(pitcher, cam, FOOT, 1 + 0.14 * (1 - e) + 0.08 * k, (60 * (1 - e) - mx * 16) / s, yy * 0.14 / s);
+    CX.placeBall(ball, { s: s, ox: cam.ox - mx * 5, oy: cam.oy + yy * 0.34 }, zp, 0);
+    // on phones the headline sits right above the copy, so it moves with the page
+    if (!CX.reduce) title.style.transform = CX.small.matches ? '' : 'translate3d(' + (-mx * 8).toFixed(1) + 'px,' + (yy * 0.2).toFixed(1) + 'px,0)';
+  }
+  var ready = Promise.all([CX.decoded([$('img', plate), $('img', pitcher), ball]),
+    Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(function (r) { setTimeout(r, 900); })])]);
+  ready.then(function () {
+    heroFrame(scrollY); heroStage.classList.add('is-live');
+    requestAnimationFrame(function () { hero.classList.add('is-in'); });
+    if (CX.reduce) return;
+    var t0 = null;
+    (function enter(now) {
+      if (t0 === null) t0 = now;
+      tIn = Math.min(1, (now - t0) / 1700); heroFrame(scrollY);
+      if (tIn < 1) requestAnimationFrame(enter);
+    })(performance.now());
+  });
+  CX.frames.push(function (y) { if (y < innerHeight * 1.2) heroFrame(y); });
+  if (!CX.reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    hero.addEventListener('pointermove', function (ev) {
+      mxT = (ev.clientX / innerWidth - 0.5) * 2;
+      if (!tilting) { tilting = true; requestAnimationFrame(function tilt() {
+        mx += (mxT - mx) * 0.08; heroFrame(scrollY);
+        if (Math.abs(mxT - mx) > 0.002) requestAnimationFrame(tilt); else tilting = false;
+      }); }
+    });
+  }
+
+  /* ------------------------------------------------- the noticeboard -- */
+  fetch('data/posts.json').then(function (r) { return r.json(); }).then(function (posts) {
+    posts.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    $('[data-news]').innerHTML = posts.slice(0, 3).map(function (p) {
+      var t = p.title.replace(/[<>&]/g, '');
+      return '<li><a href="' + p.url + '"><img src="' + p.image + '" alt="" width="195" height="130" loading="lazy"><span><time>' + p.dateFormatted + '</time><b>' + t + '</b></span><span class="arrow" aria-hidden="true">&rarr;</span></a></li>';
+    }).join('');
+  }).catch(function () {});
+
+  /* ------------------------------------------------------- right now --
+     In season: the next home game, a countdown and the three after it.
+     Out of season: says so, and when the club is back. */
+  fetch('data/schedule.json').then(function (r) { return r.json(); }).then(function (d) {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var home = [];
+    [['mavericks', 'Mavericks'], ['millers', 'Millers']].forEach(function (t) {
+      (d[t[0]] && d[t[0]].fixtures || []).forEach(function (f) { if (f.home) home.push({ f: f, team: t[1], d: new Date(f.date + 'T12:00:00') }); });
+    });
+    var up = home.filter(function (x) { return x.d >= today; }).sort(function (a, b) { return a.d - b.d; });
+    var el = $('[data-fixtures]');
+    if (!up.length) {
+      el.innerHTML = '<p class="now__status">The ' + d.season + ' season is over. Pre-season starts in January, indoors at Broadwater School in Godalming, then outdoors at George Abbot School in March. League games return to Kings College in April.</p>' +
+        '<div class="now__links"><a class="btn btn--primary" href="join.html">Try a free session</a><a class="link" href="schedule.html">' + d.season + ' fixtures &amp; results <span class="arrow" aria-hidden="true">&rarr;</span></a></div>';
+      return;
+    }
+    var n = up[0];
+    el.innerHTML = '<p class="now__kicker">Next home game</p><p class="now__status">' + n.team + ' v ' + n.f.opponent + '</p><p class="now__when">' + n.f.dateFormatted + ' &middot; Kings College &middot; free to watch</p>' +
+      '<div class="cd" aria-label="Time to the next home game"><div><b data-cd="d">--</b><span>Days</span></div><div><b data-cd="h">--</b><span>Hours</span></div><div><b data-cd="m">--</b><span>Mins</span></div></div>' +
+      '<ul class="now__fx">' + up.slice(1, 4).map(function (x) { return '<li><time>' + x.f.dateFormatted + '</time><span>' + x.team + ' v ' + x.f.opponent + '</span></li>'; }).join('') + '</ul>' +
+      '<div class="now__links"><a class="link" href="schedule.html">Full schedule &amp; results <span class="arrow" aria-hidden="true">&rarr;</span></a></div>';
+    var start = new Date(n.f.date + 'T12:00:00');
+    function tick() {
+      var ms = Math.max(0, start - new Date()), m = Math.floor(ms / 60000);
+      el.querySelector('[data-cd="d"]').textContent = Math.floor(m / 1440);
+      el.querySelector('[data-cd="h"]').textContent = String(Math.floor(m / 60) % 24).padStart(2, '0');
+      el.querySelector('[data-cd="m"]').textContent = String(m % 60).padStart(2, '0');
+    }
+    tick(); setInterval(tick, 30000);
+  }).catch(function () {});
+
+  /* ---------------------------------------------------------- close -- */
+  var close = $('#homeplate'), closeStage = $('.close__stage'), cplate = $('.plane--cplate'), cball = $('.ball--close'), landed = false;
+  function closeFrame(q, silent) {
+    var cam = CX.small.matches ? CX.camAt(CX.MITT, 0.5, 0.72, 1.0) : CX.camAt(CX.MITT, 0.62, 0.56, 1.08);
+    CX.place(cplate, cam, CX.MITT, 1 + (CX.reduce ? 0 : 0.04 * CX.sine(q)));
+    var f = CX.reduce ? 1 : CX.lerp(0.44, 1, CX.ease(CX.ramp(q, 0.3, 0.86)));
+    CX.placeBall(cball, cam, 1, f);
+    if (f >= 0.999 && !landed) { landed = true; if (!silent && !CX.reduce) { cplate.classList.remove('shake'); void cplate.offsetWidth; cplate.classList.add('shake'); } }
+    if (f < 0.98) landed = false;
+  }
+  CX.decoded([$('img', cplate), cball]).then(function () { closeFrame(CX.reduce ? 1 : 0, true); closeStage.classList.add('is-live'); CX.invalidate(); });
+  CX.frames.push(function (y) {
+    var ct = CX.top(close), vh = innerHeight;
+    if (y > ct - 1.2 * vh) closeFrame(CX.clamp((y - (ct - vh)) / (1.2 * vh)));
+  });
+
+  /* ------------------------------------------------ mobile join bar -- */
+  var bar = $('.joinbar'), dismissed = false;
+  bar.querySelector('button').addEventListener('click', function () { dismissed = true; bar.classList.remove('is-on'); });
+  CX.frames.push(function (y) {
+    var show = !dismissed && y > innerHeight * 0.8 && y < CX.top(close) - innerHeight * 0.6;
+    bar.classList.toggle('is-on', show);
+  });
+
+  /* the diamond in the bar: first at get involved, second at the diamond, third at the committee, home at the end */
+  function stations() {
+    if (!window.GBSC) return;
+    GBSC.setStations([CX.top($('#involved')) - 80, CX.top($('#diamond')) - 80, CX.top($('#committee')) - 80, document.documentElement.scrollHeight - innerHeight]);
+  }
+  addEventListener('load', stations); addEventListener('resize', stations); setTimeout(stations, 400);
+})();
+</script>
+</body>
+</html>

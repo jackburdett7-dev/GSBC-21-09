@@ -1,0 +1,84 @@
+/* ============================================================================
+   Shared layer for the rebuilt pages (home, our story, history). Loaded after
+   style.css, scrollcraft.css and theme.css. Maroon is the ground, gold is the
+   one accent (two lightnesses: bright on maroon, ochre on paper).
+   ========================================================================== */
+:root {
+  --sc-canvas:     #420b18;
+  --sc-surface:    #5a0f1d;
+  --sc-ink:        #f7efe4;
+  --sc-ink-soft:   #e3d0c3;
+  --sc-accent:     #f3b53c;
+  --sc-accent-ink: #26090f;
+  --sc-font-display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --sc-font-text:    "Archivo", system-ui, sans-serif;
+  --sc-shadow-color: 345 60% 4%;
+  --r: 4px;
+}
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+body.cx { background: var(--sc-canvas); color: var(--sc-ink); font-family: var(--sc-font-text); line-height: 1.6; }
+.cx p { max-width: none; }
+.cx h1, .cx h2, .cx h3 { color: inherit; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: fixed; left: 1rem; top: -4rem; z-index: 2000; background: var(--sc-accent); color: var(--sc-accent-ink); padding: .6rem 1rem; border-radius: var(--r); font-weight: 700; }
+.skip:focus { top: 1rem; }
+
+.sc-display { font-family: var(--sc-font-display); font-weight: 900; text-transform: uppercase; letter-spacing: .004em; line-height: .88; }
+.cx-wrap { width: 100%; max-width: 82rem; margin-inline: auto; padding-inline: var(--sc-gutter); }
+.cx-label { display: block; margin: 0 0 .9rem; font-family: var(--sc-font-text); font-weight: 700; font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--sc-accent); }
+
+/* Grounds. Each section paints its own; there is no drift. */
+.g-900 { background: #2e0813; } .g-800 { background: #420b18; } .g-700 { background: #5a0f1d; }
+.on-paper { --sc-ink: #23100e; --sc-ink-soft: #5b3b34; --sc-accent: #86560a; --sc-accent-ink: #fbf4e8;
+            --sc-hairline: color-mix(in oklab, #23100e 16%, transparent);
+            background: #f4ecdf; color: var(--sc-ink); }
+.gold-rule { border-top: 4px solid var(--sc-accent); }
+
+/* Links and buttons (the buttons themselves come from theme.css .btn--primary) */
+.link { color: var(--sc-ink); font-weight: 650; font-size: .95rem; text-decoration: underline;
+        text-decoration-color: color-mix(in oklab, var(--sc-accent) 85%, transparent); text-underline-offset: .3em; text-decoration-thickness: 2px; }
+.link:hover { text-decoration-color: var(--sc-accent); }
+.link:focus-visible, .row-link:focus-visible, .tile:focus-visible { outline: 3px solid var(--sc-accent); outline-offset: 4px; border-radius: 2px; }
+.on-paper .btn--primary { background: var(--sc-accent); color: #fbf4e8; }
+.on-paper .btn--primary:hover { background: #6f4707; color: #fbf4e8; }
+.arrow { display: inline-block; transition: transform 160ms var(--sc-ease-out); }
+@media (hover: hover) and (pointer: fine) { a:hover > .arrow, a:hover .arrow { transform: translateX(4px); } }
+
+/* Layered photo scenes (home hero and close) */
+.plane { position: absolute; left: 0; top: 0; width: 2560px; height: 1702px; transform-origin: 0 0; pointer-events: none; visibility: hidden; will-change: transform; }
+.plane img { position: absolute; max-width: none; }
+.is-live .plane { visibility: visible; }
+.plane--plate img { left: 0; top: 0; width: 2560px; height: 1702px; }
+.plane--pitcher img { left: 269px; top: 253px; width: 806px; height: 1228px; }
+.ball { position: absolute; left: 0; top: 0; width: 72px; height: 72px; max-width: none; transform-origin: 0 0; visibility: hidden; will-change: transform; pointer-events: none; }
+.is-live .ball { visibility: visible; }
+
+/* The site footer sits flush after the last section */
+.cx .footer { margin: 0; }
+
+/* Without JavaScript: no pinning, no motion, everything showing. */
+html.no-js [data-sc-stage] { position: relative; min-height: 100vh; overflow: hidden; }
+html.no-js [data-sc-cue], html.no-js [data-sc-in], html.no-js [data-sc-stagger] > * { opacity: 1 !important; transform: none !important; }
+html.no-js [data-sc-act="pan"] [data-sc-stage] { overflow-x: auto; }
+
+/* Reduced motion: a sideways rail that no longer moves would hold a still
+   stage for several screens. Re-lay every rail as an ordinary wrapped grid
+   and give the act back its natural height instead. */
+@media (prefers-reduced-motion: reduce) {
+  [data-sc-act="pan"] { height: auto !important; }
+  [data-sc-act="pan"] [data-sc-stage] { position: relative; height: auto; min-height: 0; overflow: visible; padding-block: clamp(4rem, 8vw, 6rem); }
+  [data-sc-act="pan"] [data-sc-pan] { width: auto !important; flex-wrap: wrap; align-items: flex-start; row-gap: 2.5rem; transform: none !important; }
+}
+
+/* The live site's page heroes, on the rebuilt pages */
+.cx .page-hero { padding: clamp(8.5rem, 16vh, 10.5rem) 0 clamp(3.5rem, 7vw, 5rem); }
+.cx .page-hero .overline { color: var(--sc-accent); }
+.cx .page-hero p { margin-top: 1rem; max-width: 46rem; font-size: 1.15rem; line-height: 1.55; color: rgba(247,239,228,.86); }
+.hero-links { display: flex; flex-wrap: wrap; gap: .6rem 1.8rem; margin-top: 1.8rem; }
+
+/* Legacy pages that load the scroll engine keep their own page ground and type:
+   the engine's base sets the body to the concept canvas, which turned any
+   section without its own background maroon. */
+body:not(.cx) { background: var(--off-white); color: var(--ink); font-family: var(--font-sans); font-size: 1rem; line-height: 1.7; letter-spacing: normal; }

@@ -1,0 +1,29 @@
+{
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin/index.html" }
+  ],
+  "redirects": [
+    { "source": "/membership", "destination": "/join", "permanent": true },
+    { "source": "/membership/", "destination": "/join", "permanent": true },
+    { "source": "/membership/adult-membership", "destination": "/join", "permanent": true },
+    { "source": "/membership/adult-membership/", "destination": "/join", "permanent": true },
+    { "source": "/membership/junior-membership", "destination": "/juniors", "permanent": true },
+    { "source": "/membership/junior-membership/", "destination": "/juniors", "permanent": true },
+    { "source": "/about-us", "destination": "/about", "permanent": true },
+    { "source": "/about-us/", "destination": "/about", "permanent": true },
+    { "source": "/contact-us", "destination": "/contact", "permanent": true },
+    { "source": "/contact-us/", "destination": "/contact", "permanent": true },
+    { "source": "/fixtures", "destination": "/schedule", "permanent": true },
+    { "source": "/fixtures/", "destination": "/schedule", "permanent": true },
+    { "source": "/results", "destination": "/schedule", "permanent": true },
+    { "source": "/results/", "destination": "/schedule", "permanent": true },
+    { "source": "/fixtures-results", "destination": "/schedule", "permanent": true },
+    { "source": "/fixtures-results/", "destination": "/schedule", "permanent": true },
+    { "source": "/junior-baseball", "destination": "/juniors", "permanent": true },
+    { "source": "/junior-baseball/", "destination": "/juniors", "permanent": true },
+    { "source": "/juniors-baseball", "destination": "/juniors", "permanent": true },
+    { "source": "/juniors-baseball/", "destination": "/juniors", "permanent": true },
+    { "source": "/photos", "destination": "/gallery", "permanent": true },
+    { "source": "/photos/", "destination": "/gallery", "permanent": true }
+  ]
+}

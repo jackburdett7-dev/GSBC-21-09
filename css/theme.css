@@ -1,0 +1,151 @@
+/* ============================================================================
+   GBSC maroon & gold theme (concept, local only)
+   Loaded after style.css on every page. The club's kit has been cardinal and
+   gold since 2011 (historical-data/season-2011.md); the site was still wearing
+   the navy it retired. This file re-points the palette, the type and the nav so
+   every page, old or new, reads as one site.
+   ========================================================================== */
+:root {
+  --maroon-950: #210510;
+  --maroon-900: #2e0813;
+  --maroon-800: #420b18;
+  --maroon-700: #5a0f1d;
+  --cardinal:   #a7132f;
+  --gold-hi:    #f3b53c;
+  --ochre:      #86560a;
+  --paper:      #f4ecdf;
+
+  --red:        #a7132f;
+  --red-dark:   #86101f;
+  --navy:       #420b18;          /* the retired navy becomes deep maroon */
+  --navy-light: #5a0f1d;
+  --gold:       #f3b53c;
+  --gold-dark:  #d99a1f;
+  --gold-light: rgba(243,181,60,0.14);
+  --orange:     #f3b53c;
+  --off-white:  #f7f0e5;
+  --cream:      #f1e7d8;
+  --ink:        #23100e;
+  --muted:      #6b4c45;
+  --border:     #e5d7c5;
+  --font-hero:  'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-serif: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-sans:  'Archivo', system-ui, sans-serif;
+  --shadow:     0 4px 24px rgba(66,11,24,0.10);
+  --shadow-lg:  0 16px 56px rgba(66,11,24,0.20);
+}
+
+/* ---------------------------------------------------------------- type -- */
+h1, h2, h3 { font-weight: 800; text-transform: uppercase; letter-spacing: 0.004em; line-height: 0.94; }
+h1 { font-size: clamp(3rem, 6.4vw, 5.6rem); font-weight: 900; }
+h2 { font-size: clamp(2.3rem, 4.4vw, 3.9rem); }
+h3 { font-size: clamp(1.5rem, 2.4vw, 2.1rem); }
+h4 { font-family: var(--font-sans); font-weight: 700; }
+em { font-style: normal; }
+::selection { background: var(--cardinal); color: #fff; }
+.heading-underline::after { background: var(--gold); height: 4px; }
+.overline::before, .label::before { background: var(--gold) !important; }
+
+/* Sections that used navy now sit on maroon. */
+.section--dark, .section--ink-soft, .cta-section--navy, .join-hero, .page-hero, .footer { background-color: var(--maroon-800); }
+.section--navy-soft { background: var(--maroon-700); }
+.section--cream-dark { background: var(--cream); }
+
+/* The page banner used a 1200x160 image stretched full width (blurry).
+   Swap in the club's sharpest action photograph, held back behind maroon. */
+.page-hero--banner::before, .page-hero--batting::before, .page-hero--beginners::before {
+  background-image: url('../assets/v2/slide.webp'); background-position: center 38%; opacity: 0.2; }
+.page-hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(46,8,19,.9) 0%, rgba(46,8,19,.55) 55%, rgba(46,8,19,.35) 100%); }
+.page-hero > * { position: relative; z-index: 1; }
+.page-hero p { font-style: normal; color: rgba(255,255,255,0.8); }
+.page-hero h1 { max-width: 18ch; }
+
+/* ------------------------------------------------------------- buttons -- */
+.btn { border-radius: 4px; font-weight: 700; letter-spacing: .01em; }
+.btn--primary, .btn--gold { background: var(--gold-hi); color: #26090f; box-shadow: 0 4px 16px rgba(33,5,16,.28); }
+.btn--primary:hover, .btn--gold:hover { background: #ffc65a; color: #26090f; box-shadow: 0 8px 24px rgba(33,5,16,.34); }
+.btn--pulse { animation: none; }
+.btn:focus-visible { outline: 3px solid var(--gold-hi); outline-offset: 3px; }
+.btn--outline-dark { border-color: var(--maroon-800); color: var(--maroon-800); }
+.btn--outline-dark:hover { background: var(--maroon-800); color: #fff; }
+
+/* ----------------------------------------------------------------- nav --
+   Same bar, same links, same floating pill on scroll; now maroon and gold. */
+.nav { background: linear-gradient(180deg, rgba(33,5,16,.72), rgba(33,5,16,0)); }
+.nav.scrolled { background: none; }
+.nav.scrolled .nav__inner {
+  background: rgba(66,11,24,0.94); border: 1px solid rgba(243,181,60,0.32);
+  box-shadow: 0 10px 30px rgba(20,3,9,0.35); }
+.nav__logo-text { font-family: var(--font-hero); font-weight: 800; text-transform: uppercase; letter-spacing: .03em; font-size: 1.05rem; }
+.nav__logo-text span { font-family: var(--font-sans); font-weight: 600; opacity: .75; }
+.nav__links a { font-weight: 600; color: rgba(255,255,255,0.84); }
+.nav__links a:hover, .nav__links a[aria-current="page"] { color: var(--gold-hi); }
+.nav__links a[aria-current="page"] { text-decoration: underline; text-underline-offset: .45em; text-decoration-thickness: 2px; }
+.nav__cta { white-space: nowrap; }
+.nav__mobile { background: var(--maroon-800); }
+.nav__mobile a { font-family: var(--font-hero); font-weight: 800; text-transform: uppercase; }
+.nav.menu-open { background: var(--maroon-800); border-bottom-color: rgba(243,181,60,.4); }
+
+/* The diamond in the bar: where you are on this page, round the bases. */
+.nav__diamond { display: inline-flex; width: 34px; height: 34px; flex: none; margin-left: .2rem; }
+.nav__diamond svg { width: 100%; height: 100%; overflow: visible; transition: opacity 180ms cubic-bezier(.23,1,.32,1); }
+.nav__diamond .d-path { fill: none; stroke: rgba(255,255,255,.4); stroke-width: 3; }
+.nav__diamond .d-base { fill: rgba(33,5,16,.6); stroke: rgba(255,255,255,.8); stroke-width: 3; transition: fill 200ms, stroke 200ms; }
+.nav__diamond .d-base.is-lit { fill: var(--gold-hi); stroke: var(--gold-hi); }
+.nav__diamond .d-plate { fill: rgba(255,255,255,.9); }
+.nav__diamond .d-runner { fill: #fff; stroke: var(--maroon-900); stroke-width: 2.5; }
+.nav__diamond.is-scored .d-plate { fill: var(--gold-hi); }
+@media (prefers-reduced-motion: no-preference) { .nav__diamond.is-flash svg { animation: gbsc-flash 700ms cubic-bezier(.23,1,.32,1); } }
+@keyframes gbsc-flash { 0% { transform: scale(1.25); filter: drop-shadow(0 0 0 #f3b53c); } 100% { transform: scale(1); } }
+/* The bar has to hold the logo, seven links and the button. Laptops get tighter
+   links; below 1080px the links move into the menu, as on a phone. */
+@media (max-width: 1320px) and (min-width: 1081px) { .nav__links { gap: 1.1rem; } .nav.scrolled .nav__links { gap: .95rem; } .nav__links a { font-size: .88rem; } }
+@media (max-width: 1180px) and (min-width: 1081px) { .nav__diamond { display: none; } }
+@media (max-width: 1080px) and (min-width: 769px) {
+  .nav__links { display: none; }
+  .nav__hamburger { display: flex; }
+  .nav__diamond { margin-left: auto; margin-right: .6rem; }
+}
+@media (max-width: 768px) { .nav__diamond { margin-left: auto; margin-right: .6rem; width: 30px; height: 30px; } }
+/* Phones: the bar must keep the hamburger on screen. */
+@media (max-width: 480px) {
+  .nav__inner { gap: .7rem; }
+  .nav__logo { gap: .55rem; min-width: 0; }
+  .nav__logo img { height: 32px; }
+  .nav__logo-text { font-size: .8rem; letter-spacing: .02em; }
+  .nav__logo-text span { display: none; }
+  .nav__diamond { width: 26px; height: 26px; margin-right: .2rem; }
+  .nav.scrolled .nav__inner { padding: .5rem .9rem; max-width: calc(100% - 1.5rem); }
+}
+/* Narrow phones: the club name takes two lines so the menu button stays inside the pill. */
+@media (max-width: 400px) {
+  .nav__logo-text { white-space: normal; max-width: 10em; line-height: 1.08; font-size: .78rem; }
+  .nav.scrolled .nav__inner { padding-inline: .75rem; }
+}
+@media (max-width: 340px) { .nav__diamond { display: none; } .nav__logo img { height: 28px; } }
+
+/* -------------------------------------------------------------- footer -- */
+.footer { background: var(--maroon-900); color: rgba(255,255,255,0.72); border-top: 4px solid var(--gold-hi); }
+.footer__heading { color: var(--gold-hi); }
+.footer__links a:hover { color: var(--gold-hi); }
+.footer__social a:hover { background: var(--gold-hi); color: #26090f; }
+.footer__est { font-family: var(--font-hero); font-style: normal; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+
+/* Phone fit: the carried-over pages scrolled sideways at 360px (grid items
+   sized to their widest word, and wide tables with no scroll container). */
+.grid-2 > *, .grid-3 > *, .grid-4 > * { min-width: 0; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 600px) {
+  .glove-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .contact-info-card { padding: 1.6rem; overflow-wrap: anywhere; }
+  .grid-2 > div[style*="padding: 2rem"] { padding: 1.4rem !important; }
+}
+
+/* FAQ accordions: a closed answer showed its first line under the question
+   (its bottom padding kept the row open). Closed now means closed. */
+.accordion__trigger { color: var(--ink); }
+.accordion__trigger:hover { color: var(--cardinal); }
+.accordion__body p { padding-bottom: 0; transition: padding-bottom .25s ease-out; }
+.accordion__item.open .accordion__body p { padding-bottom: 1.2rem; }
+.accordion__icon { background: var(--maroon-800) !important; color: var(--gold-hi) !important; }

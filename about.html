@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en-GB" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Our Story | Guildford Baseball &amp; Softball Club</title>
+  <meta name="description" content="The story of Guildford Baseball &amp; Softball Club since 1992: how the club began, the diamond it built at Kings College, and its teams today.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollcraft.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/concept.css">
+  <style>
+    /* ------------------------------------------------------------ intro -- */
+    .intro { padding: clamp(8.5rem, 16vh, 11rem) 0 clamp(4rem, 8vw, 6.5rem); }
+    .intro__grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+    .intro h1 { margin: 0 0 1.5rem; font-size: clamp(3.4rem, 7vw, 7.2rem); }
+    .intro h1 .gold { color: var(--sc-accent); }
+    .intro__lede { margin: 0 0 2rem; font-size: clamp(1.1rem, 1.5vw, 1.35rem); line-height: 1.5; max-width: 36rem; color: var(--sc-ink-soft); }
+    .toc { display: flex; flex-wrap: wrap; gap: .5rem 1.6rem; list-style: none; margin: 0; padding: 1.2rem 0 0; border-top: 1px solid rgba(247,239,228,.18); }
+    .toc a { font-weight: 700; font-size: .92rem; color: var(--sc-ink); }
+    .toc a span { color: var(--sc-accent); margin-right: .4rem; font-family: var(--sc-font-display); font-weight: 800; }
+    .toc a:hover { color: var(--sc-accent); }
+    .intro__photo { margin: 0; }
+    .intro__photo img { width: 100%; aspect-ratio: 1081 / 1000; object-fit: cover; border-radius: var(--r); box-shadow: var(--sc-e3); }
+    .intro__photo figcaption { margin-top: .6rem; font-size: .8rem; color: var(--sc-ink-soft); }
+
+    /* ------------------------------------------------------------ 1992 -- */
+    .found__stage { display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: clamp(1.5rem, 4vw, 5rem); padding-inline: var(--sc-gutter); }
+    .found__year { margin: 0; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(9rem, 29vw, 30rem); line-height: .78; letter-spacing: -.01em; color: var(--sc-accent); }
+    .found__text { max-width: 38rem; }
+    .found__lede { margin: 0; font-size: clamp(1.45rem, 2.2vw, 2.1rem); line-height: 1.28; font-weight: 500; letter-spacing: -.01em; }
+    .found__quote { margin: 1.1rem 0 1.8rem; font-style: normal; font-weight: 650; font-size: clamp(2.1rem, 3.6vw, 3.6rem); line-height: 1.02; letter-spacing: -.02em; color: var(--sc-accent); }
+    .found__coda { margin: 0 0 1rem; color: var(--sc-ink-soft); max-width: 32rem; }
+    .found__source { margin: 0; font-size: .8rem; color: var(--sc-ink-soft); }
+    .found__source a { color: inherit; text-decoration: underline; text-underline-offset: .2em; }
+
+    /* ------------------------------------------------------ how it started -- */
+    .started { padding-block: clamp(4.5rem, 9vw, 8rem); }
+    .started__grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2.5rem, 6vw, 7rem); align-items: start; }
+    .started__intro { position: sticky; top: 7.5rem; }
+    .started h2 { margin: 0 0 1.6rem; font-size: clamp(3rem, 5.6vw, 5.8rem); color: var(--cardinal); }
+    .started__intro p { margin: 0 0 1.1rem; font-size: 1.12rem; line-height: 1.6; }
+    .started__intro .link { display: inline-block; margin-top: .8rem; }
+    .miles { list-style: none; margin: 0; padding: 0; }
+    .mile { display: grid; grid-template-columns: clamp(5.5rem, 9vw, 7.5rem) 1fr; gap: 1.4rem; padding-block: 1.4rem; border-top: 1px solid var(--sc-hairline); }
+    .mile:last-child { border-bottom: 1px solid var(--sc-hairline); }
+    .mile b { font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(2.2rem, 3.4vw, 3.2rem); line-height: .85; color: var(--cardinal); }
+    .mile p { margin: 0; line-height: 1.55; }
+    .mile figure { margin: 1rem 0 0; max-width: 17rem; }
+    .mile figure img { width: 100%; border-radius: var(--r); box-shadow: var(--sc-e2); }
+    .mile figcaption { margin-top: .4rem; font-size: .76rem; color: var(--sc-ink-soft); }
+
+    /* -------------------------------------------------- the ground (peak) --
+       A site-plan presentation: text column left, the framed plan right, a
+       chapter timeline under it. Everything aligns to the frame's top edge. */
+    .ground__stage { background: #420b18; display: flex; align-items: center; }
+    .ground__grid { width: 100%; max-width: 94rem; margin-inline: auto; padding: 5.75rem var(--sc-gutter) 1.25rem;
+                    display: grid; grid-template-columns: minmax(17rem, 27rem) minmax(0, 1fr); gap: clamp(2rem, 4.5vw, 5.5rem); align-items: stretch; }
+    .ground__copy { position: relative; }
+    .gc { position: absolute; left: 0; right: 0; top: 0; margin: 0; }
+    .gc__k { display: block; margin: 0 0 1.1rem; font-weight: 700; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--sc-accent); }
+    .gc__say { margin: 0; font-size: clamp(1.3rem, 1.7vw, 1.72rem); line-height: 1.32; font-weight: 600; letter-spacing: -.01em; text-wrap: pretty; }
+    .gc__say b { color: var(--sc-accent); font-weight: 700; }
+    .gc__big { margin: 0; font-family: var(--sc-font-display); font-weight: 900; text-transform: uppercase; line-height: .9; letter-spacing: .004em; font-size: clamp(2.8rem, 4.6vw, 5.2rem); }
+    .gc__sub { margin: 1.1rem 0 0; font-size: 1.05rem; line-height: 1.5; color: var(--sc-ink-soft); font-weight: 500; }
+    .build { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin: 1.5rem 0 0; }
+    .build figure { margin: 0; overflow: hidden; border-radius: 3px; aspect-ratio: 4 / 3; background: #2e0813; opacity: 0; will-change: transform, opacity; }
+    .build img { width: 100%; height: 100%; object-fit: cover; }
+    .build__cap { margin: .75rem 0 0; font-size: .8rem; color: var(--sc-ink-soft); }
+
+    .frame-col { display: flex; flex-direction: column; min-width: 0; }
+    .frame { position: relative; margin: 0; width: 100%; max-width: 62rem; margin-left: auto; }
+    .frame__box { position: relative; aspect-ratio: 5 / 3; overflow: hidden; border-radius: 3px; background: #1e2a1c;
+                  outline: 1px solid rgba(243,181,60,.4); outline-offset: 5px;
+                  box-shadow: 0 8px 18px rgba(20,3,9,.35), 0 36px 70px -24px rgba(20,3,9,.7); }
+    .field, .furniture { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .field { transform-origin: 47.5% 53.8%; will-change: transform; }
+    .furniture { z-index: 1; pointer-events: none; }
+    .field__dim { fill: #1a0610; opacity: 0; }
+    .frame__chip { position: absolute; z-index: 4; left: .9rem; top: .9rem; display: inline-flex; align-items: center; gap: .55rem;
+                   padding: .45rem .75rem .45rem .6rem; background: rgba(33,5,16,.88); color: #f7efe4; border-radius: 3px;
+                   font-size: .7rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+    .frame__chip i { width: .5rem; height: .5rem; border-radius: 50%; background: var(--sc-accent); flex: none; }
+    .frame__final { position: absolute; inset: 0; z-index: 2; clip-path: circle(0px at 50% 50%); }
+    .frame__final img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
+    .iris-ring { position: absolute; z-index: 3; left: 0; top: 0; width: 0; height: 0; border: 2px solid var(--sc-accent); border-radius: 50%; pointer-events: none; opacity: 0; }
+
+    /* the plan: an architect's drawing laid over the aerial */
+    .plan__line { fill: none; stroke: #f3b53c; stroke-width: 2.2; stroke-linecap: round; stroke-dasharray: 1 1; stroke-dashoffset: calc(1 - var(--draw, 0)); opacity: min(1, calc(var(--draw, 0) * 40)); }
+    .plan__foul { stroke: #f7efe4; stroke-width: 1.5; }
+    .plan__arc { stroke: #f7efe4; stroke-width: 1.4; stroke-opacity: .9; }
+    .plan__backstop { stroke: #f7efe4; stroke-width: 2.6; }
+    .plan__bp { fill: none; stroke: #f3b53c; stroke-width: 2.4; stroke-linejoin: round; opacity: var(--o, 0); }
+    .plan__fence { stroke: #f7efe4; stroke-width: 3.2; stroke-linecap: square; }
+    .plan__fence--mid { stroke-width: 2; }
+    .plan__fence--low { stroke-width: 1.3; stroke-opacity: .9; }
+    .plan__cut { fill: #b8733f; stroke: rgba(247,239,228,.55); stroke-width: .8; opacity: var(--o, 0);
+                 transform-box: fill-box; transform-origin: center; transform: scale(calc(.55 + .45 * var(--o, 0))); }
+    .plan__legend { opacity: var(--o, 0); }
+    .legend__txt { font-family: var(--sc-font-text); font-weight: 600; font-size: 11px; fill: #f7efe4; }
+    .specs { display: grid; gap: .6rem 1.2rem; margin: 1.2rem 0 0; }
+    .specs--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .specs--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 1.4rem; }
+    .specs div { border-top: 2px solid rgba(243,181,60,.55); padding-top: .55rem; }
+    .specs dt { font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(1.6rem, 2.2vw, 2.2rem); line-height: 1; color: var(--sc-accent); font-variant-numeric: lining-nums; }
+    .specs dd { margin: .3rem 0 0; font-size: .8rem; line-height: 1.35; color: var(--sc-ink-soft); font-weight: 600; }
+    .build { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; margin-top: 1.1rem; }
+    .plan__ring { fill: #b8733f; stroke: #f3b53c; stroke-width: 1.3; opacity: var(--o, 0); }
+    .plan__base { fill: #f7efe4; opacity: var(--o, 0); }
+    .plan__runner { fill: #f7efe4; stroke: #2e0813; stroke-width: 2; opacity: var(--o, 0); }
+    .plan__dim { fill: none; stroke: #f7efe4; stroke-width: 1; opacity: var(--o, 0); }
+    .plan__label, .furn__txt { font-family: var(--sc-font-text); font-weight: 700; font-size: 11px; letter-spacing: .05em; fill: #f7efe4; paint-order: stroke; stroke: rgba(20,4,10,.82); stroke-width: 3px; }
+    .plan__label { opacity: var(--o, 0); }
+    .furn__line { stroke: #f7efe4; stroke-width: 1.2; fill: none; }
+    .furn__credit { font-family: var(--sc-font-text); font-size: 9px; fill: rgba(247,239,228,.85); paint-order: stroke; stroke: rgba(20,4,10,.7); stroke-width: 2.5px; }
+
+    /* chapter timeline */
+    .steps { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 1.6rem; max-width: 62rem; width: 100%; margin-left: auto; }
+    .steps__track { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: rgba(247,239,228,.18); }
+    .steps__fill { position: absolute; inset: 0; background: var(--sc-accent); transform-origin: 0 50%; transform: scaleX(0); }
+    .step { appearance: none; background: none; border: 0; color: var(--sc-ink-soft); text-align: left; padding: 1rem .6rem 0 0; cursor: pointer; font: inherit; position: relative; }
+    .step::before { content: ""; position: absolute; left: 0; top: -5px; width: 12px; height: 12px; border-radius: 50%; background: #420b18; border: 2px solid rgba(247,239,228,.5);
+                    transition: background 200ms var(--sc-ease-out), border-color 200ms var(--sc-ease-out), transform 200ms var(--sc-ease-out); }
+    .step b { display: block; font-family: var(--sc-font-display); font-weight: 800; font-size: 1.4rem; line-height: 1; }
+    .step span { display: block; margin-top: .3rem; font-size: .8rem; font-weight: 600; }
+    .step.is-done, .step.is-on { color: var(--sc-ink); }
+    .step.is-done::before, .step.is-on::before { background: var(--sc-accent); border-color: var(--sc-accent); }
+    .step.is-on::before { transform: scale(1.25); }
+    .step.is-on b { color: var(--sc-accent); }
+    .step:focus-visible { outline: 3px solid var(--sc-accent); outline-offset: 5px; border-radius: 2px; }
+    @media (hover: hover) and (pointer: fine) { .step:hover { color: var(--sc-ink); } }
+    .ghost { position: fixed; left: 0; top: 0; width: 120px; height: 120px; z-index: 1020; pointer-events: none; opacity: 0; transform-origin: 60px 60px; overflow: visible; }
+
+    /* ------------------------------------------------------------ teams -- */
+    .teams { padding-block: clamp(4.5rem, 9vw, 8rem); }
+    .teams h2 { margin: 0 0 2.6rem; font-size: clamp(3rem, 5.6vw, 5.8rem); }
+    .team { display: grid; grid-template-columns: clamp(9rem, 16vw, 14rem) 1fr; gap: clamp(1.5rem, 3vw, 3rem); align-items: center; padding-block: 2rem; border-top: 1px solid rgba(247,239,228,.16); }
+    .team:nth-of-type(2) { grid-template-columns: 1fr clamp(9rem, 16vw, 14rem); }
+    .team:nth-of-type(2) figure { order: 2; }
+    .team figure { margin: 0; }
+    .team img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r); box-shadow: var(--sc-e2); }
+    .team figcaption { margin-top: .5rem; font-size: .78rem; color: var(--sc-ink-soft); }
+    .team h3 { margin: 0 0 .4rem; font-size: clamp(2.2rem, 3.6vw, 3.4rem); }
+    .team .div { display: block; margin-bottom: .8rem; font-weight: 700; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-accent); }
+    .team p { margin: 0 0 1rem; max-width: 40rem; line-height: 1.55; }
+    .goldcats { margin-top: 1rem; padding: 1.8rem 2rem; border: 2px solid var(--sc-accent); border-radius: var(--r); display: grid; grid-template-columns: auto 1fr; gap: 1.8rem; align-items: center; }
+    .goldcats b { font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3rem, 5vw, 4.6rem); line-height: .85; color: var(--sc-accent); }
+    .goldcats h3 { margin: 0 0 .5rem; font-size: 1.9rem; }
+    .goldcats p { margin: 0; line-height: 1.55; }
+
+    /* ------------------------------------------------------------ ethos -- */
+    .ethos { padding-block: clamp(4.5rem, 9vw, 8rem); }
+    .ethos__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 7rem); align-items: start; }
+    .ethos h2 { margin: 0 0 1.5rem; font-size: clamp(3rem, 5.4vw, 5.4rem); color: var(--cardinal); }
+    .ethos p { margin: 0 0 1.1rem; font-size: 1.1rem; line-height: 1.6; }
+    .ethos blockquote { margin: 0 0 2rem; padding: 0; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.3; font-weight: 600; font-style: italic; color: var(--cardinal); }
+    .ethos cite { display: block; margin-top: .8rem; font-size: .85rem; font-style: normal; font-weight: 600; color: var(--sc-ink-soft); }
+    .ethos__aff { font-size: .95rem !important; color: var(--sc-ink-soft); }
+
+    /* -------------------------------------------------------------- cta -- */
+    .cta { padding-block: clamp(4.5rem, 9vw, 7.5rem); text-align: left; }
+    .cta h2 { margin: 0 0 1.2rem; font-size: clamp(3.4rem, 7vw, 7rem); }
+    .cta p { margin: 0 0 2rem; font-size: 1.2rem; max-width: 34rem; line-height: 1.5; color: var(--sc-ink-soft); }
+    .cta__row { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; }
+
+    @media (max-width: 860px) {
+      .intro__grid, .started__grid, .ethos__grid { grid-template-columns: 1fr; }
+      .started__intro { position: static; }
+      .found__stage { grid-template-columns: 1fr; align-content: center; gap: 1rem; }
+      .found__year { font-size: 44vw; }
+      .found__lede { font-size: 1.25rem; }
+      .found__coda { font-size: .95rem; }
+      .ground__grid { grid-template-columns: 1fr; gap: 1rem; padding: 4.9rem var(--sc-gutter) 1rem; align-content: start; }
+      .ground__copy { min-height: min(46vh, 25rem); }
+      .gc__k { margin-bottom: .6rem; }
+      .gc__say { font-size: 1.1rem; }
+      .gc__big { font-size: 2.5rem; }
+      .gc__sub { font-size: .92rem; margin-top: .6rem; }
+      .build { grid-template-columns: repeat(4, 1fr); gap: .35rem; margin-top: .9rem; }
+      .build__cap { display: none; }
+      .steps { margin-top: 1.1rem; }
+      .step { padding-top: .8rem; }
+      .step b { font-size: 1.05rem; }
+      .step span { font-size: .66rem; }
+      .frame__chip { font-size: .58rem; left: .5rem; top: .5rem; padding: .3rem .5rem; }
+      .plan__label, .furn__txt { font-size: 22px; stroke-width: 5px; }
+      .furn__credit { font-size: 17px; stroke-width: 4px; }
+      .team, .team:nth-of-type(2) { grid-template-columns: 7.5rem 1fr; }
+      .team:nth-of-type(2) figure { order: 0; }
+      .goldcats { grid-template-columns: 1fr; gap: .8rem; }
+    }
+    @media (max-width: 860px) and (max-height: 760px) {
+      .ground__copy { min-height: 41vh; }
+      .gc__k { margin-bottom: .4rem; }
+      .gc__big { font-size: 2.1rem; }
+      .gc__sub { font-size: .84rem; margin-top: .45rem; }
+      .specs { margin-top: .7rem; gap: .4rem 1rem; }
+      .specs div { padding-top: .35rem; }
+      .specs dt { font-size: 1.35rem; }
+      .specs dd { font-size: .7rem; }
+      .build { display: none; }
+    }
+    html.no-js .ghost, html.no-js .frame__final, html.no-js .iris-ring { display: none; }
+    html.no-js .plan__line { --draw: 1; } html.no-js .plan [data-o] { --o: 1; }
+    html.no-js .ground__stage { display: block; }
+    html.no-js .ground__grid { grid-template-columns: 1fr; padding-block: 6rem 4rem; }
+    html.no-js .gc { position: static; margin-bottom: 2.4rem; }
+    html.no-js .build figure { opacity: 1; }
+  </style>
+</head>
+<body class="cx">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="sc-grain" aria-hidden="true"></div>
+
+  <nav class="nav" aria-label="Main">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="index.html" class="nav__logo">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks logo">
+          <div class="nav__logo-text">Guildford Baseball &amp; Softball Club<span>Est. 1992</span></div>
+        </a>
+        <ul class="nav__links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="schedule.html">Schedule</a></li>
+          <li><a href="roster.html">Roster</a></li>
+          <li><a href="juniors.html">Juniors</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="join.html" class="btn btn--primary nav__cta">Try it free</a>
+        <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav__mobile">
+    <a href="about.html">About</a>
+    <a href="schedule.html">Schedule</a>
+    <a href="roster.html">Roster</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="history.html">History</a>
+    <a href="contact.html">Contact</a>
+    <a href="join.html" class="btn btn--primary">Try it free</a>
+  </div>
+
+  <svg class="ghost" viewBox="-60 -60 120 120" aria-hidden="true">
+    <path d="M0 50 L50 0 L0 -50 L-50 0 Z" fill="none" stroke="#f3b53c" stroke-width="3.2"/>
+    <rect x="42" y="-8" width="16" height="16" transform="rotate(45 50 0)" fill="#f3b53c"/>
+    <rect x="-8" y="-58" width="16" height="16" transform="rotate(45 0 -50)" fill="#f3b53c"/>
+    <rect x="-58" y="-8" width="16" height="16" transform="rotate(45 -50 0)" fill="#2e0813" stroke="#f7efe4" stroke-width="3"/>
+    <path d="M-7 47 H7 V53 L0 59 L-7 53 Z" fill="#f7efe4"/>
+    <circle cx="0" cy="-50" r="7" fill="#f7efe4" stroke="#2e0813" stroke-width="2.5"/>
+  </svg>
+
+<main id="main">
+
+  <!-- ============================================================= HERO -->
+  <section class="page-hero page-hero--banner" aria-labelledby="h1">
+    <div class="container">
+      <span class="overline overline--light">Our Story</span>
+      <h1 id="h1">Surrey's baseball community since 1992.</h1>
+      <p>From a merger of two small teams in 1992 to two adult sides, a junior programme and a diamond the club built itself at Kings College.</p>
+      <div class="hero-links"><a class="link" href="#first">How it began</a><a class="link" href="#ground">The diamond</a><a class="link" href="#teams">The teams</a></div>
+    </div>
+  </section>
+
+  <!-- ============================================================= 1992 -->
+  <section id="first" data-sc-act="pin" data-sc-span="1.45" aria-labelledby="found-h">
+    <div data-sc-stage class="found__stage g-900">
+      <h2 class="visually-hidden" id="found-h">How the club began, in 1992</h2>
+      <p class="found__year" aria-hidden="true" data-sc-cue="0 1 0 0.12">1992</p>
+      <div class="found__text">
+        <p class="cx-label" data-sc-cue="0 1 0 0.12">Year one &middot; 1992</p>
+        <p class="found__lede" data-sc-cue="0.02 1 0.2 0.12" data-sc-kinetic="lines">The Wokingham Millers were down to seven players, and a group of friends in Guildford wanted a team. The British Baseball Federation put the two together.</p>
+        <p class="found__quote" data-sc-cue="0.16 1 0.2 0.12">The Guildford Mavericks.</p>
+        <p class="found__coda" data-sc-cue="0.3 1 0.2 0.12">The first game was that April at Waltham Abbey: a loss, in the rain. Home was Northmead Junior School on Grange Road, and the first coach was Nick Jolly. The name has been on Surrey diamonds ever since.</p>
+        <p class="found__source" data-sc-cue="0.3 1 0.2 0.12"><a href="seasons/1992.html">Read the 1992 season</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== HOW IT STARTED -->
+  <section id="started" class="started on-paper" aria-labelledby="started-h">
+    <div class="cx-wrap started__grid">
+      <div class="started__intro" data-sc-in data-sc-stagger="70">
+        <h2 class="sc-display" id="started-h">How the club grew.</h2>
+        <p>From one team in 1992 to three adult teams by 2017, with a junior programme, the cardinal and gold kit and, in 2023, a diamond of its own.</p>
+        <p>The Guildford Millers, formed in 2016, are named after the Wokingham Millers, whose place in Division 2 South the new club took in 1992.</p>
+        <a class="link" href="history.html">Every season in detail <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+      <ol class="miles" data-sc-in data-sc-stagger="60">
+        <li class="mile"><b>1993</b><p>A junior programme starts, run by Richard Williams, Keith Brown and Gary Perrin.</p></li>
+        <li class="mile"><b>2010</b><p>Richard Williams relaunches the juniors as the Broadwater Bobcats: the start of today's junior section.</p></li>
+        <li class="mile"><b>2011</b><div><p>Cardinal and gold replace the navy, white and red of the previous eight years. The first team goes 16&ndash;4.</p>
+          <figure><img src="assets/v2/kit-2011.webp" alt="Will Frawley in the cardinal and gold jersey and cap" width="900" height="1035" loading="lazy"><figcaption>The kit today. Will Frawley, #11.</figcaption></figure></div></li>
+        <li class="mile"><b>2013</b><p>One resident complains about weekend noise, and the club loses its diamond at Broadwater School.</p></li>
+        <li class="mile"><b>2016</b><p>Twenty-five years. A second team, the Millers, is named after the club that started it all.</p></li>
+        <li class="mile"><b>2017</b><p>Three adult teams for the first time, and sixteen debuts in a season, a club record.</p></li>
+        <li class="mile"><b>2021</b><p>The Gold Cats take the field: fifteen players, every one from the junior programme.</p></li>
+        <li class="mile"><b>2023</b><p>The club's own diamond opens at Kings College.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ====================================================== THE GROUND -->
+  <section id="ground" data-sc-act="pin" data-sc-span="4.4" aria-labelledby="ground-h">
+    <div data-sc-stage class="ground__stage">
+      <div class="ground__grid">
+
+        <div class="ground__copy">
+          <div class="gc" data-sc-cue="0.02 0.29 0.16 0.18">
+            <span class="gc__k">The site</span>
+            <p class="gc__big">A school field in Park Barn.</p>
+            <p class="gc__sub">The club partnered with Kings College, which wanted its sports field used for more than football. Games and training use the field behind the school, with parking off Park Barn Way.</p>
+          </div>
+          <div class="gc" data-sc-cue="0.29 0.51 0.14 0.18">
+            <span class="gc__k">The layout &middot; planned from 2018</span>
+            <p class="gc__big">A full-size diamond.</p>
+            <p class="gc__sub">Bases 90 feet apart and the pitcher's mound 60 feet 6 inches from home plate. A 7-metre backstop stands 45 feet behind home; the fencing needed planning permission and scale drawings.</p>
+          </div>
+          <div class="gc" data-sc-cue="0.5 0.75 0.1 0.16">
+            <span class="gc__k">The build &middot; 2022</span>
+            <p class="gc__big">Five dirt <span style="white-space:nowrap">cut-outs.</span></p>
+            <p class="gc__sub">Home plate, the mound and the three bases, plus a keyhole strip from the mound to home: dug 15&nbsp;cm deep, laid on aggregate and topped with a baseball dirt mix. Members did the dirt work; Tate &amp; Tonbridge installed the fencing.</p>
+            <dl class="specs specs--3">
+              <div><dt>18 t</dt><dd>MOT aggregate</dd></div>
+              <div><dt>35 t</dt><dd>Baseball dirt mix</dd></div>
+              <div><dt>400</dt><dd>Clay bricks, mound and boxes</dd></div>
+            </dl>
+            <div class="build">
+              <figure><img src="assets/v2/build-digger.webp" alt="A club member on the hired digger" width="750" height="638" loading="lazy"></figure>
+              <figure><img src="assets/v2/build-compactor.webp" alt="Two members compacting the new infield dirt" width="517" height="750" loading="lazy" style="object-position: 50% 60%"></figure>
+              <figure><img src="assets/v2/build-hose.webp" alt="A member watering the fresh clay" width="532" height="750" loading="lazy" style="object-position: 50% 40%"></figure>
+              <figure><img src="assets/v2/build-lolly.webp" alt="A young member on site while the adults dig behind him" width="750" height="583" loading="lazy" style="object-position: 50% 30%"></figure>
+            </div>
+          </div>
+          <div class="gc" data-sc-cue="0.75 1 0.1 0.06">
+            <span class="gc__k">Today &middot; open since 2023</span>
+            <h2 class="gc__big" id="ground-h">Our own diamond.</h2>
+            <dl class="specs specs--4">
+              <div><dt>&pound;30,000</dt><dd>Total project</dd></div>
+              <div><dt>&pound;12,500</dt><dd>Sport England grant</dd></div>
+              <div><dt>&pound;3,000</dt><dd>BSUK facilities fund</dd></div>
+              <div><dt>2</dt><dd>Batting cages, added 2024</dd></div>
+            </dl>
+            <p class="gc__sub">The rest came from fundraising and club reserves. A scoreboard has been in use since the first season.</p>
+          </div>
+        </div>
+
+        <div class="frame-col">
+          <figure class="frame">
+            <div class="frame__box">
+              <svg class="field" viewBox="300 420 800 480" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The school field at Kings College from the air in July 2021, with the diamond the club built drawn onto it: base paths 90 feet apart, the mound 60 feet 6 inches from home plate, a 7-metre backstop 45 feet behind home, and dirt cut-outs at home plate, the mound and the three bases">
+                <image href="assets/v2/field-2021-graded.webp" x="0" y="0" width="1253" height="909"/>
+                <rect class="field__dim" x="0" y="0" width="1253" height="909"/>
+                <g class="plan">
+                  <path class="plan__line plan__foul" data-draw="0.32 0.40" d="M799 659 L341 325" pathLength="1"/>
+                  <path class="plan__line plan__foul" data-draw="0.32 0.40" d="M799 659 L480 1099" pathLength="1"/>
+                  <path class="plan__line plan__fence plan__fence--low" data-draw="0.40 0.47" d="M799.4 737.5 L702.8 815.2 M775.5 584.1 L659.9 539.4" pathLength="1"/>
+                  <path class="plan__line plan__fence plan__fence--mid" data-draw="0.40 0.46" d="M852.5 694.7 L804.2 733.5 M839.2 608.8 L781.4 586.4" pathLength="1"/>
+                  <path class="plan__line plan__fence" data-draw="0.40 0.45" d="M852.5 694.7 L886.4 667.4 L886.4 667.4 L879.7 624.5 L879.7 624.5 L839.2 608.8" pathLength="1"/>
+                  <circle class="plan__cut" data-o="0.52 0.57" cx="799" cy="659" r="24.6"/>
+                  <path class="plan__cut" data-o="0.55 0.60" d="M775.4 667.4 L774.0 658.1 L704.0 669.0 L705.4 678.3 Z"/>
+                  <circle class="plan__cut" data-o="0.58 0.63" cx="686" cy="676.6" r="18.9"/>
+                  <path class="plan__cut" data-o="0.61 0.66" d="M662.0 559.0 L642.2 544.5 A24.6 24.6 0 0 1 676.6 539.2 Z"/>
+                  <path class="plan__cut" data-o="0.63 0.68" d="M561.0 696.0 L546.4 715.8 A24.6 24.6 0 0 1 541.2 681.5 Z"/>
+                  <path class="plan__cut" data-o="0.65 0.70" d="M699.0 797.0 L684.6 816.9 A24.6 24.6 0 0 0 718.8 811.5 Z"/>
+                  <path class="plan__bp" data-o="0.295 0.315" d="M799 659 L662 559 L561 696 L699 797 Z"/>
+                  <rect class="plan__base" data-o="0.295 0.315" x="656" y="553" width="12" height="12" transform="rotate(45 662 559)"/>
+                  <rect class="plan__base" data-o="0.295 0.315" x="555" y="690" width="12" height="12" transform="rotate(45 561 696)"/>
+                  <rect class="plan__base" data-o="0.295 0.315" x="693" y="791" width="12" height="12" transform="rotate(45 699 797)"/>
+                  <path class="plan__base" data-o="0.295 0.315" d="M794 654 h10 v6 l-5 5 l-5 -5 z"/>
+                  <rect class="plan__base" data-o="0.58 0.63" x="681" y="674.6" width="10" height="4"/>
+                  <circle class="plan__runner" data-o="0.295 0.315 0.46 0.52" cx="561" cy="696" r="6"/>
+                  <g class="plan__dim" data-o="0.44 0.50">
+                    <path d="M801.4 655.8 L812.0 641.2 M664.4 555.8 L675.0 541.2 M809.6 644.5 L672.6 544.5 M808.5 643.4 L810.7 645.6 M671.5 543.4 L673.7 545.6"/>
+                    <path d="M883.9 651.5 L888.6 681.4 M799.9 664.6 L804.5 694.5 M689.2 697.1 L691.5 712.0 M887.7 675.8 L690.7 706.4 M892.4 679.3 L882.9 672.4 M808.4 692.4 L798.9 685.4 M695.4 709.9 L685.9 703.0"/>
+                  </g>
+                  <text class="plan__label" data-o="0.46 0.51" x="746.4" y="587.2" text-anchor="middle" transform="rotate(36.1 746.4 587.2)">90 FT</text>
+                  <text class="plan__label" data-o="0.46 0.51" x="749.2" y="710.7" text-anchor="middle" transform="rotate(-8.8 749.2 710.7)">60 FT 6 IN</text>
+                  <text class="plan__label" data-o="0.46 0.51" x="847.7" y="695.4" text-anchor="middle" transform="rotate(-8.8 847.7 695.4)">45 FT</text>
+                  <text class="plan__label" data-o="0.47 0.52" x="894" y="628">BACKSTOP, 7 M</text>
+                  <g class="plan__legend" data-o="0.47 0.53">
+                    <rect x="930" y="770" width="158" height="92" rx="3" fill="rgba(26,6,12,.82)"/>
+                    <path d="M944 791 H968" stroke="#f3b53c" stroke-width="2.6"/>
+                    <text class="legend__txt" x="978" y="795">Base paths</text>
+                    <path d="M944 815 H968" stroke="#f7efe4" stroke-width="3.2"/>
+                    <text class="legend__txt" x="978" y="819">Backstop fence</text>
+                    <rect x="946" y="832" width="20" height="14" rx="2" fill="#b8733f"/>
+                    <text class="legend__txt" x="978" y="843">Dirt cut-outs</text>
+                  </g>
+                </g>
+              </svg>
+              <svg class="furniture" viewBox="300 420 800 480" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                <g transform="translate(0 0)">
+                  <path class="furn__line" d="M324 876 H513 M324 870 V882 M418.5 872 V880 M513 870 V882"/>
+                  <text class="furn__txt" x="324" y="864" text-anchor="middle">0</text>
+                  <text class="furn__txt" x="418.5" y="864" text-anchor="middle">50</text>
+                  <text class="furn__txt" x="513" y="864" text-anchor="middle">100 FT</text>
+                </g>
+                <g>
+                  <text class="furn__txt" x="1072" y="449" text-anchor="middle">N</text>
+                  <path d="M1072 454 L1079 474 L1072 469 L1065 474 Z" fill="#f7efe4" stroke="rgba(20,4,10,.8)" stroke-width="1.5"/>
+                </g>
+                <text class="furn__credit" x="1090" y="892" text-anchor="end">Imagery &copy; Google</text>
+              </svg>
+              <div class="frame__final">
+                <img src="assets/v2/scoreboard-2023.webp" alt="Players by the Guildford Baseball scoreboard at Kings College in the ground's first season" width="1000" height="599" loading="lazy">
+              </div>
+              <span class="iris-ring" aria-hidden="true"></span>
+              <p class="frame__chip" aria-hidden="true"><i></i><span data-chip>Kings College field, July 2021</span></p>
+            </div>
+          </figure>
+          <div class="steps" role="group" aria-label="The ground, chapter by chapter">
+            <div class="steps__track" aria-hidden="true"><span class="steps__fill"></span></div>
+            <button class="step" type="button" data-p="0.12"><b>Site</b><span>Kings College</span></button>
+            <button class="step" type="button" data-p="0.44"><b>Layout</b><span>Planned from 2018</span></button>
+            <button class="step" type="button" data-p="0.66"><b>Build</b><span>2022</span></button>
+            <button class="step" type="button" data-p="0.93"><b>Today</b><span>Open since 2023</span></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== TEAMS -->
+  <section id="teams" class="teams g-700" aria-labelledby="teams-h">
+    <div class="cx-wrap">
+      <h2 class="sc-display" id="teams-h" data-sc-in>The teams.</h2>
+      <div class="team" data-sc-in data-sc-stagger="70">
+        <figure><img src="assets/v2/face-ben_stobart.webp" alt="Ben Stobart" width="720" height="720" loading="lazy"><figcaption>Ben Stobart, manager and coach</figcaption></figure>
+        <div>
+          <h3>Guildford Mavericks</h3>
+          <span class="div">BBF Division 3 South</span>
+          <p>The first team, playing since 1992. Sunday games, Thursday training at Kings College. Experienced and returning players, and anyone ready to step up.</p>
+          <a class="link" href="roster.html">Mavericks roster <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <div class="team" data-sc-in data-sc-stagger="70">
+        <figure><img src="assets/v2/face-chris_locke.webp" alt="Chris Locke" width="720" height="720" loading="lazy"><figcaption>Chris Locke, manager</figcaption></figure>
+        <div>
+          <h3>Guildford Millers</h3>
+          <span class="div">BBF Division 5 South/Central</span>
+          <p>Founded in 2016 and named for the Wokingham Millers. Built for players finding their feet in league baseball, which is where most new members start. Coached by Charlie Dallimore-Crook.</p>
+          <a class="link" href="roster.html">Millers roster <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <div class="goldcats" data-sc-in>
+        <b>2027</b>
+        <div>
+          <h3>Gold Cats</h3>
+          <p>In 2021 the Gold Cats were fifteen players, all from the junior programme. They return in 2027 as a third adult team in BBF Division 5, open to softball players and newcomers too. And every Saturday morning there are the juniors. <a class="link" href="juniors.html">Junior programme</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================== ETHOS -->
+  <section class="ethos on-paper" aria-labelledby="ethos-h">
+    <div class="cx-wrap ethos__grid" data-sc-in data-sc-stagger="80">
+      <div>
+        <h2 class="sc-display" id="ethos-h">A club, not a franchise.</h2>
+        <p>The Mavericks have always been about the game and the people who love it. The aim isn't to produce elite athletes. It's to give anyone in Surrey the chance to play competitive baseball somewhere welcoming, run by volunteers.</p>
+        <p class="ethos__aff">Members of the British Baseball Federation and Baseball Softball UK. <a class="link" href="docs.html">Club docs and policies</a></p>
+      </div>
+      <blockquote>&ldquo;They don't need to be the fastest or the strongest, as baseball also requires those that can out-think their opponents.&rdquo;<cite>From the club's junior programme</cite></blockquote>
+    </div>
+  </section>
+
+  <!-- ============================================================= CTA -->
+  <section class="cta g-900 gold-rule" aria-labelledby="cta-h">
+    <div class="cx-wrap" data-sc-in data-sc-stagger="70">
+      <h2 class="sc-display" id="cta-h">Be part of the story.</h2>
+      <p>Your first session is free, the club lends you the kit, and nobody minds if you've never played.</p>
+      <div class="cta__row"><a class="btn btn--primary" href="join.html">Try a free session</a><a class="link" href="juniors.html">Juniors: Saturday mornings</a></div>
+    </div>
+  </section>
+
+</main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <img src="assets/logo.jpg" alt="Guildford Mavericks">
+          <p>Guildford's baseball club since 1992. Playing and coaching at Kings College, Southway, Guildford.</p>
+        </div>
+        <div>
+          <div class="footer__heading">Club</div>
+          <ul class="footer__links">
+            <li><a href="about.html">Our story</a></li>
+            <li><a href="join.html">Try a free session</a></li>
+            <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="roster.html">2026 Roster</a></li>
+            <li><a href="juniors.html">Junior Programme</a></li>
+            <li><a href="history.html">Season History</a></li>
+            <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+            <li><a href="news.html">Latest News</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Teams</div>
+          <ul class="footer__links">
+            <li><a href="#teams">Guildford Mavericks</a></li>
+            <li><a href="#teams">Guildford Millers</a></li>
+            <li><a href="#teams">Gold Cats</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Contact</div>
+          <ul class="footer__links">
+            <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
+            <li><a href="contact.html">Get Directions</a></li>
+            <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+            <li><a href="docs.html">Club Docs &amp; Policies</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club.</span>
+        <span class="footer__est">Est. 1992 · Guildford Mavericks</span>
+      </div>
+    </div>
+  </footer>
+
+<script src="js/lenis.min.js"></script>
+<script src="js/scrollcraft.js"></script>
+<script src="js/concept.js"></script>
+<script src="js/theme.js"></script>
+<script>
+(function () {
+  'use strict';
+  var CX = window.CX, $ = CX.$, $$ = CX.$$;
+  var ground = $('#ground'), field = $('.field'), box = $('.frame__box'), ghost = $('.ghost'), dim = $('.field__dim');
+  var drawEls = $$('[data-draw]', field), oEls = $$('[data-o]', field);
+  var finalEl = $('.frame__final'), ring = $('.iris-ring'), chip = $('[data-chip]'), fill = $('.steps__fill'), steps = $$('.step');
+  var builds = $$('.build figure');
+  var VB = [300, 420, 800, 480], ORIGIN = [0.475, 0.538];          // viewBox, and the zoom's centre (the diamond)
+  var FH = [799, 659], F2 = [561, 696];                              // home plate and second base on the aerial
+  var PHASE = [0, 0.29, 0.5, 0.745];                                 // before · plan · dig · opening day
+  var CHIPS = ['Kings College field, July 2021', 'The layout', 'The build, 2022', 'The ground in 2023'];
+  var lastPhase = -1;
+  function navSvg() { return window.GBSC && GBSC.diamond ? GBSC.diamond.querySelector('svg') : null; }
+  function nums(el, a) { return el.getAttribute(a).split(' ').map(Number); }
+
+  // A point on the aerial, on screen: the SVG's slice fit, then the map's own zoom about ORIGIN.
+  function toScreen(x, y, z, r) {
+    var s = Math.max(r.width / VB[2], r.height / VB[3]);
+    var px = (x - VB[0]) * s + (r.width - VB[2] * s) / 2, py = (y - VB[1]) * s + (r.height - VB[3] * s) / 2;
+    var ox = ORIGIN[0] * r.width, oy = ORIGIN[1] * r.height;
+    return [r.left + ox + (px - ox) * z, r.top + oy + (py - oy) * z];
+  }
+  // The timeline fill reaches each chapter's dot exactly as that chapter begins.
+  function fillAt(p) {
+    var K = [[0.02, 0], [0.29, 0.25], [0.5, 0.5], [0.745, 0.75], [0.88, 1]];
+    if (p <= K[0][0]) return 0;
+    for (var i = 1; i < K.length; i++) if (p <= K[i][0]) return CX.lerp(K[i - 1][1], K[i][1], (p - K[i - 1][0]) / (K[i][0] - K[i - 1][0]));
+    return 1;
+  }
+
+  function groundFrame(p) {
+    var R = CX.reduce, r = box.getBoundingClientRect();
+
+    // The map pulls back slowly while the diamond is in the air, then holds.
+    var z = R ? 1 : 1 + 0.08 * (1 - CX.easeOut(CX.ramp(p, 0, 0.3)));
+    field.style.transform = 'scale(' + z.toFixed(4) + ')';
+
+    // The plan: base paths appear as the diamond lands, then the lines draw outward from home.
+    drawEls.forEach(function (el) { var a = nums(el, 'data-draw'); el.style.setProperty('--draw', R ? (p > a[0] ? 1 : 0) : CX.ease(CX.ramp(p, a[0], a[1])).toFixed(4)); });
+    oEls.forEach(function (el) {
+      var a = nums(el, 'data-o'), o = CX.ramp(p, a[0], a[1]);
+      if (a.length > 2) o = Math.min(o, 1 - CX.ramp(p, a[2], a[3]));
+      el.style.setProperty('--o', o.toFixed(3));
+    });
+
+    // The dig: the infield dirt spreads out from home plate.
+    dim.style.opacity = (0.2 * CX.ramp(p, 0.52, 0.62)).toFixed(3);
+    builds.forEach(function (el, i) {
+      var a = 0.53 + 0.03 * i, t = CX.easeOut(CX.ramp(p, a, a + 0.07));
+      el.style.opacity = t.toFixed(3);
+      el.style.transform = R ? 'none' : 'translateY(' + ((1 - t) * 14).toFixed(1) + 'px) scale(' + (0.97 + 0.03 * t).toFixed(4) + ')';
+    });
+
+    // The signature: the diamond in the nav bar leaves the bar, turns to the real field's
+    // orientation and lands exactly on the club's base paths, which take over from it.
+    var nd = navSvg(), t = CX.ramp(p, 0.1, 0.3);
+    if (nd) nd.style.opacity = (p > 0.09 && p < 0.9) ? '0.2' : '';
+    if (!R && t > 0 && p < 0.33) {
+      var nr = nd && nd.getBoundingClientRect(), live = nr && nr.width > 0;
+      var c0 = live ? [nr.left + nr.width / 2, nr.top + nr.height / 2] : [r.left + r.width / 2, r.top - 40];
+      var k0 = live ? (0.36 * nr.width) / 50 : 0.3;
+      var h = toScreen(FH[0], FH[1], z, r), s2 = toScreen(F2[0], F2[1], z, r);
+      var c1 = [(h[0] + s2[0]) / 2, (h[1] + s2[1]) / 2], rr = Math.hypot(h[0] - c1[0], h[1] - c1[1]);
+      var th = Math.atan2(h[1] - c1[1], h[0] - c1[0]) * 180 / Math.PI - 90;
+      var e = CX.ease(t), settle = 1 + 0.035 * Math.sin(Math.PI * CX.ramp(t, 0.78, 1));
+      var cx = CX.lerp(c0[0], c1[0], e), cy = CX.lerp(c0[1], c1[1], e) + Math.sin(Math.PI * e) * 0.07 * innerHeight;
+      ghost.style.transform = 'translate(' + (cx - 60).toFixed(1) + 'px,' + (cy - 60).toFixed(1) + 'px) rotate(' + (th * e).toFixed(2) + 'deg) scale(' + (CX.lerp(k0, rr / 50, e) * settle).toFixed(4) + ')';
+      ghost.style.opacity = (CX.ramp(t, 0, 0.05) * (1 - CX.ramp(p, 0.3, 0.325))).toFixed(3);
+    } else ghost.style.opacity = 0;
+
+    // Opening Day opens out of home plate, a thin gold ring riding its edge.
+    var ir = CX.ramp(p, 0.745, 0.88), hp = toScreen(FH[0], FH[1], z, r);
+    var hx = hp[0] - r.left, hy = hp[1] - r.top, rad = CX.ease(ir) * Math.hypot(r.width, r.height) * 1.05;
+    if (R) { finalEl.style.clipPath = 'none'; finalEl.style.opacity = ir.toFixed(3); ring.style.opacity = 0; }
+    else {
+      finalEl.style.clipPath = 'circle(' + rad.toFixed(1) + 'px at ' + hx.toFixed(1) + 'px ' + hy.toFixed(1) + 'px)';
+      ring.style.width = ring.style.height = (2 * rad).toFixed(1) + 'px';
+      ring.style.transform = 'translate(' + (hx - rad).toFixed(1) + 'px,' + (hy - rad).toFixed(1) + 'px)';
+      ring.style.opacity = (ir > 0 && ir < 1 ? 1 - CX.ramp(ir, 0.5, 1) : 0).toFixed(3);
+    }
+
+    // The chip on the map and the chapter timeline say where in the story you are.
+    var ph = p < PHASE[1] ? 0 : p < PHASE[2] ? 1 : p < PHASE[3] ? 2 : 3;
+    if (ph !== lastPhase) {
+      chip.textContent = CHIPS[ph];
+      if (!R && lastPhase !== -1 && chip.animate) chip.parentNode.animate([{ opacity: 0.25 }, { opacity: 1 }], { duration: 240, easing: 'cubic-bezier(.23,1,.32,1)' });
+      steps.forEach(function (s, i) { s.classList.toggle('is-done', i < ph); s.classList.toggle('is-on', i === ph); if (i === ph) s.setAttribute('aria-current', 'step'); else s.removeAttribute('aria-current'); });
+      lastPhase = ph;
+    }
+    fill.style.transform = 'scaleX(' + fillAt(p).toFixed(4) + ')';
+  }
+
+  CX.frames.push(function (y) {
+    var top = CX.top(ground), vh = innerHeight;
+    if (y > top - 1.2 * vh && y < top + ground.offsetHeight + 0.2 * vh) groundFrame(CX.pinned(ground));
+    else { ghost.style.opacity = 0; var nd = navSvg(); if (nd) nd.style.opacity = ''; }
+  });
+
+  // Each chapter is a button: it takes you to that moment.
+  steps.forEach(function (s) {
+    s.addEventListener('click', function () {
+      CX.jumpTo(CX.top(ground) + (ground.offsetHeight - innerHeight) * +s.getAttribute('data-p'));
+    });
+  });
+
+  // The diamond in the bar: first at 1992, second at the ground, third at the teams, home at the end.
+  function stations() {
+    if (!window.GBSC) return;
+    GBSC.setStations([CX.top($('#first')), CX.top(ground) + 2, CX.top($('#teams')) - 80, document.documentElement.scrollHeight - innerHeight]);
+  }
+  addEventListener('load', stations); addEventListener('resize', stations); setTimeout(stations, 400);
+})();
+</script>
+</body>
+</html>
