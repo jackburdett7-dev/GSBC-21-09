@@ -78,6 +78,37 @@ html.no-js [data-sc-act="pan"] [data-sc-stage] { overflow-x: auto; }
 .cx .page-hero p { margin-top: 1rem; max-width: 46rem; font-size: 1.15rem; line-height: 1.55; color: rgba(247,239,228,.86); }
 .hero-links { display: flex; flex-wrap: wrap; gap: .6rem 1.8rem; margin-top: 1.8rem; }
 
+/* Photo hero: an inner page's first screen. The headline on the dark ground,
+   a club photograph in its own colours on the right, and a gold rule before
+   the page starts (the Juniors and Join heroes, shared). Pick photos that
+   are at least as big as their half of the screen: never stretched. */
+.phero { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; min-height: min(84vh, 50rem); background: #2e0813; color: #f7efe4; border-bottom: 4px solid #f3b53c; overflow: hidden; }
+.phero__text { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end;
+               padding: clamp(8rem, 16vh, 10rem) clamp(1.5rem, 4vw, 4rem) clamp(3rem, 7vh, 4.5rem) max(var(--sc-gutter), calc((100vw - 82rem) / 2 + var(--sc-gutter))); }
+.phero .overline { color: #f3b53c; }
+.phero h1 { margin: .9rem 0 1.2rem; max-width: 12ch; font-size: clamp(3rem, 5.6vw, 6rem); line-height: .92; color: #f7efe4; }
+.phero p { margin: 0; max-width: 34rem; font-size: 1.1rem; line-height: 1.6; color: rgba(247,239,228,.84); }
+.phero .hero-links { margin-top: 1.8rem; }
+.phero__photo { position: relative; margin: 0; overflow: hidden; }
+.phero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.phero__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, #2e0813 0%, rgba(46,8,19,0) 22%); }
+.phero__tag { position: absolute; z-index: 2; right: 1.2rem; bottom: 1.2rem; padding: .35rem .7rem; border-radius: 3px; background: rgba(33,5,16,.84); font-size: .76rem; font-weight: 700; color: #f7efe4; }
+@media (prefers-reduced-motion: no-preference) {
+  html.js .phero__photo { clip-path: inset(0 0 0 100%); }
+  html.js .phero__photo img { transform: scale(1.1); }
+  html.js .phero__text > * { opacity: 0; transform: translateY(18px); }
+  html.js .phero.is-in .phero__photo { clip-path: inset(0); transition: clip-path 1000ms cubic-bezier(.77,0,.18,1) 100ms; }
+  html.js .phero.is-in .phero__photo img { transform: none; transition: transform 2000ms cubic-bezier(.22,1,.36,1) 100ms; }
+  html.js .phero.is-in .phero__text > * { opacity: 1; transform: none; transition: opacity 700ms ease, transform 700ms cubic-bezier(.22,1,.36,1); transition-delay: var(--d, 0ms); }
+}
+@media (max-width: 860px) {
+  .phero { grid-template-columns: 1fr; min-height: 0; }
+  .phero__photo { order: -1; height: 44vh; min-height: 17rem; }
+  .phero__photo::after { background: linear-gradient(0deg, #2e0813 0%, rgba(46,8,19,0) 30%); }
+  .phero__text { padding: 1.4rem var(--sc-gutter) 2.6rem; }
+  .phero h1 { font-size: clamp(2.6rem, 12vw, 3.6rem); }
+}
+
 /* Sections, heads, closes and the phone join bar, shared by the rebuilt inner
    pages (schedule, contact, join). Same values as the home page's own. */
 .sec { padding-block: clamp(4rem, 8vw, 7rem); }

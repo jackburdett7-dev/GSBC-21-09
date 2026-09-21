@@ -34,6 +34,13 @@
   };
   if (window.ScrollCraft) ScrollCraft.mount(document.body);
 
+  /* photo heroes wipe in once their photo is ready (or after a second, whatever happens) */
+  CX.$$('.phero').forEach(function (h) {
+    var go = function () { h.classList.add('is-in'); }, img = h.querySelector('img');
+    if (img && img.decode) img.decode().then(go, go); else go();
+    setTimeout(go, 1200);
+  });
+
   /* Content that arrives late (the news cards, fixtures) moves every act below
      it. Re-measure the engine and GSAP's triggers when the page's height changes. */
   if (window.ScrollCraft && window.ResizeObserver) {
