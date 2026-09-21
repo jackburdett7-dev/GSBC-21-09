@@ -28,7 +28,7 @@
         ? (inNewsDir ? 'post.html?slug=' : 'news/post.html?slug=') + encodeURIComponent(p.slug)
         : (imgBase + p.url);
       return '<a href="' + url + '" class="post-card stagger-child">' +
-        '<div class="post-card__img"><img src="' + imgSrc + '" alt="' + p.title + '" loading="lazy"></div>' +
+        '<div class="post-card__img"><img src="' + imgSrc + '" alt="' + p.title + '" loading="lazy"' + (p.imageFocus ? ' style="object-position:' + p.imageFocus + '"' : '') + '></div>' +
         '<div class="post-card__body">' +
           '<div class="post-card__meta">' + p.category + ' &middot; ' + (p.dateFormatted || formatDate(p.date)) + '</div>' +
           '<h3 class="post-card__title">' + p.title + '</h3>' +

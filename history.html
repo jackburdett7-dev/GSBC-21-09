@@ -26,7 +26,8 @@
     .run__stage { display: flex; align-items: center; }
     .rail { display: flex; align-items: center; gap: clamp(1.25rem, 3vw, 3rem); padding-inline: var(--sc-gutter); width: max-content; }
     .rail > * { flex: none; }
-    .rail__lead { width: clamp(16rem, 26vw, 24rem); }
+    /* The column takes the heading's width, so the big type can never run into 1992. */
+    .rail__lead { width: max-content; min-width: clamp(16rem, 26vw, 24rem); }
     .rail__lead h2 { margin: 0 0 1rem; font-size: clamp(3.4rem, 6.4vw, 6.8rem); }
     .rail__lead p { margin: 0; color: var(--sc-ink-soft); max-width: 22rem; line-height: 1.5; }
     .season { display: block; width: clamp(15rem, 22vw, 21rem); color: var(--sc-ink); }
@@ -140,7 +141,7 @@
     <div data-sc-stage class="run__stage g-700">
       <div class="rail" data-sc-pan="0.05">
         <div class="rail__lead" style="--i:0">
-          <h2 class="sc-display" id="run-h">Some highlights.</h2>
+          <h2 class="sc-display" id="run-h">Some<br>highlights.</h2>
           <p>Six seasons that shaped the club. Each one links to its full write-up.</p>
         </div>
         <a class="season season--type" href="seasons/1992.html" style="--i:1">

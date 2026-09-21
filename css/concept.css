@@ -78,6 +78,34 @@ html.no-js [data-sc-act="pan"] [data-sc-stage] { overflow-x: auto; }
 .cx .page-hero p { margin-top: 1rem; max-width: 46rem; font-size: 1.15rem; line-height: 1.55; color: rgba(247,239,228,.86); }
 .hero-links { display: flex; flex-wrap: wrap; gap: .6rem 1.8rem; margin-top: 1.8rem; }
 
+/* Sections, heads, closes and the phone join bar, shared by the rebuilt inner
+   pages (schedule, contact, join). Same values as the home page's own. */
+.sec { padding-block: clamp(4rem, 8vw, 7rem); }
+.sec__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.sec__head h2 { margin: 0; font-size: clamp(2.8rem, 5.2vw, 5.2rem); }
+.sec__head p { margin: .8rem 0 0; max-width: 38rem; color: var(--sc-ink-soft); line-height: 1.5; }
+.on-paper .sec__head h2 { color: var(--cardinal); }
+.btn--outline-cx { display: inline-flex; align-items: center; gap: .5rem; padding: .9em 1.3em; border: 2px solid currentColor; border-radius: 4px; font-weight: 700; font-size: .9rem; color: var(--sc-ink); }
+.btn--outline-cx:hover { background: color-mix(in oklab, currentColor 10%, transparent); }
+.cta { padding-block: clamp(4rem, 8vw, 6.5rem); }
+.cta h2 { margin: 0 0 1.2rem; font-size: clamp(3.2rem, 6.4vw, 6.4rem); }
+.cta p { margin: 0 0 2rem; font-size: 1.15rem; max-width: 34rem; line-height: 1.5; color: var(--sc-ink-soft); }
+.cta__row { display: flex; flex-wrap: wrap; gap: 1rem 1.6rem; align-items: center; }
+.follow { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
+.follow a { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .9rem; border: 1px solid rgba(247,239,228,.28); border-radius: 4px; font-size: .85rem; font-weight: 600; color: var(--sc-ink); }
+.follow a:hover { border-color: var(--sc-accent); color: var(--sc-accent); }
+.follow svg { width: 15px; height: 15px; fill: currentColor; }
+.joinbar { position: fixed; z-index: 1005; left: .75rem; right: .75rem; bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); display: none; align-items: center; gap: .8rem;
+           padding: .7rem .7rem .7rem 1rem; background: #2e0813; border: 1px solid rgba(243,181,60,.4); border-radius: 6px; box-shadow: 0 10px 30px rgba(10,2,5,.45);
+           transform: translateY(140%); transition: transform 280ms var(--sc-ease-out); }
+.joinbar.is-on { transform: none; }
+.joinbar p { margin: 0; flex: 1; font-size: .8rem; line-height: 1.3; }
+.joinbar p b { display: block; font-size: .9rem; }
+.joinbar .btn { padding: .65rem .9rem; font-size: .8rem; }
+.joinbar button { flex: none; width: 32px; height: 32px; color: var(--sc-ink-soft); font-size: 1.1rem; }
+@media (max-width: 860px) { .joinbar { display: flex; } }
+html.no-js .joinbar { display: none; }
+
 /* Legacy pages that load the scroll engine keep their own page ground and type:
    the engine's base sets the body to the concept canvas, which turned any
    section without its own background maroon. */

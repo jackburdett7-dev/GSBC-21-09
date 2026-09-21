@@ -439,8 +439,8 @@
     <div class="paths__body" data-sc-in data-sc-stagger="70">
       <p class="cx-label">Get involved</p>
       <h2 class="sc-display" id="paths-h">There's a team for you.</h2>
-      <a class="path" href="join.html"><span><strong>Brand new</strong><small>Rookie &middot; Millers</small></span><p>Start with a free session on a Thursday evening. Rookie membership (&pound;125) gets you training and a place in the Millers, our BBF Division 5 team for players finding their feet.</p><span class="go">Try a free session <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
-      <a class="path" href="join.html"><span><strong>Played before</strong><small>Mavericks &middot; Div 3</small></span><p>The Mavericks play in BBF Division 3 South, with Thursday training and Sunday games at Kings College. If you've played before, come and try out.</p><span class="go">Join the Mavericks <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+      <a class="path" href="join.html"><span><strong>Brand new</strong><small>Mavericks or Millers</small></span><p>Start with a free session on a Thursday evening and we'll coach you from the basics. Rookie membership (&pound;125) gets you training and a place in one of our adult teams: the Mavericks or the Millers.</p><span class="go">Try a free session <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+      <a class="path" href="join.html"><span><strong>Played before</strong><small>Mavericks or Millers</small></span><p>Come and try out on a Thursday evening. Adult membership (&pound;200) gets you training and a place in one of our adult teams: the Mavericks in BBF Division 3 South or the Millers in Division 5.</p><span class="go">Come and try out <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
       <a class="path" href="juniors.html"><span><strong>Juniors</strong><small>Ages 4 to 14</small></span><p>Saturday mornings at Kings College: junior baseball for ages 8 to 14 and Teeball for 4 to 7. The first two sessions are free and no kit is needed.</p><span class="go">Junior programme <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
       <p class="paths__note">Adult training: Thursdays, 6:30 to 8:30pm, May to August, with pre-season from January. League games: Sundays, April to August.</p>
     </div>
@@ -686,7 +686,9 @@
     posts.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
     $('[data-news]').innerHTML = posts.slice(0, 3).map(function (p) {
       var t = p.title.replace(/[<>&]/g, '');
-      return '<li><a href="' + p.url + '"><img src="' + p.image + '" alt="" width="195" height="130" loading="lazy"><span><time>' + p.dateFormatted + '</time><b>' + t + '</b></span><span class="arrow" aria-hidden="true">&rarr;</span></a></li>';
+      // imageFocus: where to crop a photo that isn't landscape (a portrait keeps the face)
+      var focus = p.imageFocus ? ' style="object-position:' + p.imageFocus + '"' : '';
+      return '<li><a href="' + p.url + '"><img src="' + p.image + '" alt="" width="195" height="130" loading="lazy"' + focus + '><span><time>' + p.dateFormatted + '</time><b>' + t + '</b></span><span class="arrow" aria-hidden="true">&rarr;</span></a></li>';
     }).join('');
   }).catch(function () {});
 

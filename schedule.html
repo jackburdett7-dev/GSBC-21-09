@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>2026 Schedule | Guildford Mavericks Baseball</title>
   <meta name="description" content="Full 2026 fixtures for the Guildford Mavericks and Millers. BBF Division 3 South & Division 5. Home games at Kings College, Guildford.">
   <link rel="canonical" href="https://guildfordbaseball.co.uk/schedule.html">
@@ -42,61 +42,15 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollcraft.css">
   <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/concept.css">
   <style>
-    .team-tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .team-tab {
-      padding: 0.6rem 1.4rem;
-      border-radius: 50px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      border: 2px solid var(--border);
-      color: var(--muted);
-      cursor: pointer;
-      transition: all var(--transition);
-      background: var(--white);
-    }
-    .team-tab.active, .team-tab:hover {
-      border-color: var(--red);
-      color: var(--red);
-      background: rgba(200,0,37,0.05);
-    }
-    .fixture-section { display: none; }
-    .fixture-section.active { display: block; animation: fadeTab 0.3s ease forwards; }
-    .next-game-banner {
-      background: var(--red);
-      color: var(--white);
-      border-radius: var(--radius-lg);
-      padding: 1.8rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .next-game-banner__label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 0.3rem;
-    }
-    .next-game-banner h3 { color: var(--white); font-size: 1.4rem; }
-    .next-game-banner__meta { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 0.3rem; }
-    .fixture--past { opacity: 0.4; }
-    .fixture--past td { color: var(--muted) !important; }
-    .fixture--next { background: rgba(200,0,37,0.06) !important; border-left: 3px solid var(--red); }
-    .fixture--next td:first-child { font-weight: 700; color: var(--red); }
-
     /* ------------------------------------------------- season calendar -- */
     .cal { background: var(--cream); padding-block: clamp(3.5rem, 7vw, 5.5rem); }
     .cal__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 3rem; margin-bottom: 1.6rem; }
@@ -147,11 +101,79 @@
       .cal__count { margin-left: 0; width: 100%; }
       .fx__opp { font-size: .95rem; }
     }
+    .cal { color: var(--ink); }
+    .cal__head .cx-label { display: flex; align-items: center; gap: .7rem; }
+    .cal__head h2 { margin: 0; font-size: clamp(2.8rem, 5.2vw, 5.2rem); color: var(--cardinal); }
+    .cal__state { display: inline-block; padding: .22rem .6rem; border-radius: 100px; background: var(--maroon-800); color: #f7efe4; font-size: .66rem; letter-spacing: .12em; }
+    .cal--done .cal__state { background: var(--gold-hi); color: #26090f; }
+    .fx__tag { justify-self: start; margin-top: .3rem; padding: .1rem .45rem; border-radius: 3px; background: var(--maroon-800); color: #f7efe4; font-size: .6rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .fx.is-played { opacity: .5; }
+    .fx.is-next { box-shadow: 0 0 0 3px var(--cardinal); }
+    .fx.is-next::before { content: "Next home game"; justify-self: start; margin-bottom: .25rem; font-size: .6rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--cardinal); }
+    .cal__foot { margin: 1.4rem 0 0; font-size: .88rem; color: var(--muted); }
+
+    /* ------------------------------------------------ where the season is --
+       Where the club is in its year, season-aware (the old next-game banner,
+       tables and training band, in the rebuilt pages' look). */
+    .yr-now__grid { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+    .yr-now h2 { margin: 0 0 1.4rem; font-size: clamp(2.8rem, 5vw, 5rem); }
+    .yr-now__status { margin: 0; font-size: clamp(1.15rem, 1.6vw, 1.45rem); line-height: 1.45; font-weight: 600; max-width: 36rem; text-wrap: pretty; }
+    .yr-now__links { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.4rem; margin: 1.8rem 0 2.4rem; }
+    .yr-now figure { position: relative; margin: 0; border-radius: var(--r); overflow: hidden; box-shadow: var(--sc-e2); }
+    .yr-now figure img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 30%; }
+    .yr-now figcaption { position: absolute; left: .8rem; bottom: .8rem; font-size: .74rem; font-weight: 600; background: rgba(33,5,16,.84); padding: .22rem .55rem; border-radius: 3px; }
+    .year { list-style: none; margin: 0; padding: 0; counter-reset: yr; }
+    .year li { position: relative; display: grid; grid-template-columns: 8.5rem 1fr; gap: .3rem 1.4rem; padding: 1.15rem 0 1.15rem 1.4rem; border-left: 3px solid rgba(247,239,228,.16); }
+    .year li::before { content: ""; position: absolute; left: -9px; top: 1.45rem; width: 15px; height: 15px; transform: rotate(45deg); background: #2e0813; border: 3px solid rgba(247,239,228,.4); }
+    .year b { font-family: var(--sc-font-display); font-weight: 800; text-transform: uppercase; font-size: 1.45rem; line-height: 1; color: var(--sc-accent); }
+    .year h3 { margin: 0; font-family: var(--sc-font-text); text-transform: none; letter-spacing: 0; font-size: 1.02rem; font-weight: 700; line-height: 1.35; }
+    .year p { grid-column: 2; margin: 0; font-size: .9rem; line-height: 1.5; color: var(--sc-ink-soft); }
+    .year .tag { display: none; margin-left: .5rem; padding: .12rem .45rem; border-radius: 3px; font-size: .62rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; vertical-align: .15em; }
+    .year li.is-now { border-left-color: var(--sc-accent); }
+    .year li.is-now::before { background: var(--sc-accent); border-color: var(--sc-accent); }
+    .year li.is-now .tag--now, .year li.is-next .tag--next { display: inline-block; }
+    .tag--now { background: var(--sc-accent); color: #26090f; }
+    .tag--next { border: 1px solid rgba(247,239,228,.4); color: var(--sc-ink); }
+    .yr-now__note { margin: 1.4rem 0 0; font-size: .88rem; color: var(--sc-ink-soft); }
+
+    /* --------------------------------------------------------- the archive -- */
+    .arch__grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; }
+    .arch__card { display: flex; flex-direction: column; min-height: 15rem; padding: 1.3rem 1.3rem 1.2rem; border-radius: var(--r); background: #5a0f1d; color: var(--sc-ink); border-top: 4px solid var(--sc-accent); }
+    .arch__card b { font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3rem, 4.4vw, 4.4rem); line-height: .85; color: var(--sc-accent); }
+    .arch__card small { display: block; margin: .7rem 0 .5rem; font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--sc-ink-soft); }
+    .arch__card p { margin: 0 0 1rem; font-size: .92rem; line-height: 1.45; }
+    .arch__card .go { margin-top: auto; font-weight: 700; font-size: .85rem; }
+    .arch__card--now { background: #f3b53c; color: #26090f; border-top-color: #26090f; }
+    .arch__card--now b { color: #420b18; } .arch__card--now small { color: #5a0f1d; }
+    .arch__card--all { background: transparent; border: 1px solid rgba(247,239,228,.28); border-top: 4px solid rgba(247,239,228,.28); justify-content: flex-end; }
+    .arch__card--all p { font-family: var(--sc-font-display); font-weight: 800; text-transform: uppercase; font-size: 1.9rem; line-height: .95; }
+    @media (hover: hover) and (pointer: fine) {
+      .arch__card { transition: transform 180ms var(--sc-ease-out), box-shadow 180ms var(--sc-ease-out); }
+      .arch__card:hover { transform: translateY(-3px); box-shadow: var(--sc-e2); }
+      .arch__card:hover .arrow { transform: translateX(4px); }
+    }
+    .arch__card:focus-visible { outline: 3px solid var(--sc-accent); outline-offset: 3px; }
+    .arch__bbf { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1px solid rgba(247,239,228,.16); }
+    .arch__bbf p { margin: 0; max-width: 36rem; color: var(--sc-ink-soft); }
+
+    @media (max-width: 1100px) { .arch__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 960px) { .yr-now__grid { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) {
+      .arch__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .arch__card { min-height: 12rem; padding: 1rem; }
+      .arch__card--all { grid-column: span 2; min-height: 0; }
+      .year li { grid-template-columns: 1fr; }
+      .year p { grid-column: 1; }
+    }
+    /* section rules like .here p must not restyle the small gold labels */
+    .cx p.cx-label { margin: 0 0 .9rem; max-width: none; font-size: .74rem; line-height: 1.6; color: var(--sc-accent); }
   </style>
 </head>
-<body>
+<body class="cx">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="sc-grain" aria-hidden="true"></div>
 
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="container">
       <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -167,7 +189,7 @@
           <li><a href="history.html">History</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <a href="join.html" class="btn btn--primary btn--pulse nav__cta">Try it free</a>
+        <a href="join.html" class="btn btn--primary nav__cta">Try it free</a>
         <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -183,21 +205,24 @@
     <a href="join.html" class="btn btn--primary">Try it free</a>
   </div>
 
-  <div class="page-hero page-hero--batting">
-    <div class="container fade-up">
-      <span class="overline" style="color: var(--orange);">British Baseball Federation</span>
-      <h1>2026 Season Fixtures</h1>
+<main id="main">
+
+  <section class="page-hero page-hero--batting" aria-labelledby="h1">
+    <div class="container">
+      <span class="overline overline--light">British Baseball Federation</span>
+      <h1 id="h1">2026 Season Fixtures</h1>
       <p>Home games at Kings College, Guildford. Free entry for spectators.</p>
+      <div class="hero-links"><a class="link" href="#calendar">The calendar</a><a class="link" href="#season">What's next</a><a class="link" href="#archive">Past seasons</a></div>
     </div>
-  </div>
+  </section>
 
   <!-- ================================================== SEASON CALENDAR -->
-  <section id="calendar" class="cal" aria-labelledby="cal-h">
-    <div class="container">
+  <section id="calendar" class="cal on-paper" aria-labelledby="cal-h">
+    <div class="cx-wrap">
       <div class="cal__head">
         <div>
-          <span class="overline">2026 Season</span>
-          <h2 id="cal-h"><span class="heading-underline">The season at a glance</span></h2>
+          <p class="cx-label">2026 season <span class="cal__state" data-cal-state>April to August</span></p>
+          <h2 class="sc-display" id="cal-h">The season at a glance.</h2>
         </div>
         <p>Every Sunday, April to August: 26 games for the two adult teams, 13 of them at home. <b>Gold cards are home games at Kings College, free to watch.</b></p>
       </div>
@@ -209,150 +234,94 @@
         <span class="cal__count" aria-live="polite" data-cal-count>26 games</span>
       </div>
       <div class="cal__months">
-        <section class="cal__month" aria-label="April 2026"><h3>April</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-04-19"><b>19</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:0"><span class="fx__team">Mavericks</span><span class="fx__opp">v Kent Buccs</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:1"><span class="fx__team">Millers</span><span class="fx__opp">at Bracknell 3</span><span class="fx__where">Away &middot; <span class="nw">Westmorland Park Pavilion</span></span></li></ul></li><li class="cal__day"><time datetime="2026-04-26"><b>26</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:2"><span class="fx__team">Mavericks</span><span class="fx__opp">at Croydon Pirates 2</span><span class="fx__where">Away &middot; <span class="nw">Roundshaw D1</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:3"><span class="fx__team">Millers</span><span class="fx__opp">v Richmond Dukes</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li></ol></section><section class="cal__month" aria-label="May 2026"><h3>May</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-05-03"><b>3</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:4"><span class="fx__team">Mavericks</span><span class="fx__opp">at Kent Buccs</span><span class="fx__where">Away &middot; <span class="nw">Williams Field</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:5"><span class="fx__team">Millers</span><span class="fx__opp">v Herts Eagles</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-05-17"><b>17</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:6"><span class="fx__team">Mavericks</span><span class="fx__opp">at London Meteors</span><span class="fx__where">Away &middot; <span class="nw">Finsbury D3</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:7"><span class="fx__team">Millers</span><span class="fx__opp">v Capybaras</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-05-24"><b>24</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:8"><span class="fx__team">Mavericks</span><span class="fx__opp">v London Meteors</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li></ol></section><section class="cal__month" aria-label="June 2026"><h3>June</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-06-07"><b>7</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:9"><span class="fx__team">Mavericks</span><span class="fx__opp">v Richmond Knights</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:10"><span class="fx__team">Millers</span><span class="fx__opp">at Capybaras</span><span class="fx__where">Away &middot; <span class="nw">Enfield Playing Fields</span></span></li></ul></li><li class="cal__day"><time datetime="2026-06-14"><b>14</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:11"><span class="fx__team">Mavericks</span><span class="fx__opp">v Hurricanes Baseball</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:12"><span class="fx__team">Millers</span><span class="fx__opp">at Herts Eagles</span><span class="fx__where">Away &middot; <span class="nw">Basing Hill</span></span></li></ul></li><li class="cal__day"><time datetime="2026-06-28"><b>28</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="millers" data-home="true" style="--n:13"><span class="fx__team">Millers</span><span class="fx__opp">v Bracknell 3</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li></ol></section><section class="cal__month" aria-label="July 2026"><h3>July</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-07-05"><b>5</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:14"><span class="fx__team">Mavericks</span><span class="fx__opp">v Croydon Pirates 2</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:15"><span class="fx__team">Millers</span><span class="fx__opp">at Richmond Dukes</span><span class="fx__where">Away &middot; <span class="nw">Flood Field</span></span></li></ul></li><li class="cal__day"><time datetime="2026-07-12"><b>12</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:16"><span class="fx__team">Mavericks</span><span class="fx__opp">at Hurricanes Baseball</span><span class="fx__where">Away &middot; <span class="nw">Sackville School</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:17"><span class="fx__team">Millers</span><span class="fx__opp">v Richmond Dukes</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-07-19"><b>19</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:18"><span class="fx__team">Mavericks</span><span class="fx__opp">v London Marauders</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-07-26"><b>26</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="millers" data-home="false" style="--n:19"><span class="fx__team">Millers</span><span class="fx__opp">at Bracknell 3</span><span class="fx__where">Away &middot; <span class="nw">Westmorland Park Pavilion</span></span></li></ul></li></ol></section><section class="cal__month" aria-label="August 2026"><h3>August</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-08-02"><b>2</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:20"><span class="fx__team">Mavericks</span><span class="fx__opp">v Richmond Dragons</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-08-09"><b>9</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:21"><span class="fx__team">Mavericks</span><span class="fx__opp">at Richmond Dragons</span><span class="fx__where">Away &middot; <span class="nw">Flood Field</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:22"><span class="fx__team">Millers</span><span class="fx__opp">v Herts Eagles</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-08-16"><b>16</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:23"><span class="fx__team">Mavericks</span><span class="fx__opp">at Richmond Knights</span><span class="fx__where">Away &middot; <span class="nw">Connare Field</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:24"><span class="fx__team">Millers</span><span class="fx__opp">at Capybaras</span><span class="fx__where">Away &middot; <span class="nw">Enfield Playing Fields</span></span></li></ul></li><li class="cal__day"><time datetime="2026-08-23"><b>23</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:25"><span class="fx__team">Mavericks</span><span class="fx__opp">at London Marauders</span><span class="fx__where">Away &middot; <span class="nw">Enfield Playing Fields</span></span></li></ul></li></ol></section>
+        <section class="cal__month" aria-label="April 2026"><h3>April</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-04-19"><b>19</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:0"><span class="fx__team">Mavericks</span><span class="fx__opp">v Kent Buccs</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:1"><span class="fx__team">Millers</span><span class="fx__opp">at Bracknell 3</span><span class="fx__where">Away &middot; <span class="nw">Westmorland Park Pavilion</span></span></li></ul></li><li class="cal__day"><time datetime="2026-04-26"><b>26</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:2"><span class="fx__team">Mavericks</span><span class="fx__opp">at Croydon Pirates 2</span><span class="fx__where">Away &middot; <span class="nw">Roundshaw D1</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:3"><span class="fx__team">Millers</span><span class="fx__opp">v Richmond Dukes</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span><span class="fx__tag">Timed game</span></li></ul></li></ol></section><section class="cal__month" aria-label="May 2026"><h3>May</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-05-03"><b>3</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:4"><span class="fx__team">Mavericks</span><span class="fx__opp">at Kent Buccs</span><span class="fx__where">Away &middot; <span class="nw">Williams Field</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:5"><span class="fx__team">Millers</span><span class="fx__opp">v Herts Eagles</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-05-17"><b>17</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:6"><span class="fx__team">Mavericks</span><span class="fx__opp">at London Meteors</span><span class="fx__where">Away &middot; <span class="nw">Finsbury D3</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:7"><span class="fx__team">Millers</span><span class="fx__opp">v Capybaras</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span><span class="fx__tag">Timed game</span></li></ul></li><li class="cal__day"><time datetime="2026-05-24"><b>24</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:8"><span class="fx__team">Mavericks</span><span class="fx__opp">v London Meteors</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li></ol></section><section class="cal__month" aria-label="June 2026"><h3>June</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-06-07"><b>7</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:9"><span class="fx__team">Mavericks</span><span class="fx__opp">v Richmond Knights</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:10"><span class="fx__team">Millers</span><span class="fx__opp">at Capybaras</span><span class="fx__where">Away &middot; <span class="nw">Enfield Playing Fields</span></span></li></ul></li><li class="cal__day"><time datetime="2026-06-14"><b>14</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:11"><span class="fx__team">Mavericks</span><span class="fx__opp">v Hurricanes Baseball</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:12"><span class="fx__team">Millers</span><span class="fx__opp">at Herts Eagles</span><span class="fx__where">Away &middot; <span class="nw">Basing Hill</span></span><span class="fx__tag">Timed game</span></li></ul></li><li class="cal__day"><time datetime="2026-06-28"><b>28</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="millers" data-home="true" style="--n:13"><span class="fx__team">Millers</span><span class="fx__opp">v Bracknell 3</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li></ol></section><section class="cal__month" aria-label="July 2026"><h3>July</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-07-05"><b>5</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:14"><span class="fx__team">Mavericks</span><span class="fx__opp">v Croydon Pirates 2</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:15"><span class="fx__team">Millers</span><span class="fx__opp">at Richmond Dukes</span><span class="fx__where">Away &middot; <span class="nw">Flood Field</span></span></li></ul></li><li class="cal__day"><time datetime="2026-07-12"><b>12</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:16"><span class="fx__team">Mavericks</span><span class="fx__opp">at Hurricanes Baseball</span><span class="fx__where">Away &middot; <span class="nw">Sackville School</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:17"><span class="fx__team">Millers</span><span class="fx__opp">v Richmond Dukes</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-07-19"><b>19</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:18"><span class="fx__team">Mavericks</span><span class="fx__opp">v London Marauders</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-07-26"><b>26</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="millers" data-home="false" style="--n:19"><span class="fx__team">Millers</span><span class="fx__opp">at Bracknell 3</span><span class="fx__where">Away &middot; <span class="nw">Westmorland Park Pavilion</span></span></li></ul></li></ol></section><section class="cal__month" aria-label="August 2026"><h3>August</h3><ol class="cal__days"><li class="cal__day"><time datetime="2026-08-02"><b>2</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--home" data-team="mavericks" data-home="true" style="--n:20"><span class="fx__team">Mavericks</span><span class="fx__opp">v Richmond Dragons</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-08-09"><b>9</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:21"><span class="fx__team">Mavericks</span><span class="fx__opp">at Richmond Dragons</span><span class="fx__where">Away &middot; <span class="nw">Flood Field</span></span></li><li class="fx fx--home" data-team="millers" data-home="true" style="--n:22"><span class="fx__team">Millers</span><span class="fx__opp">v Herts Eagles</span><span class="fx__where">Home &middot; <span class="nw">Kings College</span></span></li></ul></li><li class="cal__day"><time datetime="2026-08-16"><b>16</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:23"><span class="fx__team">Mavericks</span><span class="fx__opp">at Richmond Knights</span><span class="fx__where">Away &middot; <span class="nw">Connare Field</span></span></li><li class="fx fx--away" data-team="millers" data-home="false" style="--n:24"><span class="fx__team">Millers</span><span class="fx__opp">at Capybaras</span><span class="fx__where">Away &middot; <span class="nw">Enfield Playing Fields</span></span></li></ul></li><li class="cal__day"><time datetime="2026-08-23"><b>23</b><span>Sun</span></time><ul class="cal__fx"><li class="fx fx--away" data-team="mavericks" data-home="false" style="--n:25"><span class="fx__team">Mavericks</span><span class="fx__opp">at London Marauders</span><span class="fx__where">Away &middot; <span class="nw">Enfield Playing Fields</span></span></li></ul></li></ol></section>
+      </div>
+      <p class="cal__foot">Mavericks: BBF Division 3 South. Millers: BBF Division 5 South/Central. The Gold Cats return in 2027, in BBF Division 5.</p>
+    </div>
+  </section>
+
+  <!-- ============================================== WHERE THE SEASON IS -->
+  <section id="season" class="sec yr-now g-900" aria-labelledby="season-h">
+    <div class="cx-wrap yr-now__grid">
+      <div data-sc-in data-sc-stagger="70">
+        <p class="cx-label">Where the season stands</p>
+        <h2 class="sc-display" id="season-h" data-season-h>The club year.</h2>
+        <p class="yr-now__status" data-season-status>League games are on Sundays from April to August, with home games at Kings College. Adult training runs on Thursday evenings, and junior sessions on Saturday mornings.</p>
+        <div class="yr-now__links">
+          <a class="btn btn--primary" href="join.html">Try a free session</a>
+          <a class="link" href="contact.html#directions">Get directions <span class="arrow" aria-hidden="true">&rarr;</span></a>
+          <a class="link" href="juniors.html">Juniors: Saturday mornings <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        </div>
+        <figure>
+          <img src="assets/gallery/2024/2024-playoffs.jpg" alt="A Millers pitcher delivers during the play-off against Bracknell, September 2024" width="1027" height="1000" loading="lazy">
+          <figcaption>Millers &middot; 2024 play-offs</figcaption>
+        </figure>
+      </div>
+      <div data-sc-in>
+        <p class="cx-label">The club year</p>
+        <ol class="year" data-year>
+          <li data-months="0 1"><b>Jan &ndash; Feb</b><h3>Indoor pre-season <span class="tag tag--now">Now</span><span class="tag tag--next">Next</span></h3><p>Broadwater School, Summers Road, Godalming.</p></li>
+          <li data-months="2"><b>March</b><h3>Outdoor pre-season <span class="tag tag--now">Now</span><span class="tag tag--next">Next</span></h3><p>George Abbot School, Guildford.</p></li>
+          <li data-months="3 4 5 6 7"><b>Apr &ndash; Aug</b><h3>The league season <span class="tag tag--now">Now</span><span class="tag tag--next">Next</span></h3><p>BBF games on Sundays, home games at Kings College. Thursday training, 6:30 to 8:30pm, May to August.</p></li>
+          <li data-months="8"><b>September</b><h3>Post-season <span class="tag tag--now">Now</span><span class="tag tag--next">Next</span></h3><p>Play-offs, and the juniors' Youth National Championships.</p></li>
+          <li data-months="9"><b>October</b><h3>Awards evening <span class="tag tag--now">Now</span><span class="tag tag--next">Next</span></h3><p>The season's awards, and the end of the club year.</p></li>
+        </ol>
+        <p class="yr-now__note">Your first session is free, in any part of the year.</p>
       </div>
     </div>
   </section>
 
-  <section class="section section--white">
-    <div class="container">
-
-      <!-- Next home game -->
-      <div class="next-game-banner fade-up">
-        <div>
-          <div class="next-game-banner__label">&#128197; Next Home Game</div>
-          <h3>Mavericks vs Kent Buccs</h3>
-          <div class="next-game-banner__meta">Sunday 19 April 2026 &bull; Kings College, Guildford &bull; BBF Division 3 South</div>
-        </div>
-        <a href="contact.html#directions" class="btn btn--outline">Get Directions &rarr;</a>
+  <!-- ====================================================== THE ARCHIVE -->
+  <section id="archive" class="sec g-800" aria-labelledby="archive-h">
+    <div class="cx-wrap">
+      <div class="sec__head" data-sc-in data-sc-stagger="60">
+        <div><p class="cx-label">Past seasons</p><h2 class="sc-display" id="archive-h">Every season, on file.</h2></div>
+        <p>Each finished season goes into the club's record books, with its results and a write-up.</p>
       </div>
-
-      <!-- season photo -->
-      <div class="fade-up" style="border-radius:16px; overflow:hidden; margin-bottom:2rem; position:relative;">
-        <img src="assets/gallery/2024/2024-playoffs.jpg" alt="Millers v Bracknell play-off, September 2024" style="display:block; width:100%; max-height:420px; object-fit:cover; object-position:center 24%;">
-        <div style="position:absolute; bottom:1rem; left:1.5rem; color:#fff; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; background:rgba(0,0,0,0.55); padding:0.3rem 0.8rem; border-radius:50px;">Millers · 2024 Play-offs</div>
+      <div class="arch__grid" data-sc-in data-sc-stagger="60">
+        <a class="arch__card arch__card--now" href="#calendar"><b>2026</b><small data-arch-state>This season</small><p>26 games for the Mavericks and the Millers, April to August.</p><span class="go">The fixtures <span class="arrow" aria-hidden="true">&uarr;</span></span></a>
+        <a class="arch__card" href="seasons/2025.html"><b>2025</b><small>Mavericks: runners-up</small><p>Runners-up in the regular season. Semi-final exit to Cardiff Merlins.</p><span class="go">Read 2025 <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+        <a class="arch__card" href="seasons/2024.html"><b>2024</b><small>Millers: play-offs</small><p>The Millers reach the play-offs for the first time.</p><span class="go">Read 2024 <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+        <a class="arch__card" href="seasons/2023.html"><b>2023</b><small>Kings College: year one</small><p>The first season at Kings College. Millers go 22&ndash;7.</p><span class="go">Read 2023 <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
+        <a class="arch__card arch__card--all" href="history.html#books"><p>Every season since 1992</p><span class="go">The record books <span class="arrow" aria-hidden="true">&rarr;</span></span></a>
       </div>
-
-      <!-- Team tabs -->
-      <div class="team-tabs fade-up">
-        <button class="team-tab active" data-tab="mavericks">Mavericks — Div 3 South</button>
-        <button class="team-tab" data-tab="millers">Millers — Div 5 South/Central</button>
-        <button class="team-tab" data-tab="goldcats">Gold Cats</button>
-      </div>
-
-      <!-- Mavericks fixtures -->
-      <div class="fixture-section active" id="tab-mavericks">
-        <div class="table-scroll">
-          <table class="fixture-table">
-            <thead>
-              <tr><th>Date</th><th>Opponent</th><th>Venue</th><th>H/A</th><th>Result</th></tr>
-            </thead>
-            <tbody>
-              <tr class="no-game"><td>Sun 12 Apr</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 1</td><td>—</td></tr>
-              <tr class="home"><td>Sun 19 Apr</td><td>Kent Buccs</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr><td>Sun 26 Apr</td><td>@ Croydon Pirates 2</td><td>Roundshaw D1</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr><td>Sun 3 May</td><td>@ Kent Buccs</td><td>Williams Field</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 10 May</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 5</td><td>—</td></tr>
-              <tr><td>Sun 17 May</td><td>@ London Meteors</td><td>Finsbury D3</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr class="home"><td>Sun 24 May</td><td>London Meteors</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 31 May</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 8</td><td>—</td></tr>
-              <tr class="home"><td>Sun 7 Jun</td><td>Richmond Knights</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr class="home"><td>Sun 14 Jun</td><td>Hurricanes Baseball</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 21 Jun</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 11</td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 28 Jun</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 12</td><td>—</td></tr>
-              <tr class="home"><td>Sun 5 Jul</td><td>Croydon Pirates 2</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr><td>Sun 12 Jul</td><td>@ Hurricanes Baseball</td><td>Sackville School</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr class="home"><td>Sun 19 Jul</td><td>London Marauders</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 26 Jul</td><td colspan="3" style="color:var(--muted); font-style:italic;">No fixture — Week 16</td><td>—</td></tr>
-              <tr class="home"><td>Sun 2 Aug</td><td>Richmond Dragons</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr><td>Sun 9 Aug</td><td>@ Richmond Dragons</td><td>Flood Field</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr><td>Sun 16 Aug</td><td>@ Richmond Knights</td><td>Connare Field</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr><td>Sun 23 Aug</td><td>@ London Marauders</td><td>Enfield Playing Fields</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Millers fixtures -->
-      <div class="fixture-section" id="tab-millers">
-        <div class="table-scroll">
-          <table class="fixture-table">
-            <thead>
-              <tr><th>Date</th><th>Opponent</th><th>Venue</th><th>H/A</th><th>Result</th></tr>
-            </thead>
-            <tbody>
-              <tr class="no-game"><td>Sun 12 Apr</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 1</td><td>—</td></tr>
-              <tr><td>Sun 19 Apr</td><td>@ Bracknell 3</td><td>Westmorland Park Pavilion</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr class="home"><td>Sun 26 Apr</td><td>Richmond Dukes</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td><span class="fixture-badge" style="background:var(--orange);color:#fff;font-size:0.72rem;">Timed</span></td></tr>
-              <tr class="home"><td>Sun 3 May</td><td>Herts Eagles</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 10 May</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 5</td><td>—</td></tr>
-              <tr class="home"><td>Sun 17 May</td><td>Capybaras</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td><span class="fixture-badge" style="background:var(--orange);color:#fff;font-size:0.72rem;">Timed</span></td></tr>
-              <tr class="no-game"><td>Sun 24 May</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 7</td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 31 May</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 8</td><td>—</td></tr>
-              <tr><td>Sun 7 Jun</td><td>@ Capybaras</td><td>Enfield Playing Fields</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr><td>Sun 14 Jun</td><td>@ Herts Eagles</td><td>Basing Hill</td><td><span class="fixture-badge away">Away</span></td><td><span class="fixture-badge" style="background:var(--orange);color:#fff;font-size:0.72rem;">Timed</span></td></tr>
-              <tr class="no-game"><td>Sun 21 Jun</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 11</td><td>—</td></tr>
-              <tr class="home"><td>Sun 28 Jun</td><td>Bracknell 3</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr><td>Sun 5 Jul</td><td>@ Richmond Dukes</td><td>Flood Field</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr class="home"><td>Sun 12 Jul</td><td>Richmond Dukes</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 19 Jul</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 15</td><td>—</td></tr>
-              <tr><td>Sun 26 Jul</td><td>@ Bracknell 3</td><td>Westmorland Park Pavilion</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-              <tr class="no-game"><td>Sun 2 Aug</td><td colspan="3" style="color:var(--muted); font-style:italic;">No game — Week 17</td><td>—</td></tr>
-              <tr class="home"><td>Sun 9 Aug</td><td>Herts Eagles</td><td>Kings College, Guildford</td><td><span class="fixture-badge">Home</span></td><td>—</td></tr>
-              <tr><td>Sun 16 Aug</td><td>@ Capybaras</td><td>Enfield Playing Fields</td><td><span class="fixture-badge away">Away</span></td><td>—</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Gold Cats fixtures -->
-      <div class="fixture-section" id="tab-goldcats">
-        <div style="background: var(--off-white); border-radius: var(--radius-lg); padding: 2.5rem; text-align: center;">
-          <p style="color: var(--muted); margin: 0;">Gold Cats 2026 schedule to be confirmed. <a href="contact.html" style="color: var(--red);">Contact us</a> for the latest information.</p>
-        </div>
-      </div>
-
-      <!-- BBF standings link -->
-      <div class="fade-up" style="margin-top: 2rem; text-align: center;">
-        <p style="color: var(--muted); font-size: 0.9rem;">For full BBF standings and results across all divisions, visit the official British Baseball Federation website.</p>
-        <a href="https://www.bbf.uk.com" target="_blank" rel="noopener" class="btn btn--outline-dark" style="margin-top: 0.75rem;">BBF Standings &rarr;</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Training schedule note -->
-  <section class="section section--dark">
-    <div class="container text-center fade-up">
-      <span class="overline" style="color: var(--orange);">Weekly Training</span>
-      <h2>Join us on the diamond</h2>
-      <p style="color: rgba(255,255,255,0.72); margin-inline: auto; margin-bottom: 2rem;">Adult training runs every <strong style="color: var(--white);">Thursday evening</strong> at Kings College, Guildford. Junior sessions are <strong style="color: var(--white);">Saturday mornings</strong>. First session is always free.</p>
-      <div class="btn-group" style="justify-content: center;">
-        <a href="join.html" class="btn btn--primary">Chat with Our Club Assistant &rarr;</a>
-        <a href="contact.html#directions" class="btn btn--outline">Get Directions</a>
+      <div class="arch__bbf" data-sc-in>
+        <p>For full BBF standings and results across all divisions, visit the official British Baseball Federation website.</p>
+        <a class="btn--outline-cx" href="https://www.bbf.uk.com" target="_blank" rel="noopener">BBF standings <span class="arrow" aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
+
+  <section class="cta g-900 gold-rule" aria-labelledby="cta-h">
+    <div class="cx-wrap" data-sc-in data-sc-stagger="70">
+      <h2 class="sc-display" id="cta-h">Join us on the diamond.</h2>
+      <p>Adult training runs every Thursday evening at Kings College, Guildford. Junior sessions are Saturday mornings. Your first session is always free.</p>
+      <div class="cta__row"><a class="btn btn--primary" href="join.html">Try a free session</a><a class="link" href="join.html#join-chat">Chat with our club assistant</a><a class="link" href="contact.html#directions">Get directions</a></div>
+    </div>
+  </section>
+
+</main>
 
   <footer class="footer">
     <div class="container">
       <div class="footer__grid">
         <div class="footer__brand">
           <img src="assets/logo.jpg" alt="Guildford Mavericks">
-          <p>Guildford's only baseball and softball club, playing and coaching since 1992 at Kings College, Surrey.</p>
+          <p>Guildford's only baseball and softball club. Playing and coaching since 1992 at Kings College, Southway, Guildford.</p>
           <div class="footer__social">
-            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.883v2.27h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a>
-            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Twitter/X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.69.24 2.69.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="X / Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24H16.17l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25H8.08l4.25 5.62 5.91-5.62zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
+            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></a>
+            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 00.5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 002.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 002.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></a>
           </div>
         </div>
         <div>
           <div class="footer__heading">Club</div>
           <ul class="footer__links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="join.html">Join the Club</a></li>
+            <li><a href="about.html">About us</a></li>
+            <li><a href="join.html">Try a free session</a></li>
             <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="roster.html">2026 Roster</a></li>
             <li><a href="juniors.html">Junior Programme</a></li>
             <li><a href="history.html">Season History</a></li>
             <li><a href="hall-of-fame.html">Hall of Fame</a></li>
@@ -364,7 +333,7 @@
           <ul class="footer__links">
             <li><a href="about.html#teams">Guildford Mavericks</a></li>
             <li><a href="about.html#teams">Guildford Millers</a></li>
-            <li><a href="about.html#teams">Gold Cats</a></li>
+            <li><a href="about.html#teams">Gold Cats (from 2027)</a></li>
           </ul>
         </div>
         <div>
@@ -373,89 +342,22 @@
             <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
             <li><a href="contact.html">Get Directions</a></li>
             <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+            <li><a href="docs.html">Club Docs &amp; Policies</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__bottom">
-        <span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved.</span>
-        <span class="footer__est">Est. 1992 &mdash; Guildford Mavericks</span>
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club.</span>
+        <span class="footer__est">Est. 1992 · Guildford Mavericks</span>
       </div>
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  
-  <script src="js/main.js"></script>
-  <script>
-    // Tab switching
-    document.querySelectorAll('.team-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.team-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.fixture-section').forEach(s => s.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-      });
-    });
-
-    // Auto-highlight past games and next upcoming game
-    (function() {
-      const M = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
-      const today = new Date(); today.setHours(0,0,0,0);
-
-      document.querySelectorAll('.fixture-table tbody tr').forEach(row => {
-        const cell = row.querySelector('td');
-        if (!cell) return;
-        const m = cell.textContent.trim().match(/\w+\s+(\d{1,2})\s+(\w{3})/);
-        if (!m || M[m[2]] === undefined) return;
-        const d = new Date(2026, M[m[2]], parseInt(m[1]));
-        if (d < today) row.classList.add('fixture--past');
-      });
-
-      // Mark the next real game in each table (first non-past, non-no-game row)
-      document.querySelectorAll('.fixture-table').forEach(table => {
-        let marked = false;
-        table.querySelectorAll('tbody tr').forEach(row => {
-          if (marked || row.classList.contains('no-game') || row.classList.contains('fixture--past')) return;
-          row.classList.add('fixture--next');
-          marked = true;
-        });
-      });
-
-      // Next Home Game banner: the earliest upcoming home game for either team.
-      // Out of season it says so, instead of showing a game that has already been played.
-      const banner = document.querySelector('.next-game-banner');
-      const TEAMS = [['mavericks', 'Mavericks', 'BBF Division 3 South'], ['millers', 'Millers', 'BBF Division 5']];
-      const upcoming = [];
-      TEAMS.forEach(([id, name, div]) => {
-        const t = document.querySelector('#tab-' + id + ' .fixture-table');
-        if (!t) return;
-        t.querySelectorAll('tbody tr.home').forEach(r => {
-          if (r.classList.contains('fixture--past')) return;
-          const cells = r.querySelectorAll('td');
-          const m = cells[0] && cells[0].textContent.trim().match(/\w+\s+(\d{1,2})\s+(\w{3})/);
-          if (m && M[m[2]] !== undefined) upcoming.push({ d: new Date(2026, M[m[2]], +m[1]), cells, name, div });
-        });
-      });
-      upcoming.sort((a, b) => a.d - b.d);
-      if (banner && upcoming.length) {
-        const g = upcoming[0];
-        banner.querySelector('h3').textContent = g.name + ' vs ' + g.cells[1].textContent.trim();
-        banner.querySelector('.next-game-banner__meta').textContent =
-          g.cells[0].textContent.trim() + ' 2026 • ' + g.cells[2].textContent.trim() + ' • ' + g.div;
-      } else if (banner) {
-        banner.querySelector('.next-game-banner__label').textContent = 'Season finished';
-        banner.querySelector('h3').textContent = 'The 2026 season is over. See you in the new year.';
-        banner.querySelector('.next-game-banner__meta').textContent =
-          'Pre-season starts in January, indoors at Broadwater School, Godalming. League games return in April.';
-        const a = banner.querySelector('a');
-        if (a) { a.href = 'join.html'; a.textContent = 'Try a free session'; }
-      }
-    })();
-  </script>
-<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
-  <script defer src="/_vercel/insights/script.js"></script>
-  <script>
+<script src="js/lenis.min.js"></script>
+<script src="js/scrollcraft.js"></script>
+<script src="js/concept.js"></script>
+<script src="js/theme.js"></script>
+<script>
   (function () {
     'use strict';
     var cal = document.getElementById('calendar'); if (!cal) return;
@@ -479,8 +381,45 @@
         count.textContent = shown + (shown === 1 ? ' game' : ' games') + (show === 'home' ? ' at Kings College' : show === 'all' ? '' : ' for the ' + (show === 'mavericks' ? 'Mavericks' : 'Millers'));
       });
     });
+
+    /* Where the season stands, from the calendar's own dates: before it
+       starts, in play (next home game marked, played games faded), or done
+       (the season is filed with the others and the page looks to next year). */
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    function dayOf(card) { return new Date(card.closest('.cal__day').querySelector('time').getAttribute('datetime') + 'T12:00:00'); }
+    function when(d) { return d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }); }
+    var first = dayOf(cards[0]), last = dayOf(cards[cards.length - 1]), yr = first.getFullYear();
+    var next = cards.filter(function (c) { return c.getAttribute('data-home') === 'true' && dayOf(c) >= today; })[0];
+    var status = document.querySelector('[data-season-status]'), head = document.querySelector('[data-season-h]');
+    var state = cal.querySelector('[data-cal-state]'), arch = document.querySelector('[data-arch-state]');
+    function game(c) { return c.querySelector('.fx__team').textContent + ' ' + c.querySelector('.fx__opp').textContent; }
+    if (today > last) {
+      cal.classList.add('cal--done'); state.textContent = 'Complete'; arch.textContent = 'Complete';
+      head.textContent = 'See you in ' + (yr + 1) + '.';
+      status.textContent = 'The ' + yr + ' season is over. Pre-season starts in January, indoors at Broadwater School in Godalming, then outdoors at George Abbot School in March. League games return to Kings College in April, and the ' + (yr + 1) + ' fixtures will appear here once the BBF publishes them.';
+    } else {
+      cards.forEach(function (c) { if (dayOf(c) < today) c.classList.add('is-played'); });
+      if (next) next.classList.add('is-next');
+      state.textContent = today < first ? 'Starts ' + when(first) : 'In play';
+      head.textContent = today < first ? 'The season is coming.' : 'The season is on.';
+      status.textContent = next
+        ? 'Next home game: ' + game(next) + ', ' + when(dayOf(next)) + ', at Kings College. Free to watch.'
+        : 'The last home game of ' + yr + ' has been played. The season finishes on ' + when(last) + '.';
+    }
+    // the club year: this part of it, and the next
+    var m = today.getMonth(), steps = [].slice.call(document.querySelectorAll('[data-year] li'));
+    var at = -1; steps.forEach(function (li, i) { if (li.getAttribute('data-months').split(' ').indexOf(String(m)) > -1) at = i; });
+    if (at > -1) steps[at].classList.add('is-now');
+    steps[at > -1 ? (at + 1) % steps.length : 0].classList.add('is-next');
   })();
-  </script>
-<script src="js/theme.js" defer></script>
+</script>
+<script>
+  // The diamond in the bar: first at the calendar, second at where the season stands, third at the archive, home at the end.
+  (function () {
+    var CX = window.CX, $ = CX.$;
+    function stations() { if (window.GBSC) GBSC.setStations([CX.top($('#calendar')) - 80, CX.top($('#season')) - 80, CX.top($('#archive')) - 80, document.documentElement.scrollHeight - innerHeight]); }
+    addEventListener('load', stations); addEventListener('resize', stations); setTimeout(stations, 400);
+  })();
+</script>
 </body>
 </html>

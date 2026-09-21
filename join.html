@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB" class="no-js">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Join the Guildford Mavericks | Baseball Club Surrey</title>
   <meta name="description" content="Join Guildford's baseball club. Your first session is completely free — no kit, no experience needed. Adult and junior baseball in Surrey.">
   <link rel="canonical" href="https://guildfordbaseball.co.uk/join.html">
@@ -48,83 +49,169 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="css/style.css">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/scrollcraft.css">
   <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/concept.css">
   <style>
-    .join-hero {
-      background: var(--navy);
-      padding: 10rem 0 6rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .join-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url('assets/match-01.jpg');
-      background-size: cover;
-      background-position: center 40%;
-      opacity: 0.15;
-    }
-    .join-hero h1 { color: var(--white); }
-    .join-hero p { color: rgba(255,255,255,0.8); font-size: 1.15rem; margin-top: 0.75rem; }
+    /* --------------------------------------------------------------- hero --
+       Split like the juniors hero: the offer on maroon, a Guildford pitcher
+       on the right. */
+    .jh { display: grid; grid-template-columns: 1fr 1fr; min-height: 92vh; min-height: 92svh; }
+    .jh__copy { display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(8rem, 18vh, 10rem) var(--sc-gutter) clamp(3rem, 8vh, 5rem); }
+    .jh h1 { margin: 0 0 1.4rem; font-size: clamp(3.6rem, 7.2vw, 7.6rem); }
+    .jh h1 .gold { color: var(--sc-accent); }
+    .jh__sub { margin: 0 0 2rem; font-size: 1.15rem; line-height: 1.55; max-width: 32rem; color: var(--sc-ink-soft); }
+    .jh__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.4rem; }
+    .jh__photo { position: relative; margin: 0; overflow: hidden; }
+    .jh__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 42% 50%; }
+    .jh__photo figcaption { position: absolute; right: 1rem; bottom: 1rem; font-size: .76rem; font-weight: 600; background: rgba(46,8,19,.84); padding: .25rem .55rem; border-radius: 3px; }
 
-    .expect-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-    .expect-item {
-      display: flex;
-      gap: 1.2rem;
-      align-items: flex-start;
-    }
-    .expect-item__num {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--red);
-      color: var(--white);
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .expect-item h4 { margin-bottom: 0.2rem; }
-    .expect-item p { color: var(--muted); font-size: 0.92rem; margin: 0; }
+    /* --------------------------------------------------------- stat bar -- */
+    .stats { background: #2e0813; border-top: 4px solid var(--sc-accent); }
+    .stats__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .stat { padding: 2rem 1.5rem 1.8rem; border-right: 1px solid rgba(247,239,228,.1); }
+    .stat:last-child { border-right: 0; }
+    .stat b { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3rem, 5vw, 4.4rem); line-height: .9; color: var(--sc-accent); font-variant-numeric: lining-nums tabular-nums; }
+    .stat span { display: block; margin-top: .5rem; font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sc-ink-soft); }
 
-    /* Chat CTA box */
-    .chat-cta-box {
-      background: var(--navy);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem;
-      text-align: center;
-      color: var(--white);
-      position: sticky;
-      top: 100px;
+    /* -------------------------------------------------------- the bases --
+       Try, join, play: the old stepper, run round the bases. */
+    .bases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); position: relative; }
+    .bases::before { content: ""; position: absolute; left: 0; right: 0; top: 13px; height: 3px; background: linear-gradient(90deg, var(--sc-accent), rgba(243,181,60,.25)); }
+    .bases li { position: relative; padding: 3rem 2rem 0 0; }
+    .bases li::before { content: ""; position: absolute; left: 2px; top: 2px; width: 22px; height: 22px; transform: rotate(45deg); background: #420b18; border: 3px solid var(--sc-accent); }
+    .bases li:first-child::before { background: var(--sc-accent); }
+    .bases small { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
+    .bases h3 { margin: .3rem 0 .4rem; font-size: clamp(2.4rem, 4vw, 3.6rem); color: var(--sc-accent); }
+    .bases p { margin: 0; font-size: 1.02rem; line-height: 1.5; }
+
+    /* ----------------------------------------------- what to expect + chat -- */
+    .xp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+    .xp h2 { margin: 0 0 1.3rem; font-size: clamp(2.6rem, 4.6vw, 4.6rem); }
+    .xp__intro { margin: 0 0 2rem; font-size: 1.05rem; line-height: 1.6; color: var(--sc-ink-soft); }
+    .xp__intro b { color: var(--sc-ink); }
+    .steps { list-style: none; margin: 0 0 2.4rem; padding: 0; counter-reset: st; }
+    .steps li { counter-increment: st; display: grid; grid-template-columns: 3.4rem 1fr; gap: 0 1.2rem; padding-block: 1.2rem; border-top: 1px solid rgba(247,239,228,.16); }
+    .steps li:last-child { border-bottom: 1px solid rgba(247,239,228,.16); }
+    .steps li::before { content: counter(st); grid-row: span 2; font-family: var(--sc-font-display); font-weight: 900; font-size: 3.2rem; line-height: .85; color: var(--sc-accent); }
+    .steps h3 { margin: 0 0 .35rem; font-family: var(--sc-font-text); text-transform: none; letter-spacing: 0; font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
+    .steps p { margin: 0; font-size: .95rem; line-height: 1.55; color: var(--sc-ink-soft); }
+    .xp figure { margin: 0; }
+    .xp figure img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 30%; border-radius: var(--r); box-shadow: var(--sc-e2); }
+    .xp figcaption { margin-top: .6rem; font-size: .8rem; color: var(--sc-ink-soft); }
+    .xp__chat { position: sticky; top: 6.5rem; }
+    .xp__chat > p:not(.cx-label) { margin: 0 0 1.4rem; font-size: 1rem; line-height: 1.55; color: var(--sc-ink-soft); }
+    .chat { display: flex; flex-direction: column; height: 480px; background: #420b18; border: 1px solid rgba(243,181,60,.3); border-radius: 8px; overflow: hidden; box-shadow: var(--sc-e3); scroll-margin-top: 7rem; }
+    .chat__band { flex: none; padding: .45rem 1.2rem; background: var(--cardinal); text-align: center; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
+    .chat__head { flex: none; display: flex; align-items: center; gap: .75rem; padding: 1rem 1.2rem; background: #2e0813; border-bottom: 1px solid rgba(255,255,255,.07); }
+    .chat__head img { width: 52px; height: 36px; border-radius: 6px; object-fit: cover; background: var(--cardinal); }
+    .chat__head b { display: block; font-size: .88rem; line-height: 1.2; color: #fff; }
+    .chat__head span { display: flex; align-items: center; gap: .35rem; font-size: .72rem; color: rgba(247,239,228,.6); }
+    .chat__head span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4ade80; }
+    .chat__msgs { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: .75rem; scroll-behavior: smooth; overscroll-behavior: contain; }
+    .jc-msg { max-width: 85%; padding: .65rem .9rem; border-radius: 12px 12px 12px 4px; background: rgba(255,255,255,.08); font-size: .875rem; line-height: 1.55; color: rgba(247,239,228,.92); overflow-wrap: anywhere; white-space: pre-line; }
+    .jc-msg--me { align-self: flex-end; border-radius: 12px 12px 4px 12px; background: var(--cardinal); color: #fff; }
+    .jc-msg a, .jc-booked a { color: #f3b53c; }
+    .jc-typing { display: flex; gap: 4px; align-items: center; width: fit-content; padding: .65rem .9rem; border-radius: 12px 12px 12px 4px; background: rgba(255,255,255,.08); }
+    .jc-typing span { display: block; width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.4); animation: jc-dot 1.2s infinite; }
+    .jc-typing span:nth-child(2) { animation-delay: .2s; } .jc-typing span:nth-child(3) { animation-delay: .4s; }
+    @keyframes jc-dot { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+    .jc-booked { max-width: 90%; padding: .75rem .9rem; border: 1px solid rgba(243,181,60,.35); border-radius: 12px; background: rgba(243,181,60,.15); font-size: .83rem; line-height: 1.5; color: rgba(247,239,228,.92); }
+    .jc-booked strong { color: #f3b53c; }
+    .chat__input { flex: none; display: flex; gap: .5rem; padding: .75rem; border-top: 1px solid rgba(255,255,255,.08); background: #2e0813; }
+    .chat__input textarea { flex: 1; max-height: 80px; resize: none; padding: .55rem .75rem; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; outline: none; background: rgba(255,255,255,.08); font: inherit; font-size: .88rem; color: #fff; transition: border-color .15s; }
+    .chat__input textarea::placeholder { color: rgba(255,255,255,.42); }
+    .chat__input textarea:focus { border-color: rgba(243,181,60,.7); }
+    .chat__input button { flex: none; align-self: flex-end; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 0; border-radius: 8px; background: #f3b53c; cursor: pointer; transition: background .15s; }
+    .chat__input button:hover { background: #ffc65a; }
+    .chat__input button:disabled { opacity: .6; cursor: default; }
+    .chat__input button:focus-visible { outline: 3px solid #f3b53c; outline-offset: 2px; }
+    .chat__note { margin: .7rem 0 0; text-align: center; font-size: .74rem; color: var(--sc-ink-soft); }
+    @media (prefers-reduced-motion: reduce) { .jc-typing span { animation: none; } .chat__msgs { scroll-behavior: auto; } }
+
+    /* ----------------------------------------------------------- pricing -- */
+    .price__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.6rem); align-items: stretch; }
+    .tier { position: relative; display: flex; flex-direction: column; padding: 1.8rem 1.7rem 1.7rem; border-radius: var(--r); background: #fff8ee; border: 1px solid var(--sc-hairline); border-top: 4px solid var(--cardinal); }
+    .tier__name { margin: 0; font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
+    .tier__price { margin: .5rem 0 1.3rem; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3.8rem, 6vw, 5.4rem); line-height: .85; color: var(--cardinal); }
+    .tier__price small { font-family: var(--sc-font-text); font-weight: 700; font-size: .9rem; letter-spacing: 0; color: var(--sc-ink-soft); }
+    .tier ul { list-style: none; margin: 0 0 1.8rem; padding: 0; }
+    .tier li { display: flex; gap: .7rem; padding-block: .5rem; border-top: 1px solid var(--sc-hairline); font-size: .95rem; line-height: 1.45; }
+    .tick { flex: none; width: 9px; height: 9px; margin-top: .45em; transform: rotate(45deg); background: var(--cardinal); }
+    .tier .btn, .tier .btn--outline-cx { margin-top: auto; justify-content: center; }
+    .tier--star { background: #420b18; color: #f7efe4; border-color: #420b18; border-top-color: #f3b53c; box-shadow: var(--sc-e3); }
+    .tier--star .tier__name, .tier--star .tier__price small { color: #e3d0c3; }
+    .tier--star .tier__price { color: #f3b53c; }
+    .tier--star li { border-top-color: rgba(247,239,228,.16); }
+    .tier--star .tick { background: #f3b53c; }
+    .tier--star .btn--primary { background: #f3b53c; color: #26090f; } .tier--star .btn--primary:hover { background: #ffc65a; }
+    .tier__badge { position: absolute; top: -.8rem; right: 1.2rem; padding: .25rem .65rem; border-radius: 3px; background: #f3b53c; color: #26090f; font-size: .66rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .price__note { margin: 1.6rem 0 0; font-size: .92rem; line-height: 1.7; color: var(--sc-ink-soft); }
+
+    /* --------------------------------------------------------------- kit -- */
+    .kit__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 3vw, 2.5rem); }
+    .kit__card { padding: clamp(1.6rem, 3vw, 2.2rem); border-radius: var(--r); background: #5a0f1d; }
+    .kit__card h3 { margin: 0 0 .8rem; font-size: clamp(1.9rem, 3vw, 2.6rem); }
+    .kit__card > p { margin: 0 0 1.3rem; line-height: 1.6; color: var(--sc-ink-soft); }
+    .kit__card > p b { color: var(--sc-ink); }
+    .kit__list { list-style: none; margin: 1.4rem 0 0; padding: 0; }
+    .kit__list li { padding-block: .75rem; border-top: 1px solid rgba(247,239,228,.16); font-size: .95rem; line-height: 1.5; color: var(--sc-ink-soft); }
+    .kit__list li:last-child { border-bottom: 1px solid rgba(247,239,228,.16); }
+    .kit__list b, .kit__list a { color: var(--sc-ink); font-weight: 700; }
+    .kit__list a { text-decoration: underline; text-decoration-color: color-mix(in oklab, var(--sc-accent) 85%, transparent); text-underline-offset: .25em; text-decoration-thickness: 2px; }
+    .kit__list a:hover { color: var(--sc-accent); }
+    .kit__small { margin: 1.2rem 0 0 !important; font-size: .88rem; }
+
+    /* ------------------------------------------------ member benefits + faq -- */
+    .mem__grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+    .mem h2 { margin: 0 0 1.8rem; font-size: clamp(2.6rem, 4.4vw, 4.4rem); color: var(--cardinal); }
+    .perks { list-style: none; margin: 0; padding: 0; }
+    .perks li { display: grid; grid-template-columns: 1.4rem 1fr; gap: .2rem .9rem; padding-block: 1rem; border-top: 1px solid var(--sc-hairline); }
+    .perks li:last-child { border-bottom: 1px solid var(--sc-hairline); }
+    .perks .tick { grid-row: span 2; margin-top: .5em; }
+    .perks b { font-size: 1.02rem; }
+    .perks span:not(.tick) { font-size: .92rem; line-height: 1.5; color: var(--sc-ink-soft); }
+    .qs details { margin-bottom: .7rem; border: 1px solid var(--sc-hairline); border-left: 4px solid var(--cardinal); border-radius: 6px; background: #fff8ee; }
+    .qs details[open] { border-left-color: #f3b53c; }
+    .qs summary { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.05rem 1.2rem; cursor: pointer; list-style: none; font-weight: 700; font-size: 1.02rem; color: #420b18; }
+    .qs summary::-webkit-details-marker { display: none; }
+    .qs summary::after { content: "+"; flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #420b18; color: #f3b53c; font-size: 1.1rem; font-weight: 700; transition: transform 200ms var(--sc-ease-out); }
+    .qs details[open] summary::after { transform: rotate(45deg); }
+    .qs summary:focus-visible { outline: 3px solid var(--cardinal); outline-offset: 2px; border-radius: 4px; }
+    .qs details p { margin: 0; padding: 0 1.2rem 1.15rem; line-height: 1.65; color: #4a3531; }
+    .qs details a { color: var(--cardinal); font-weight: 600; }
+
+    @media (max-width: 960px) {
+      .jh { grid-template-columns: 1fr; min-height: 0; }
+      .jh__photo { order: -1; height: 46vh; }
+      .jh__copy { padding-top: 2.4rem; }
+      .xp__grid, .mem__grid, .kit__grid { grid-template-columns: 1fr; }
+      .xp__chat { position: static; }
+      .price__grid { grid-template-columns: 1fr; max-width: 30rem; }
     }
-    .chat-cta-box h3 { color: var(--white); margin-bottom: 0.5rem; }
-    .chat-cta-box p { color: rgba(255,255,255,0.72); font-size: 0.95rem; margin-bottom: 1.8rem; }
-    .chat-cta-box .chat-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      display: block;
+    @media (max-width: 860px) {
+      .stats__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stat:nth-child(2) { border-right: 0; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(247,239,228,.1); }
+      .bases { grid-template-columns: 1fr; }
+      .bases::before { left: 12px; right: auto; top: 0; bottom: 0; width: 3px; height: auto; background: linear-gradient(180deg, var(--sc-accent), rgba(243,181,60,.25)); }
+      .bases li { padding: 0 0 2rem 3.2rem; }
+      .bases li::before { top: 4px; }
     }
-    .chat-cta-box .contact-alt {
-      margin-top: 1.2rem;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.5);
-    }
-    .chat-cta-box .contact-alt a { color: var(--orange); }
+    /* section rules like .here p must not restyle the small gold labels */
+    .cx p.cx-label { margin: 0 0 .9rem; max-width: none; font-size: .74rem; line-height: 1.6; color: var(--sc-accent); }
   </style>
 </head>
-<body>
+<body class="cx">
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="sc-grain" aria-hidden="true"></div>
 
-  <nav class="nav">
+  <nav class="nav" aria-label="Main">
     <div class="container">
       <div class="nav__inner">
         <a href="index.html" class="nav__logo">
@@ -140,7 +227,7 @@
           <li><a href="history.html">History</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <a href="join.html" class="btn btn--primary btn--pulse nav__cta">Try it free</a>
+        <a href="join.html" class="btn btn--primary nav__cta">Try it free</a>
         <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -156,381 +243,222 @@
     <a href="join.html" class="btn btn--primary">Try it free</a>
   </div>
 
-  <!-- Hero -->
-  <div class="join-hero">
-    <div class="container fade-up">
-      <span class="overline" style="color: var(--orange);">No commitment. No kit. No experience needed.</span>
-      <h1>Your first session is free.</h1>
-      <p>Whether you've never held a bat or you've played for years — just show up. We'll take it from there.</p>
-    </div>
-  </div>
+<main id="main">
 
-  <!-- Journey Stepper -->
-  <div style="background: var(--off-white); padding: 3rem 0 2rem; border-bottom: 1px solid var(--border);">
-    <div class="container">
-      <div class="stepper fade-up">
-        <div class="stepper__step active">
-          <div class="stepper__circle">1</div>
-          <div class="stepper__label">Try</div>
-          <div class="stepper__sub">Free first session</div>
+  <!-- ============================================================= HERO -->
+  <section class="jh g-900" aria-labelledby="h1">
+    <div class="jh__copy" data-sc-in data-sc-stagger="80">
+      <p class="cx-label">No commitment. No kit. No experience needed.</p>
+      <h1 class="sc-display" id="h1">Your first session is <span class="gold">free.</span></h1>
+      <p class="jh__sub">Whether you've never held a bat or you've played for years, just show up on a Thursday evening at Kings College. We'll take it from there.</p>
+      <div class="jh__ctas"><a class="btn btn--primary" href="#join-chat">Ask a question</a><a class="link" href="#expect">What to expect <span class="arrow" aria-hidden="true">&darr;</span></a></div>
+    </div>
+    <figure class="jh__photo">
+      <img src="assets/v2/s2025-tonbridge.webp" alt="A Guildford pitcher follows through on a pitch at Tonbridge" width="1491" height="1000" fetchpriority="high">
+      <figcaption>Mavericks at Tonbridge, 2025</figcaption>
+    </figure>
+  </section>
+
+  <section class="stats" aria-label="The club in numbers">
+    <div class="cx-wrap stats__grid" data-sc-in data-sc-stagger="60">
+      <div class="stat"><b>150+</b><span>Players over 34 years</span></div>
+      <div class="stat"><b>2</b><span>Adult teams</span></div>
+      <div class="stat"><b>Free</b><span>First session</span></div>
+      <div class="stat"><b>1992</b><span>Est. in Surrey</span></div>
+    </div>
+  </section>
+
+  <!-- ========================================================= THE BASES -->
+  <section class="sec g-800" aria-labelledby="bases-h">
+    <div class="cx-wrap">
+      <div class="sec__head" data-sc-in><div><p class="cx-label">How it works</p><h2 class="sc-display" id="bases-h">Try. Join. Play.</h2></div></div>
+      <ol class="bases" data-sc-in data-sc-stagger="120">
+        <li><small>First base</small><h3 class="sc-display">Try</h3><p>A free first session. No kit, no experience, no commitment.</p></li>
+        <li><small>Second base</small><h3 class="sc-display">Join</h3><p>Pick a membership that fits: Adult, Rookie, or Juniors.</p></li>
+        <li><small>Third base</small><h3 class="sc-display">Play</h3><p>BBF league games on Sundays, and training on Thursday evenings.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================== WHAT TO EXPECT + CHAT -->
+  <section id="expect" class="sec xp g-900" aria-labelledby="xp-h">
+    <div class="cx-wrap xp__grid">
+      <div>
+        <div data-sc-in data-sc-stagger="70">
+          <p class="cx-label">What to expect</p>
+          <h2 class="sc-display" id="xp-h">Your first training session.</h2>
+          <p class="xp__intro">Thursday evenings at Kings College, Guildford <b>from May to August, with pre-season training from January to March</b>. Arrive, meet the team, and we'll get you into drills straight away. Here's how it goes:</p>
         </div>
-        <div class="stepper__line"></div>
-        <div class="stepper__step">
-          <div class="stepper__circle">2</div>
-          <div class="stepper__label">Join</div>
-          <div class="stepper__sub">Pick a membership</div>
-        </div>
-        <div class="stepper__line"></div>
-        <div class="stepper__step">
-          <div class="stepper__circle">3</div>
-          <div class="stepper__label">Play</div>
-          <div class="stepper__sub">BBF league &amp; training</div>
-        </div>
+        <ol class="steps" data-sc-in data-sc-stagger="70">
+          <li><h3>Arrive &amp; meet the team</h3><p>Come to Kings College field around 6:30pm. Someone will meet you at the gate: just mention you're new. No need to book, but our club assistant can let the team know you're coming.</p></li>
+          <li><h3>Warm-up &amp; catching</h3><p>We start with a group warm-up and then split into skills stations. New players start with throwing and catching fundamentals. It's relaxed, with experienced players helping you.</p></li>
+          <li><h3>Batting practice</h3><p>Everybody loves batting. We'll get you in the cage and hitting by your second or third session. No previous experience needed: we coach from scratch.</p></li>
+          <li><h3>Finish &amp; decide</h3><p>After training, there's usually a pub trip. Decide if you want to join, with no pressure. Membership opens up BBF league games, full training, and the full club experience.</p></li>
+        </ol>
+        <figure data-sc-in>
+          <img src="assets/v2/reel/2020-indoor-training.webp" alt="Guildford players grinning at indoor pre-season training" width="640" height="613" loading="lazy">
+          <figcaption>Indoor pre-season training.</figcaption>
+        </figure>
       </div>
-    </div>
-  </div>
-
-  <!-- FREE SESSION HOOK BAND -->
-  <div class="free-session-band">
-    <div class="container">
-      <div class="free-session-band__inner fade-up">
-        <span style="font-size: 2.5rem; flex-shrink: 0;">⚾</span>
-        <div>
-          <h3>Your first training session costs nothing.</h3>
-          <p>No kit. No experience. No commitment. Just show up on a Thursday evening at Kings College &mdash; we'll take it from there.</p>
-        </div>
-        <a href="#join-chat" class="btn btn--outline" style="flex-shrink:0; margin-left:auto;">Ask a question &rarr;</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- SOCIAL PROOF STRIP -->
-  <div style="background: var(--off-white); border-bottom: 1px solid var(--border); padding: 1.8rem 0;">
-    <div class="container">
-      <div style="display: flex; gap: 2.5rem; flex-wrap: wrap; align-items: center; justify-content: center; text-align: center;">
-        <div>
-          <div style="font-family: var(--font-hero); font-size: 2rem; font-weight: 900; color: var(--red); line-height: 1;"><span data-count="150" data-suffix="+">150+</span></div>
-          <div style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem;">Players over 34 years</div>
-        </div>
-        <div style="width: 1px; height: 36px; background: var(--border); flex-shrink: 0;"></div>
-        <div>
-          <div style="font-family: var(--font-hero); font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1;">2</div>
-          <div style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem;">Adult teams</div>
-        </div>
-        <div style="width: 1px; height: 36px; background: var(--border); flex-shrink: 0;"></div>
-        <div>
-          <div style="font-family: var(--font-hero); font-size: 2rem; font-weight: 900; color: var(--red); line-height: 1;">Free</div>
-          <div style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem;">First session</div>
-        </div>
-        <div style="width: 1px; height: 36px; background: var(--border); flex-shrink: 0;"></div>
-        <div>
-          <div style="font-family: var(--font-hero); font-size: 2rem; font-weight: 900; color: var(--gold); line-height: 1;">1992</div>
-          <div style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 0.2rem;">Est. in Surrey</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- What to expect + sticky chat -->
-  <section class="section section--white">
-    <div class="container">
-      <div class="grid-2" style="gap: 5rem; align-items: start;">
-
-        <!-- Left: what to expect -->
-        <div>
-          <div class="fade-up">
-            <span class="overline">What to expect</span>
-            <h2>Your first training session</h2>
-            <p style="color: var(--muted);">Thursday evenings at Kings College, Guildford <strong style="color: var(--ink);">from May to August, with pre-season training from January to March</strong>. Arrive, meet the team, and we'll get you into drills straight away. Here's how it goes:</p>
+      <div class="xp__chat" data-sc-in>
+        <p class="cx-label">Register your interest</p>
+        <h2 class="sc-display">Join the club, right here in chat.</h2>
+        <p>No forms to fill in. Tell our assistant you'd like to join and you're registered in under a minute. It can also answer anything: training times, pricing, junior sessions.</p>
+        <div id="join-chat" class="chat">
+          <div class="chat__band">Official club registration</div>
+          <div class="chat__head"><img src="assets/logo.jpg" alt="" width="52" height="36"><div><b>Guildford Baseball Assistant</b><span>Online, ready to register you</span></div></div>
+          <div id="join-chat-messages" class="chat__msgs" aria-live="polite">
+            <div class="jc-msg">Hi! I can register you with the club right here. Just say "I'd like to join". You can also ask me anything about training times, pricing, or junior sessions.</div>
           </div>
-          <div class="expect-list fade-up">
-            <div class="expect-item">
-              <div class="expect-item__num">1</div>
-              <div>
-                <h4>Arrive &amp; meet the team</h4>
-                <p>Come to Kings College field around 6:30pm. Someone will meet you at the gate — just mention you're new. No need to book, but our club assistant can let the team know you're coming.</p>
-              </div>
-            </div>
-            <div class="expect-item">
-              <div class="expect-item__num">2</div>
-              <div>
-                <h4>Warm-up &amp; catching</h4>
-                <p>We start with a group warm-up and then split into skills stations. New players start with throwing and catching fundamentals — it's relaxed, with experienced players helping you.</p>
-              </div>
-            </div>
-            <div class="expect-item">
-              <div class="expect-item__num">3</div>
-              <div>
-                <h4>Batting practice</h4>
-                <p>Everybody loves batting. We'll get you in the cage and hitting by your second or third session. No previous experience needed — we coach from scratch.</p>
-              </div>
-            </div>
-            <div class="expect-item">
-              <div class="expect-item__num">4</div>
-              <div>
-                <h4>Finish &amp; decide</h4>
-                <p>After training, there's usually a pub trip. Decide if you want to join — no pressure. Membership opens up BBF league games, full training, and the full club experience.</p>
-              </div>
-            </div>
+          <div class="chat__input">
+            <label class="visually-hidden" for="join-chat-input">Your message</label>
+            <textarea id="join-chat-input" rows="1" placeholder="Type your question&hellip;"></textarea>
+            <button id="join-chat-send" type="button" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="#26090f" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
           </div>
         </div>
-
-        <!-- Right: inline chat -->
-        <div style="position: sticky; top: 100px;">
-          <div class="fade-up" style="margin-bottom: 1.25rem;">
-            <span class="overline">Register your interest</span>
-            <h2>Join the club —<br>right here in chat</h2>
-            <p style="color: var(--muted); margin-top: 0.5rem; font-size: 0.95rem;">No forms to fill in. Tell our assistant you'd like to join and you're registered in under a minute. It can also answer anything — training times, pricing, junior sessions.</p>
-          </div>
-          <div id="join-chat" style="
-            background: #420b18;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-            display: flex;
-            flex-direction: column;
-            height: 480px;
-          ">
-            <!-- Registration band -->
-            <div style="background: #a7132f; padding: 0.45rem 1.2rem; text-align: center; flex-shrink: 0;">
-              <span style="font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #fff;">Official club registration</span>
-            </div>
-            <!-- Header -->
-            <div style="background: #2e0813; padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,0.07);">
-              <div style="width:52px;height:36px;border-radius:6px;overflow:hidden;flex-shrink:0;background:#a7132f;"><img src="assets/logo.jpg" alt="Guildford Mavericks" style="width:100%;height:100%;object-fit:cover;"></div>
-              <div style="flex:1;">
-                <div style="font-family:var(--font-sans);font-size:0.88rem;font-weight:700;color:#fff;line-height:1.2;">Guildford Baseball Assistant</div>
-                <div style="font-size:0.72rem;color:rgba(255,255,255,0.5);display:flex;align-items:center;gap:0.3rem;">
-                  <span style="width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block;flex-shrink:0;"></span>
-                  Online — ready to register you
-                </div>
-              </div>
-            </div>
-            <!-- Messages -->
-            <div id="join-chat-messages" style="flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.75rem;scroll-behavior:smooth;">
-              <div style="max-width:85%;background:rgba(255,255,255,0.08);border-radius:12px;border-bottom-left-radius:4px;padding:0.65rem 0.9rem;font-family:var(--font-sans);font-size:0.875rem;line-height:1.55;color:rgba(255,255,255,0.88);">
-                Hi! I can register you with the club right here — just say "I'd like to join". You can also ask me anything about training times, pricing, or junior sessions.
-              </div>
-            </div>
-            <!-- Input -->
-            <div style="padding:0.75rem;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:0.5rem;flex-shrink:0;background:#2e0813;">
-              <textarea id="join-chat-input" rows="1" placeholder="Type your question…" style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.55rem 0.75rem;font-family:var(--font-sans);font-size:0.88rem;color:#fff;outline:none;resize:none;max-height:80px;transition:border-color 0.15s;"></textarea>
-              <button id="join-chat-send" style="width:38px;height:38px;border-radius:8px;background:#a7132f;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.15s;align-self:flex-end;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-              </button>
-            </div>
-          </div>
-          <p style="text-align:center;font-size:0.72rem;color:var(--muted);margin-top:0.6rem;">Guildford Mavericks · Powered by AI</p>
-        </div>
-
+        <p class="chat__note">Guildford Mavericks &middot; Powered by AI</p>
       </div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section class="section section--cream-dark">
-    <div class="container">
-      <div class="section-header section-header--center fade-up">
-        <span class="label">Membership</span>
-        <h2><span class="heading-underline">Simple, honest pricing</span></h2>
-        <p style="font-style: italic; color: var(--muted);">No hidden costs, and no match fees until you're playing BBF league games. The club lends all the equipment you need to train.</p>
+  <!-- =========================================================== PRICING -->
+  <section id="pricing" class="sec on-paper" aria-labelledby="price-h">
+    <div class="cx-wrap">
+      <div class="sec__head" data-sc-in data-sc-stagger="60">
+        <div><p class="cx-label">Membership</p><h2 class="sc-display" id="price-h">Simple, honest pricing.</h2></div>
+        <p>No hidden costs, and no match fees until you're playing BBF league games. The club lends all the equipment you need to train.</p>
       </div>
-      <div class="grid-3 stagger-parent" style="max-width: 960px; margin-inline: auto; margin-top: 2.5rem;">
-        <div class="pricing-card stagger-child fade-up">
-          <div class="pricing-card__tier">Adult</div>
-          <div class="pricing-card__price">£200<sub>/season</sub></div>
-          <ul class="pricing-card__features">
-            <li>BBF league matches</li>
-            <li>Thursday evening training</li>
-            <li>Access to club kit &amp; cap (purchased separately)</li>
-            <li>Club community &amp; events</li>
+      <div class="price__grid" data-sc-in data-sc-stagger="80">
+        <div class="tier">
+          <p class="tier__name">Adult</p>
+          <p class="tier__price">&pound;200<small> / season</small></p>
+          <ul>
+            <li><span class="tick" aria-hidden="true"></span>BBF league matches</li>
+            <li><span class="tick" aria-hidden="true"></span>Thursday evening training</li>
+            <li><span class="tick" aria-hidden="true"></span>Access to club kit &amp; cap (purchased separately)</li>
+            <li><span class="tick" aria-hidden="true"></span>Club community &amp; events</li>
           </ul>
-          <a href="join.html" class="btn btn--primary" style="width:100%;justify-content:center;">Get Started &rarr;</a>
+          <a class="btn btn--primary" href="#join-chat">Get started</a>
         </div>
-        <div class="pricing-card pricing-card--featured stagger-child fade-up">
-          <div class="pricing-card__badge">New Player</div>
-          <div class="pricing-card__tier">Rookie</div>
-          <div class="pricing-card__price">£125<sub>/season</sub></div>
-          <ul class="pricing-card__features">
-            <li>For newcomers to the sport</li>
-            <li>Full BBF league access</li>
-            <li>Thursday evening training</li>
-            <li>Introductory coaching</li>
+        <div class="tier tier--star">
+          <span class="tier__badge">New player</span>
+          <p class="tier__name">Rookie</p>
+          <p class="tier__price">&pound;125<small> / season</small></p>
+          <ul>
+            <li><span class="tick" aria-hidden="true"></span>For newcomers to the sport</li>
+            <li><span class="tick" aria-hidden="true"></span>Full BBF league access</li>
+            <li><span class="tick" aria-hidden="true"></span>Thursday evening training</li>
+            <li><span class="tick" aria-hidden="true"></span>Introductory coaching</li>
           </ul>
-          <a href="join.html" class="btn btn--primary" style="width:100%;justify-content:center;">Get Started &rarr;</a>
+          <a class="btn btn--primary" href="#join-chat">Get started</a>
         </div>
-        <div class="pricing-card stagger-child fade-up">
-          <div class="pricing-card__tier">Junior</div>
-          <div class="pricing-card__price">£100<sub>/season</sub></div>
-          <ul class="pricing-card__features">
-            <li>Ages 8–14</li>
-            <li>Saturday morning sessions</li>
-            <li>Cap + t-shirt included</li>
-            <li>Experienced club coaches</li>
+        <div class="tier">
+          <p class="tier__name">Junior</p>
+          <p class="tier__price">&pound;100<small> / season</small></p>
+          <ul>
+            <li><span class="tick" aria-hidden="true"></span>Ages 8&ndash;14</li>
+            <li><span class="tick" aria-hidden="true"></span>Saturday morning sessions</li>
+            <li><span class="tick" aria-hidden="true"></span>Cap + t-shirt included</li>
+            <li><span class="tick" aria-hidden="true"></span>Experienced club coaches</li>
           </ul>
-          <a href="juniors.html" class="btn btn--outline-dark" style="width:100%;justify-content:center;">Juniors Info &rarr;</a>
+          <a class="btn--outline-cx" href="juniors.html">Juniors info <span class="arrow" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
-      <p class="fade-up" style="text-align:center; color: var(--muted); font-size: 0.85rem; margin-top: 1.5rem;">U18/students: £125/season &nbsp;&middot;&nbsp; Midweek training only: £50/season  ·  Teeball (ages 4 to 7): £25/season &nbsp;&middot;&nbsp; No match fees until BBF competitive play</p>
+      <p class="price__note" data-sc-in>U18/students: &pound;125/season &middot; Midweek training only: &pound;50/season &middot; Teeball (ages 4 to 7): &pound;25/season &middot; No match fees until BBF competitive play</p>
     </div>
   </section>
 
-  <!-- Club Shop & Kit -->
-  <section class="section section--cream" id="kit">
-    <div class="container">
-      <div class="section-header section-header--center fade-up">
-        <span class="label">Kit &amp; Club Shop</span>
-        <h2><span class="heading-underline">Getting kitted out</span></h2>
-        <p style="color: var(--muted);">Your first session needs nothing. Once you join, here's how kit works.</p>
+  <!-- =============================================================== KIT -->
+  <section id="kit" class="sec g-800" aria-labelledby="kit-h">
+    <div class="cx-wrap">
+      <div class="sec__head" data-sc-in data-sc-stagger="60">
+        <div><p class="cx-label">Kit &amp; club shop</p><h2 class="sc-display" id="kit-h">Getting kitted out.</h2></div>
+        <p>Your first session needs nothing. Once you join, here's how kit works.</p>
       </div>
-      <div class="grid-2 fade-up" style="gap: 3rem; align-items: start; max-width: 960px; margin-inline: auto; margin-top: 2.5rem;">
-
-        <!-- Club shop -->
-        <div style="background: var(--white); border-radius: var(--radius-lg); padding: 2rem; border: 1px solid var(--border);">
-          <h3 style="margin-bottom: 0.75rem;">Club shop</h3>
-          <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem;">
-            Our club kit is supplied by <strong>Karuta Sportswear</strong>. Visit their site and order from the Guildford Baseball Club range directly.
-          </p>
-          <a href="https://karuta-sportswear.com" target="_blank" rel="noopener" class="btn btn--primary" style="margin-bottom: 1.25rem;">Club Shop — Karuta Sportswear &rarr;</a>
-          <ul style="color: var(--muted); font-size: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; list-style: none; padding: 0;">
-            <li>&#8594; <strong>Jersey:</strong> Adult members — check with the club for available squad numbers before ordering</li>
-            <li>&#8594; <strong>Caps (fitted &amp; stretch fit):</strong> Purchased directly from the club — <a href="mailto:michael.burdett1@outlook.com" style="color: var(--red);">email us for details</a></li>
-            <li>&#8594; Any other clothing queries — <a href="contact.html" style="color: var(--red);">contact us</a></li>
+      <div class="kit__grid" data-sc-in data-sc-stagger="80">
+        <div class="kit__card">
+          <h3>Club shop</h3>
+          <p>Our club kit is supplied by <b>Karuta Sportswear</b>. Visit their site and order from the Guildford Baseball Club range directly.</p>
+          <a class="btn btn--primary" href="https://karuta-sportswear.com" target="_blank" rel="noopener">Club shop: Karuta Sportswear</a>
+          <ul class="kit__list">
+            <li><b>Jersey:</b> adult members, check with the club for available squad numbers before ordering.</li>
+            <li><b>Caps (fitted &amp; stretch fit):</b> purchased directly from the club. <a href="mailto:michael.burdett1@outlook.com">Email us for details</a>.</li>
+            <li>Any other clothing queries: <a href="contact.html">contact us</a>.</li>
           </ul>
         </div>
-
-        <!-- Wider kit links -->
-        <div style="background: var(--white); border-radius: var(--radius-lg); padding: 2rem; border: 1px solid var(--border);">
-          <h3 style="margin-bottom: 0.75rem;">Buy kit &amp; equipment</h3>
-          <p style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
-            For gloves, bats, cleats, and wider baseball gear, these are reliable places to shop:
-          </p>
-          <ul style="display: flex; flex-direction: column; gap: 0.75rem; list-style: none; padding: 0; font-size: 0.93rem;">
-            <li><a href="http://www.baseballsoftballuk.com/" target="_blank" rel="noopener" style="color: var(--red); font-weight: 600;">Baseball Softball UK</a> <span style="color: var(--muted);">— UK-based, good all-round selection</span></li>
-            <li><a href="https://www.rawlings.com" target="_blank" rel="noopener" style="color: var(--red); font-weight: 600;">Rawlings</a> <span style="color: var(--muted);">— official MLB equipment supplier, gloves &amp; bats</span></li>
-            <li><a href="https://www.baseballexpress.com" target="_blank" rel="noopener" style="color: var(--red); font-weight: 600;">Baseball Express</a> <span style="color: var(--muted);">— wide range of gear shipped to the UK</span></li>
-            <li><a href="https://www.justballgloves.com" target="_blank" rel="noopener" style="color: var(--red); font-weight: 600;">JustBallGloves</a> <span style="color: var(--muted);">— specialist glove retailer</span></li>
-            <li><a href="https://www.decathlon.co.uk" target="_blank" rel="noopener" style="color: var(--red); font-weight: 600;">Decathlon UK</a> <span style="color: var(--muted);">— budget-friendly starter gear for new players</span></li>
+        <div class="kit__card">
+          <h3>Buy kit &amp; equipment</h3>
+          <p>For gloves, bats, cleats, and wider baseball gear, these are reliable places to shop:</p>
+          <ul class="kit__list">
+            <li><a href="http://www.baseballsoftballuk.com/" target="_blank" rel="noopener">Baseball Softball UK</a>: UK-based, good all-round selection</li>
+            <li><a href="https://www.rawlings.com" target="_blank" rel="noopener">Rawlings</a>: official MLB equipment supplier, gloves &amp; bats</li>
+            <li><a href="https://www.baseballexpress.com" target="_blank" rel="noopener">Baseball Express</a>: wide range of gear shipped to the UK</li>
+            <li><a href="https://www.justballgloves.com" target="_blank" rel="noopener">JustBallGloves</a>: specialist glove retailer</li>
+            <li><a href="https://www.decathlon.co.uk" target="_blank" rel="noopener">Decathlon UK</a>: budget-friendly starter gear for new players</li>
           </ul>
-          <p style="color: var(--muted); font-size: 0.82rem; margin-top: 1.25rem;">Not sure what to buy? Ask our club assistant below — we'll point you in the right direction for your level.</p>
+          <p class="kit__small">Not sure what to buy? <a class="link" href="#join-chat">Ask our club assistant</a> and we'll point you in the right direction for your level.</p>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- What you get + FAQ -->
-  <section class="section section--white">
-    <div class="container">
-      <div class="grid-2" style="gap: 5rem; align-items: start;">
-
-        <!-- Left: member benefits -->
-        <div class="fade-up">
-          <span class="overline">Membership benefits</span>
-          <h2>What you get as a member</h2>
-          <ul style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;">
-            <li style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="color: var(--red); font-weight: 700; font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem;">✓</span>
-              <div>
-                <strong style="display: block; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.15rem;">BBF league match play</strong>
-                <span style="font-size: 0.88rem; color: var(--muted);">Sunday fixtures at Kings College against clubs across the south of England.</span>
-              </div>
-            </li>
-            <li style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="color: var(--red); font-weight: 700; font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem;">✓</span>
-              <div>
-                <strong style="display: block; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.15rem;">Thursday evening training</strong>
-                <span style="font-size: 0.88rem; color: var(--muted);">Weekly sessions at Kings College, 6:30–8:30pm (May–August).</span>
-              </div>
-            </li>
-            <li style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="color: var(--red); font-weight: 700; font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem;">✓</span>
-              <div>
-                <strong style="display: block; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.15rem;">Access to our own diamond</strong>
-                <span style="font-size: 0.88rem; color: var(--muted);">A proper baseball diamond at Kings College — complete with batting cages.</span>
-              </div>
-            </li>
-            <li style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="color: var(--red); font-weight: 700; font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem;">✓</span>
-              <div>
-                <strong style="display: block; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.15rem;">Club community</strong>
-                <span style="font-size: 0.88rem; color: var(--muted);">Social events, post-game pub trips, end-of-season awards evening.</span>
-              </div>
-            </li>
-            <li style="display: flex; gap: 1rem; align-items: flex-start;">
-              <span style="color: var(--red); font-weight: 700; font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem;">✓</span>
-              <div>
-                <strong style="display: block; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.15rem;">No surprise costs</strong>
-                <span style="font-size: 0.88rem; color: var(--muted);">No match fees until you're playing official BBF competitive games.</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Right: FAQ -->
-        <div class="fade-up">
-          <span class="overline">Common questions</span>
-          <h2>Before you come along</h2>
-          <div class="accordion" style="margin-top: 1.5rem;">
-            <div class="accordion__item">
-              <button class="accordion__trigger">Do I need any experience? <span class="accordion__icon">+</span></button>
-              <div class="accordion__body"><p>Not at all. Plenty of the players who join us have never played baseball before. We coach from basics and you'll find experienced players always willing to help. The Rookie membership tier is designed specifically for people new to the sport.</p></div>
-            </div>
-            <div class="accordion__item">
-              <button class="accordion__trigger">What kit do I need? <span class="accordion__icon">+</span></button>
-              <div class="accordion__body"><p>For your first session, just wear comfortable sports clothing and trainers or cleats if you have them. The club provides bats, gloves, helmets, and balls — you don't need to buy anything to try it out. Once you join, you'll need a club jersey and cap: see Getting kitted out below.</p></div>
-            </div>
-            <div class="accordion__item">
-              <button class="accordion__trigger">When and where is training? <span class="accordion__icon">+</span></button>
-              <div class="accordion__body"><p>Adult training is Thursday evenings 6:30–8:30pm at Kings College, Guildford (May–August). Junior sessions are Saturday mornings 9:30am–12:00pm. Our club assistant can confirm the latest schedule.</p></div>
-            </div>
-            <div class="accordion__item">
-              <button class="accordion__trigger">What's the time commitment? <span class="accordion__icon">+</span></button>
-              <div class="accordion__body"><p>Most members come to Thursday training (roughly 2 hours) and Sunday BBF fixtures during the season. There's no mandatory attendance — we understand people have lives outside baseball!</p></div>
-            </div>
-            <div class="accordion__item">
-              <button class="accordion__trigger">How do I get to Kings College? <span class="accordion__icon">+</span></button>
-              <div class="accordion__body"><p>Kings College is on Southway, Guildford. For outdoor games and training, parking is off Park Barn Way at the back of the school — not the main entrance. Check our <a href="contact.html#directions" style="color: var(--red);">contact page for full directions</a>.</p></div>
-            </div>
-            <div class="accordion__item">
-              <button class="accordion__trigger">Is it suitable for women and girls? <span class="accordion__icon">+</span></button>
-              <div class="accordion__body"><p>Absolutely. The Guildford Mavericks welcomes players of all genders and backgrounds. We have women playing in our adult teams and the junior programme is open to all children aged 8–14.</p></div>
-            </div>
-          </div>
-        </div>
-
+  <!-- ============================================ MEMBER BENEFITS + FAQ -->
+  <section id="faq" class="sec mem on-paper" aria-labelledby="mem-h">
+    <div class="cx-wrap mem__grid">
+      <div data-sc-in data-sc-stagger="60">
+        <p class="cx-label">Membership benefits</p>
+        <h2 class="sc-display" id="mem-h">What you get as a member.</h2>
+        <ul class="perks">
+          <li><span class="tick" aria-hidden="true"></span><b>BBF league match play</b><span>Sunday fixtures at Kings College against clubs across the south of England.</span></li>
+          <li><span class="tick" aria-hidden="true"></span><b>Thursday evening training</b><span>Weekly sessions at Kings College, 6:30&ndash;8:30pm (May&ndash;August).</span></li>
+          <li><span class="tick" aria-hidden="true"></span><b>Access to our own diamond</b><span>A proper baseball diamond at Kings College, complete with batting cages.</span></li>
+          <li><span class="tick" aria-hidden="true"></span><b>Club community</b><span>Social events, post-game pub trips, end-of-season awards evening.</span></li>
+          <li><span class="tick" aria-hidden="true"></span><b>No surprise costs</b><span>No match fees until you're playing official BBF competitive games.</span></li>
+        </ul>
+      </div>
+      <div class="qs" data-sc-in>
+        <p class="cx-label">Common questions</p>
+        <h2 class="sc-display">Before you come along.</h2>
+        <details><summary>Do I need any experience?</summary><p>Not at all. Plenty of the players who join us have never played baseball before. We coach from basics and you'll find experienced players always willing to help. The Rookie membership tier is designed specifically for people new to the sport.</p></details>
+        <details><summary>What kit do I need?</summary><p>For your first session, just wear comfortable sports clothing and trainers or cleats if you have them. The club provides bats, gloves, helmets, and balls: you don't need to buy anything to try it out. Once you join, you'll need a club jersey and cap: see <a href="#kit">Getting kitted out</a>.</p></details>
+        <details><summary>When and where is training?</summary><p>Adult training is Thursday evenings 6:30&ndash;8:30pm at Kings College, Guildford (May&ndash;August). Junior sessions are Saturday mornings 9:30am&ndash;12:00pm. Our club assistant can confirm the latest schedule.</p></details>
+        <details><summary>What's the time commitment?</summary><p>Most members come to Thursday training (roughly 2 hours) and Sunday BBF fixtures during the season. There's no mandatory attendance: we understand people have lives outside baseball!</p></details>
+        <details><summary>How do I get to Kings College?</summary><p>Kings College is on Southway, Guildford. For outdoor games and training, parking is off Park Barn Way at the back of the school, not the main entrance. Check our <a href="contact.html#directions">contact page for full directions</a>.</p></details>
+        <details><summary>Is it suitable for women and girls?</summary><p>Absolutely. The Guildford Mavericks welcomes players of all genders and backgrounds. We have women playing in our adult teams and the junior programme is open to all children aged 8&ndash;14.</p></details>
       </div>
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section class="cta-section cta-section--navy">
-    <div class="container fade-up">
-      <h2>First training is free.</h2>
+  <section class="cta g-900 gold-rule" aria-labelledby="cta-h">
+    <div class="cx-wrap" data-sc-in data-sc-stagger="70">
+      <h2 class="sc-display" id="cta-h">First training is free.</h2>
       <p>No commitment, no kit, no experience needed. Just show up on a Thursday evening.</p>
-      <a href="join.html" class="btn btn--outline">Get Started &rarr;</a>
+      <div class="cta__row"><a class="btn btn--primary" href="#join-chat">Get started</a><a class="link" href="juniors.html">Juniors: Saturday mornings</a></div>
     </div>
   </section>
+
+</main>
 
   <footer class="footer">
     <div class="container">
       <div class="footer__grid">
         <div class="footer__brand">
           <img src="assets/logo.jpg" alt="Guildford Mavericks">
-          <p>Guildford's only baseball and softball club, playing and coaching since 1992 at Kings College, Surrey.</p>
+          <p>Guildford's only baseball and softball club. Playing and coaching since 1992 at Kings College, Southway, Guildford.</p>
           <div class="footer__social">
-            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.883v2.27h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a>
-            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Twitter/X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            <a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.69.24 2.69.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg></a>
+            <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="X / Twitter"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24H16.17l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25H8.08l4.25 5.62 5.91-5.62zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
+            <a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95C23.73 2.7 21.31.27 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 100 12.32 6.16 6.16 0 000-12.32zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-11.85a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></a>
+            <a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.19a3.02 3.02 0 00-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 00.5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 002.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 002.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></a>
           </div>
         </div>
         <div>
           <div class="footer__heading">Club</div>
           <ul class="footer__links">
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="join.html">Join the Club</a></li>
+            <li><a href="about.html">About us</a></li>
+            <li><a href="join.html">Try a free session</a></li>
             <li><a href="schedule.html">2026 Schedule</a></li>
+            <li><a href="roster.html">2026 Roster</a></li>
             <li><a href="juniors.html">Junior Programme</a></li>
             <li><a href="history.html">Season History</a></li>
             <li><a href="hall-of-fame.html">Hall of Fame</a></li>
@@ -542,7 +470,7 @@
           <ul class="footer__links">
             <li><a href="about.html#teams">Guildford Mavericks</a></li>
             <li><a href="about.html#teams">Guildford Millers</a></li>
-            <li><a href="about.html#teams">Gold Cats</a></li>
+            <li><a href="about.html#teams">Gold Cats (from 2027)</a></li>
           </ul>
         </div>
         <div>
@@ -551,32 +479,30 @@
             <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
             <li><a href="contact.html">Get Directions</a></li>
             <li><a href="contact.html#hire">Hire Our Diamond</a></li>
+            <li><a href="docs.html">Club Docs &amp; Policies</a></li>
           </ul>
         </div>
       </div>
       <div class="footer__bottom">
-        <span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved.</span>
-        <span class="footer__est">Est. 1992 &mdash; Guildford Mavericks</span>
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club.</span>
+        <span class="footer__est">Est. 1992 · Guildford Mavericks</span>
       </div>
     </div>
   </footer>
 
-  <!-- STICKY JOIN BAR (mobile only) -->
-  <div class="sticky-join-bar" id="sticky-join-bar" role="complementary" aria-label="Join prompt">
-    <div class="sticky-join-bar__text">
-      <strong>First training is free.</strong>
-      Thursdays, May to August &middot; Kings College
-    </div>
-    <a href="#join-chat" class="btn btn--primary" style="flex-shrink:0; font-size:0.85rem; padding: 0.6rem 1.2rem;">Ask Us &rarr;</a>
-    <button class="sticky-join-bar__close" id="sticky-bar-close" aria-label="Dismiss">&#10005;</button>
-  </div>
+  <aside class="joinbar" aria-label="First training is free">
+    <p><b>First training is free.</b>Thursdays, May to August &middot; Kings College</p>
+    <a class="btn btn--primary" href="#join-chat">Ask us</a>
+    <button type="button" aria-label="Dismiss">&times;</button>
+  </aside>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  
-  <script src="js/main.js"></script>
-  <script>
-    (function () {
+<script src="js/lenis.min.js"></script>
+<script src="js/scrollcraft.js"></script>
+<script src="js/concept.js"></script>
+<script src="js/theme.js"></script>
+<script>
+  (function () {
+    // The registration chat (the club's assistant; unchanged apart from how messages are drawn)
       const SESSION_ID = 'gbsc_join_' + Math.random().toString(36).slice(2, 9) + '_' + Date.now();
       const messagesEl = document.getElementById('join-chat-messages');
       const inputEl    = document.getElementById('join-chat-input');
@@ -585,10 +511,8 @@
 
       function addMsg(text, isUser) {
         const d = document.createElement('div');
-        d.style.cssText = isUser
-          ? 'max-width:85%;background:#a7132f;border-radius:12px;border-bottom-right-radius:4px;padding:0.65rem 0.9rem;font-family:sans-serif;font-size:0.875rem;line-height:1.55;color:#fff;align-self:flex-end;margin-left:auto;word-wrap:break-word;'
-          : 'max-width:85%;background:rgba(255,255,255,0.08);border-radius:12px;border-bottom-left-radius:4px;padding:0.65rem 0.9rem;font-family:sans-serif;font-size:0.875rem;line-height:1.55;color:rgba(255,255,255,0.88);word-wrap:break-word;';
-        d.innerHTML = text.replace(/\n/g, '<br>');
+        d.className = isUser ? 'jc-msg jc-msg--me' : 'jc-msg';
+        if (isUser) { d.textContent = text; } else { d.innerHTML = text.replace(/\n/g, '<br>'); }
         messagesEl.appendChild(d);
         messagesEl.scrollTop = messagesEl.scrollHeight;
         return d;
@@ -597,9 +521,9 @@
       function showTyping() {
         const t = document.createElement('div');
         t.id = 'join-typing';
-        t.style.cssText = 'display:flex;gap:4px;align-items:center;padding:0.65rem 0.9rem;background:rgba(255,255,255,0.08);border-radius:12px;border-bottom-left-radius:4px;width:fit-content;';
-        t.innerHTML = '<style>@keyframes jb{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}</style>' +
-          [0,0.2,0.4].map(d => `<span style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.4);display:block;animation:jb 1.2s ${d}s infinite;"></span>`).join('');
+        t.className = 'jc-typing';
+        t.setAttribute('aria-label', 'The assistant is typing');
+        t.innerHTML = '<span></span><span></span><span></span>';
         messagesEl.appendChild(t);
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }
@@ -630,15 +554,15 @@
 
           if (data.booking_submitted) {
             const conf = document.createElement('div');
-            conf.style.cssText = 'max-width:90%;background:rgba(212,168,67,0.15);border:1px solid rgba(212,168,67,0.35);border-radius:12px;padding:0.75rem 0.9rem;font-family:sans-serif;font-size:0.83rem;line-height:1.5;color:rgba(255,255,255,0.9);';
-            conf.innerHTML = '<strong style="color:#d4a843">🎉 You\'re booked in!</strong><br>We\'ve got your details and a confirmation email is on its way. See you on the diamond.';
+            conf.className = 'jc-booked';
+            conf.innerHTML = '<strong>🎉 You\'re booked in!</strong><br>We\'ve got your details and a confirmation email is on its way. See you on the diamond.';
             messagesEl.appendChild(conf);
             messagesEl.scrollTop = messagesEl.scrollHeight;
           }
         } catch (e) {
           const t = document.getElementById('join-typing');
           if (t) t.remove();
-          addMsg("Sorry, something went wrong. Email us at <a href='mailto:michael.burdett1@outlook.com' style='color:#d4a843'>michael.burdett1@outlook.com</a>", false);
+          addMsg("Sorry, something went wrong. Email us at <a href='mailto:michael.burdett1@outlook.com'>michael.burdett1@outlook.com</a>", false);
         } finally {
           waiting = false;
           sendBtn.disabled = false;
@@ -653,15 +577,26 @@
         inputEl.style.height = 'auto';
         inputEl.style.height = Math.min(inputEl.scrollHeight, 80) + 'px';
       });
+  })();
 
-      // Style the input placeholder for dark background
-      const placeholderStyle = document.createElement('style');
-      placeholderStyle.textContent = '#join-chat-input::placeholder{color:rgba(255,255,255,0.35)} #join-chat-input:focus{border-color:rgba(200,0,37,0.6)!important} #join-chat-send:hover{background:#a8001e!important}';
-      document.head.appendChild(placeholderStyle);
-    })();
-  </script>
-<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
-  <script defer src="/_vercel/insights/script.js"></script>
-<script src="js/theme.js" defer></script>
+  /* phone join bar: after the hero, gone by the chat and the close */
+  (function () {
+    var CX = window.CX, $ = CX.$, bar = $('.joinbar'), dismissed = false;
+    bar.querySelector('button').addEventListener('click', function () { dismissed = true; bar.classList.remove('is-on'); });
+    CX.frames.push(function (y) {
+      var chat = $('#join-chat').getBoundingClientRect(), close = $('.cta').getBoundingClientRect();
+      var over = (chat.top < innerHeight && chat.bottom > 0) || close.top < innerHeight;
+      bar.classList.toggle('is-on', !dismissed && y > innerHeight * 0.8 && !over);
+    });
+  })();
+</script>
+<script>
+  // The diamond in the bar: first at what to expect, second at pricing, third at the questions, home at the end.
+  (function () {
+    var CX = window.CX, $ = CX.$;
+    function stations() { if (window.GBSC) GBSC.setStations([CX.top($('#expect')) - 80, CX.top($('#pricing')) - 80, CX.top($('#faq')) - 80, document.documentElement.scrollHeight - innerHeight]); }
+    addEventListener('load', stations); addEventListener('resize', stations); setTimeout(stations, 400);
+  })();
+</script>
 </body>
 </html>
