@@ -20,21 +20,23 @@
   <style>
     /* ------------------------------------------------------ club details -- */
     .det__grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
-    .det h2 { margin: 0 0 1.8rem; font-size: clamp(2.8rem, 5vw, 5rem); }
+    .det h2 { margin: 0 0 1.8rem; font-size: clamp(2.8rem, 5vw, 5rem); color: var(--cardinal); }
     .det__big { list-style: none; margin: 0 0 2rem; padding: 0; }
-    .det__big li { padding-block: 1rem; border-top: 1px solid rgba(247,239,228,.16); }
-    .det__big li:last-child { border-bottom: 1px solid rgba(247,239,228,.16); }
+    .det__big li { padding-block: 1rem; border-top: 1px solid var(--sc-hairline); }
+    .det__big li:last-child { border-bottom: 1px solid var(--sc-hairline); }
     .det__big small, .det__rows dt { display: block; margin-bottom: .35rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
     .det__big a { font-family: var(--sc-font-display); font-weight: 800; font-size: clamp(1.6rem, 2.6vw, 2.3rem); line-height: 1.05; color: var(--sc-ink); overflow-wrap: anywhere;
                   text-decoration: underline; text-decoration-color: color-mix(in oklab, var(--sc-accent) 70%, transparent); text-underline-offset: .18em; text-decoration-thickness: 3px; }
     .det__big a:hover { color: var(--sc-accent); }
     .det__follow > span { display: block; margin-bottom: .8rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
     .det__rows { margin: 0; }
-    .det__rows div { display: grid; grid-template-columns: 11rem 1fr; gap: .4rem 1.6rem; padding-block: 1.4rem; border-top: 1px solid rgba(247,239,228,.16); }
-    .det__rows div:last-child { border-bottom: 1px solid rgba(247,239,228,.16); }
+    .det__rows div { display: grid; grid-template-columns: 11rem 1fr; gap: .4rem 1.6rem; padding-block: 1.4rem; border-top: 1px solid var(--sc-hairline); }
+    .det__rows div:last-child { border-bottom: 1px solid var(--sc-hairline); }
     .det__rows dt { margin: 0; font-family: var(--sc-font-display); font-weight: 800; font-size: 1.5rem; line-height: 1; letter-spacing: 0; color: var(--sc-accent); }
     .det__rows dd { margin: 0; font-size: 1.05rem; line-height: 1.55; }
     .det__rows dd small { display: block; margin-top: .2rem; font-size: .88rem; color: var(--sc-ink-soft); }
+    .on-paper .follow a { border-color: color-mix(in oklab, #23100e 28%, transparent); }
+    .on-paper .follow a:hover { border-color: var(--cardinal); color: var(--cardinal); }
 
     /* ------------------------------------------------------- getting here -- */
     .here__grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; }
@@ -140,7 +142,7 @@
   </section>
 
   <!-- ====================================================== CLUB DETAILS -->
-  <section id="details" class="sec det g-900" aria-labelledby="det-h">
+  <section id="details" class="sec det on-paper" aria-labelledby="det-h">
     <div class="cx-wrap det__grid">
       <div data-sc-in data-sc-stagger="70">
         <p class="cx-label">Club details</p>

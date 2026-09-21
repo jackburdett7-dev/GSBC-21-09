@@ -89,6 +89,10 @@
     .bases small { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
     .bases h3 { margin: .3rem 0 .4rem; font-size: clamp(2.4rem, 4vw, 3.6rem); color: var(--sc-accent); }
     .bases p { margin: 0; font-size: 1.02rem; line-height: 1.5; }
+    .on-paper .bases::before { background: linear-gradient(90deg, var(--cardinal), rgba(167,19,47,.2)); }
+    .on-paper .bases li::before { background: #fff8ee; border-color: var(--cardinal); }
+    .on-paper .bases li:first-child::before { background: var(--cardinal); }
+    .on-paper .bases h3 { color: var(--cardinal); }
 
     /* ----------------------------------------------- what to expect + chat -- */
     .xp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
@@ -199,7 +203,7 @@
       .stat:nth-child(2) { border-right: 0; }
       .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(247,239,228,.1); }
       .bases { grid-template-columns: 1fr; }
-      .bases::before { left: 12px; right: auto; top: 0; bottom: 0; width: 3px; height: auto; background: linear-gradient(180deg, var(--sc-accent), rgba(243,181,60,.25)); }
+      .bases::before, .on-paper .bases::before { left: 12px; right: auto; top: 0; bottom: 0; width: 3px; height: auto; background: linear-gradient(180deg, var(--cardinal), rgba(167,19,47,.2)); }
       .bases li { padding: 0 0 2rem 3.2rem; }
       .bases li::before { top: 4px; }
     }
@@ -269,7 +273,7 @@
   </section>
 
   <!-- ========================================================= THE BASES -->
-  <section class="sec g-800" aria-labelledby="bases-h">
+  <section class="sec on-paper" aria-labelledby="bases-h">
     <div class="cx-wrap">
       <div class="sec__head" data-sc-in><div><p class="cx-label">How it works</p><h2 class="sc-display" id="bases-h">Try. Join. Play.</h2></div></div>
       <ol class="bases" data-sc-in data-sc-stagger="120">
