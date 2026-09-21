@@ -108,9 +108,13 @@
     .xp figure { margin: 0; }
     .xp figure img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 30%; border-radius: var(--r); box-shadow: var(--sc-e2); }
     .xp figcaption { margin-top: .6rem; font-size: .8rem; color: var(--sc-ink-soft); }
-    .xp__chat { position: sticky; top: 6.5rem; }
-    .xp__chat > p:not(.cx-label) { margin: 0 0 1.4rem; font-size: 1rem; line-height: 1.55; color: var(--sc-ink-soft); }
-    .chat { display: flex; flex-direction: column; height: 480px; background: #420b18; border: 1px solid rgba(243,181,60,.3); border-radius: 8px; overflow: hidden; box-shadow: var(--sc-e3); scroll-margin-top: 7rem; }
+    .xp__chat { align-self: stretch; }
+    .xp { --chat-h: clamp(340px, calc(100vh - 380px), 480px); }
+    .xp__stick { position: sticky; top: max(6.5rem, calc(50vh - var(--chat-h) / 2 - 85px)); }
+    .xp__stick .cx-label { margin-bottom: .5rem; }
+    .xp .xp__title { margin: 0 0 1rem; font-size: clamp(1.6rem, 2.2vw, 2.2rem); }
+    .xp__lede { margin: .8rem 0 0; font-size: .9rem; line-height: 1.5; color: var(--sc-ink-soft); }
+    .chat { display: flex; flex-direction: column; height: var(--chat-h); background: #420b18; border: 1px solid rgba(243,181,60,.3); border-radius: 8px; overflow: hidden; box-shadow: var(--sc-e3); scroll-margin-top: 7rem; }
     .chat__band { flex: none; padding: .45rem 1.2rem; background: var(--cardinal); text-align: center; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #fff; }
     .chat__head { flex: none; display: flex; align-items: center; gap: .75rem; padding: 1rem 1.2rem; background: #2e0813; border-bottom: 1px solid rgba(255,255,255,.07); }
     .chat__head img { width: 52px; height: 36px; border-radius: 6px; object-fit: cover; background: var(--cardinal); }
@@ -135,7 +139,7 @@
     .chat__input button:hover { background: #ffc65a; }
     .chat__input button:disabled { opacity: .6; cursor: default; }
     .chat__input button:focus-visible { outline: 3px solid #f3b53c; outline-offset: 2px; }
-    .chat__note { margin: .7rem 0 0; text-align: center; font-size: .74rem; color: var(--sc-ink-soft); }
+    .chat__note { margin: .35rem 0 0; font-size: .74rem; color: var(--sc-ink-soft); }
     @media (prefers-reduced-motion: reduce) { .jc-typing span { animation: none; } .chat__msgs { scroll-behavior: auto; } }
 
     /* ----------------------------------------------------------- pricing -- */
@@ -195,7 +199,7 @@
       .jh__photo { order: -1; height: 46vh; }
       .jh__copy { padding-top: 2.4rem; }
       .xp__grid, .mem__grid, .kit__grid { grid-template-columns: 1fr; }
-      .xp__chat { position: static; }
+      .xp__stick { position: static; }
       .price__grid { grid-template-columns: 1fr; max-width: 30rem; }
     }
     @media (max-width: 860px) {
@@ -304,10 +308,10 @@
           <figcaption>Indoor pre-season training.</figcaption>
         </figure>
       </div>
-      <div class="xp__chat" data-sc-in>
+      <div class="xp__chat">
+        <div class="xp__stick">
         <p class="cx-label">Register your interest</p>
-        <h2 class="sc-display">Join the club, right here in chat.</h2>
-        <p>No forms to fill in. Tell our assistant you'd like to join and you're registered in under a minute. It can also answer anything: training times, pricing, junior sessions.</p>
+        <h2 class="sc-display xp__title">Join the club, right here in chat.</h2>
         <div id="join-chat" class="chat">
           <div class="chat__band">Official club registration</div>
           <div class="chat__head"><img src="assets/logo.jpg" alt="" width="52" height="36"><div><b>Guildford Baseball Assistant</b><span>Online, ready to register you</span></div></div>
@@ -320,7 +324,9 @@
             <button id="join-chat-send" type="button" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="#26090f" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
           </div>
         </div>
+        <p class="xp__lede">No forms to fill in. Tell our assistant you'd like to join and you're registered in under a minute. It can also answer anything: training times, pricing, junior sessions.</p>
         <p class="chat__note">Guildford Mavericks &middot; Powered by AI</p>
+        </div>
       </div>
     </div>
   </section>
