@@ -152,3 +152,6 @@ em { font-style: normal; }
 .accordion__body p { padding-bottom: 0; transition: padding-bottom .25s ease-out; }
 .accordion__item.open .accordion__body p { padding-bottom: 1.2rem; }
 .accordion__icon { background: var(--maroon-800) !important; color: var(--gold-hi) !important; }
+
+/* Privacy links read as links: footer and the note under the Join chat */
+.footer__bottom a, .chat__note a { text-decoration: underline; text-underline-offset: 2px; }

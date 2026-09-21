@@ -527,7 +527,7 @@ p  { max-width: 65ch; }
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.72);
   margin-top: 0.3rem;
   display: block;
 }

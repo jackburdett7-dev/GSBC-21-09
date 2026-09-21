@@ -311,12 +311,12 @@
       <div class="xp__chat">
         <div class="xp__stick">
         <p class="cx-label">Register your interest</p>
-        <h2 class="sc-display xp__title">Join the club, right here in chat.</h2>
+        <h2 class="sc-display xp__title">Start joining, right here in chat.</h2>
         <div id="join-chat" class="chat">
-          <div class="chat__band">Official club registration</div>
-          <div class="chat__head"><img src="assets/logo.jpg" alt="" width="52" height="36"><div><b>Guildford Baseball Assistant</b><span>Online, ready to register you</span></div></div>
+          <div class="chat__band">Join the club</div>
+          <div class="chat__head"><img src="assets/logo.jpg" alt="" width="52" height="36"><div><b>Guildford Baseball Assistant</b><span>Online, ask us anything</span></div></div>
           <div id="join-chat-messages" class="chat__msgs" aria-live="polite">
-            <div class="jc-msg">Hi! I can register you with the club right here. Just say "I'd like to join". You can also ask me anything about training times, pricing, or junior sessions.</div>
+            <div class="jc-msg">Hi! I can pass your details to the club so they can get you started. Just say "I'd like to join". You can also ask me anything about training times, pricing, or junior sessions.</div>
           </div>
           <div class="chat__input">
             <label class="visually-hidden" for="join-chat-input">Your message</label>
@@ -324,8 +324,8 @@
             <button id="join-chat-send" type="button" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="#26090f" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
           </div>
         </div>
-        <p class="xp__lede">No forms to fill in. Tell our assistant you'd like to join and you're registered in under a minute. It can also answer anything: training times, pricing, junior sessions.</p>
-        <p class="chat__note">Guildford Mavericks &middot; Powered by AI</p>
+        <p class="xp__lede">No forms to fill in. Tell our assistant you'd like to join and your details are with the club in under a minute. It can also answer anything: training times, pricing, junior sessions.</p>
+        <p class="chat__note">Guildford Mavericks &middot; Powered by AI. What you share goes to the club so it can get in touch. <a href="/privacy.html">Privacy notice</a></p>
         </div>
       </div>
     </div>
@@ -494,7 +494,7 @@
         </div>
       </div>
       <div class="footer__bottom">
-        <span>&copy; 2026 Guildford Baseball &amp; Softball Club.</span>
+        <span>&copy; 2026 Guildford Baseball &amp; Softball Club. &middot; <a href="/privacy.html">Privacy</a></span>
         <span class="footer__est">Est. 1992 · Guildford Mavericks</span>
       </div>
     </div>
@@ -565,7 +565,7 @@
           if (data.booking_submitted) {
             const conf = document.createElement('div');
             conf.className = 'jc-booked';
-            conf.innerHTML = '<strong>🎉 You\'re booked in!</strong><br>We\'ve got your details and a confirmation email is on its way. See you on the diamond.';
+            conf.innerHTML = '<strong>Thanks, your details are with the club.</strong><br>A confirmation email is on its way and the club will be in touch. See you on the diamond.';
             messagesEl.appendChild(conf);
             messagesEl.scrollTop = messagesEl.scrollHeight;
           }
@@ -608,5 +608,7 @@
     addEventListener('load', stations); addEventListener('resize', stations); setTimeout(stations, 400);
   })();
 </script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
