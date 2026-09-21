@@ -25,7 +25,7 @@
     .det .ask__card { margin-bottom: 2.2rem; }
     .det__rows dt { display: block; margin-bottom: .35rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
     .det__follow > span { display: block; margin-bottom: .8rem; font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
-    .det__rows { margin: 0; }
+    .det__rows { margin: 0; align-self: center; }
     .det__rows div { display: grid; grid-template-columns: 11rem 1fr; gap: .4rem 1.6rem; padding-block: 1.4rem; border-top: 1px solid var(--sc-hairline); }
     .det__rows div:last-child { border-bottom: 1px solid var(--sc-hairline); }
     .det__rows dt { margin: 0; font-family: var(--sc-font-display); font-weight: 800; font-size: 1.5rem; line-height: 1; letter-spacing: 0; color: var(--sc-accent); }
@@ -58,11 +58,11 @@
     .ask__card .btn--primary:hover { background: #ffc65a; color: #26090f; }
 
     /* ------------------------------------------------------ diamond hire -- */
-    .hire { display: grid; grid-template-columns: 1fr 1.1fr; min-height: 80vh; }
-    .hire__photo { position: relative; margin: 0; overflow: hidden; min-height: 50vh; }
-    .hire__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55% 50%; }
-    .hire__photo figcaption { position: absolute; left: 1rem; bottom: 1rem; font-size: .76rem; font-weight: 600; background: rgba(46,8,19,.84); padding: .25rem .55rem; border-radius: 3px; }
-    .hire__body { padding: clamp(3.5rem, 7vw, 6rem) var(--sc-gutter); display: flex; flex-direction: column; justify-content: center; }
+    .hire__grid { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(2.5rem, 5vw, 5rem); align-items: center; }
+    .hire__photo { margin: 0; }
+    .hire__photo img { display: block; width: 100%; height: auto; border-radius: var(--r); box-shadow: var(--sc-e2); }
+    .hire__photo figcaption { margin-top: .6rem; font-size: .8rem; color: var(--sc-ink-soft); }
+    .hire__body { display: flex; flex-direction: column; }
     .hire h2 { margin: 0 0 1.4rem; font-size: clamp(2.8rem, 5vw, 5rem); color: var(--cardinal); }
     .hire p { margin: 0 0 1.4rem; font-size: 1.08rem; line-height: 1.6; color: var(--sc-ink-soft); max-width: 34rem; }
     .hire__specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 1.6rem; margin: .6rem 0 2.2rem; max-width: 34rem; }
@@ -73,8 +73,7 @@
 
     @media (max-width: 960px) {
       .det__grid, .here__grid { grid-template-columns: 1fr; }
-      .hire { grid-template-columns: 1fr; min-height: 0; }
-      .hire__photo { height: 50vh; }
+      .hire__grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .det__rows div { grid-template-columns: 1fr; }
@@ -186,8 +185,9 @@
   </section>
 
   <!-- ====================================================== DIAMOND HIRE -->
-  <section id="hire" class="hire on-paper" aria-labelledby="hire-h">
-    <figure class="hire__photo" data-sc-reveal="right" data-sc-reveal-at="0.02 0.3">
+  <section id="hire" class="sec hire on-paper" aria-labelledby="hire-h">
+    <div class="cx-wrap hire__grid">
+    <figure class="hire__photo" data-sc-in>
       <img src="assets/v2/scoreboard-2023.webp" alt="A game at Kings College, with the scoreboard showing the fifth inning" width="1000" height="599" loading="lazy">
       <figcaption>Kings College, 2023</figcaption>
     </figure>
@@ -201,6 +201,7 @@
         <div><b>2</b><span>Batting cages</span></div>
       </div>
       <a class="btn btn--primary" href="mailto:michael.burdett1@outlook.com?subject=Diamond%20Hire%20Enquiry">Enquire about hire</a>
+    </div>
     </div>
   </section>
 
