@@ -1,33 +1,278 @@
 {
-  "cleanUrls": true,
   "headers": [
-    { "source": "/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": ".*\\.vercel\\.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
   ],
   "rewrites": [
-    { "source": "/admin", "destination": "/admin/index.html" }
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
+    }
   ],
   "redirects": [
-    { "source": "/membership", "destination": "/join", "permanent": true },
-    { "source": "/membership/", "destination": "/join", "permanent": true },
-    { "source": "/membership/adult-membership", "destination": "/join", "permanent": true },
-    { "source": "/membership/adult-membership/", "destination": "/join", "permanent": true },
-    { "source": "/membership/junior-membership", "destination": "/juniors", "permanent": true },
-    { "source": "/membership/junior-membership/", "destination": "/juniors", "permanent": true },
-    { "source": "/about-us", "destination": "/about", "permanent": true },
-    { "source": "/about-us/", "destination": "/about", "permanent": true },
-    { "source": "/contact-us", "destination": "/contact", "permanent": true },
-    { "source": "/contact-us/", "destination": "/contact", "permanent": true },
-    { "source": "/fixtures", "destination": "/schedule", "permanent": true },
-    { "source": "/fixtures/", "destination": "/schedule", "permanent": true },
-    { "source": "/results", "destination": "/schedule", "permanent": true },
-    { "source": "/results/", "destination": "/schedule", "permanent": true },
-    { "source": "/fixtures-results", "destination": "/schedule", "permanent": true },
-    { "source": "/fixtures-results/", "destination": "/schedule", "permanent": true },
-    { "source": "/junior-baseball", "destination": "/juniors", "permanent": true },
-    { "source": "/junior-baseball/", "destination": "/juniors", "permanent": true },
-    { "source": "/juniors-baseball", "destination": "/juniors", "permanent": true },
-    { "source": "/juniors-baseball/", "destination": "/juniors", "permanent": true },
-    { "source": "/photos", "destination": "/gallery", "permanent": true },
-    { "source": "/photos/", "destination": "/gallery", "permanent": true }
+    {
+      "source": "/membership",
+      "destination": "/join.html",
+      "permanent": true
+    },
+    {
+      "source": "/membership/",
+      "destination": "/join.html",
+      "permanent": true
+    },
+    {
+      "source": "/membership/adult-membership",
+      "destination": "/join.html",
+      "permanent": true
+    },
+    {
+      "source": "/membership/adult-membership/",
+      "destination": "/join.html",
+      "permanent": true
+    },
+    {
+      "source": "/membership/junior-membership",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/membership/junior-membership/",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us/",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/fixtures",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/fixtures/",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/results",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/results/",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/fixtures-results",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/fixtures-results/",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/junior-baseball",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/junior-baseball/",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/juniors-baseball",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/juniors-baseball/",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/photos",
+      "destination": "/gallery.html",
+      "permanent": true
+    },
+    {
+      "source": "/photos/",
+      "destination": "/gallery.html",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/about/",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/join",
+      "destination": "/join.html",
+      "permanent": true
+    },
+    {
+      "source": "/join/",
+      "destination": "/join.html",
+      "permanent": true
+    },
+    {
+      "source": "/juniors",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/juniors/",
+      "destination": "/juniors.html",
+      "permanent": true
+    },
+    {
+      "source": "/schedule",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/schedule/",
+      "destination": "/schedule.html",
+      "permanent": true
+    },
+    {
+      "source": "/roster",
+      "destination": "/roster.html",
+      "permanent": true
+    },
+    {
+      "source": "/roster/",
+      "destination": "/roster.html",
+      "permanent": true
+    },
+    {
+      "source": "/gallery",
+      "destination": "/gallery.html",
+      "permanent": true
+    },
+    {
+      "source": "/gallery/",
+      "destination": "/gallery.html",
+      "permanent": true
+    },
+    {
+      "source": "/history",
+      "destination": "/history.html",
+      "permanent": true
+    },
+    {
+      "source": "/history/",
+      "destination": "/history.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/news",
+      "destination": "/news.html",
+      "permanent": true
+    },
+    {
+      "source": "/news/",
+      "destination": "/news.html",
+      "permanent": true
+    },
+    {
+      "source": "/docs",
+      "destination": "/docs.html",
+      "permanent": true
+    },
+    {
+      "source": "/docs/",
+      "destination": "/docs.html",
+      "permanent": true
+    },
+    {
+      "source": "/hall-of-fame",
+      "destination": "/hall-of-fame.html",
+      "permanent": true
+    },
+    {
+      "source": "/hall-of-fame/",
+      "destination": "/hall-of-fame.html",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/privacy/",
+      "destination": "/privacy.html",
+      "permanent": true
+    }
   ]
 }
