@@ -54,11 +54,11 @@
     .hero__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transition: opacity 300ms var(--sc-ease-out); }
     .is-live .hero__poster { opacity: 0; }
     .plane--plate { z-index: 1; } .ball--hero { z-index: 4; } .plane--pitcher { z-index: 5; }
-    .hero__scrim-top { position: absolute; inset: 0; z-index: 2; pointer-events: none;
-      background: radial-gradient(125% 88% at 100% 0%, rgba(46,8,19,.88) 0%, rgba(46,8,19,.7) 34%, rgba(46,8,19,.3) 52%, rgba(46,8,19,0) 66%); }
+    .hero__scrim-top { position: absolute; inset: 0; z-index: 6; pointer-events: none;
+      background: radial-gradient(110% 80% at 0% 0%, rgba(46,8,19,.86) 0%, rgba(46,8,19,.66) 30%, rgba(46,8,19,.28) 50%, rgba(46,8,19,0) 64%); }
     .hero__scrim-low { position: absolute; inset: 0; z-index: 6; pointer-events: none;
       background: radial-gradient(100% 76% at 0% 100%, rgba(46,8,19,.92) 0%, rgba(46,8,19,.74) 36%, rgba(46,8,19,0) 64%); }
-    .hero__title { position: absolute; z-index: 3; right: var(--sc-gutter); top: clamp(6.5rem, 15vh, 9rem); text-align: right; will-change: transform; }
+    .hero__title { position: absolute; z-index: 7; left: var(--sc-gutter); top: clamp(6.5rem, 15vh, 9rem); text-align: left; will-change: transform; }
     .hero__h1 { margin: 0; font-size: clamp(3.6rem, 7.4vw, 8.6rem); color: #f7efe4; }
     .hero__h1 .ln { display: block; overflow: hidden; padding-bottom: .05em; }
     .hero__h1 .ln > span { display: block; }
@@ -601,7 +601,7 @@
         <div>
           <div class="footer__heading">Contact</div>
           <ul class="footer__links">
-            <li><a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a></li>
+            <li><a class="btn btn--primary footer__btn" href="mailto:michael.burdett1@outlook.com?subject=Club%20Enquiry">Email the club</a></li>
             <li><a href="contact.html">Get Directions</a></li>
             <li><a href="contact.html#hire">Hire Our Diamond</a></li>
             <li><a href="docs.html">Club Docs &amp; Policies</a></li>

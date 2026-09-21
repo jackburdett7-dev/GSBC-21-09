@@ -130,6 +130,9 @@ em { font-style: normal; }
 .footer__heading { color: var(--gold-hi); }
 .footer__links a:hover { color: var(--gold-hi); }
 .footer__social a:hover { background: var(--gold-hi); color: #26090f; }
+/* Contact: a button to the club inbox rather than the address itself (Jack, 21 Sep) */
+.footer__links .footer__btn { align-self: flex-start; padding: .65rem 1.1rem; font-size: .85rem; color: #26090f; }
+.footer__links .footer__btn:hover { color: #26090f; }
 .footer__est { font-family: var(--font-hero); font-style: normal; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
 
 /* Phone fit: the carried-over pages scrolled sideways at 360px (grid items
