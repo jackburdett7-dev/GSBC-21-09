@@ -29,6 +29,9 @@
     .privacy a { text-decoration: underline; }
     .privacy__updated { font-size: .85rem; margin-bottom: .5rem; }
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
   <nav class="nav">
@@ -55,7 +58,7 @@
 
   <section class="section section--white">
     <div class="container privacy">
-      <p class="privacy__updated">Last updated 21 September 2026</p>
+      <p class="privacy__updated">Last updated 22 September 2026</p>
 
       <h2>Who we are</h2>
       <p>Guildford Baseball &amp; Softball Club decides how the personal information described here is used, which makes us its "controller" under UK data protection law. To contact us about your information, email <a href="mailto:michael.burdett1@outlook.com">michael.burdett1@outlook.com</a>.</p>
@@ -63,7 +66,7 @@
       <h2>Joining through our chat assistant</h2>
       <p>The assistant on our Join page asks for:</p>
       <ul>
-        <li><strong>Players:</strong> your full name, email address, phone number, date of birth, and any baseball or softball you've played before.</li>
+        <li><strong>Players:</strong> your full name, email address, phone number, date of birth, and any baseball or softball you've played before. If you're 16 or under, it also asks for a parent or guardian's name, email address and phone number.</li>
         <li><strong>Juniors:</strong> your child's full name, date of birth and experience, plus your name, email address and phone number as their parent or guardian.</li>
         <li><strong>Coaching sessions:</strong> your name, email address, phone number, the organisation you represent, and the days you're looking for.</li>
       </ul>
@@ -77,9 +80,9 @@
         <li><strong>Modal</strong>: runs the assistant (US)</li>
         <li><strong>Supabase</strong>: stores enquiries and chat conversations (Ireland)</li>
         <li><strong>Google (Gmail)</strong>: sends the confirmation emails</li>
-        <li><strong>Vercel</strong>: hosts this website</li>
+        <li><strong>Vercel</strong>: hosts this website and the club's enquiry dashboard</li>
       </ul>
-      <p>Your enquiry is also emailed to the club's mailbox. Where information is processed outside the UK, it is protected by the safeguards in each provider's data processing terms, such as the UK International Data Transfer Addendum. We never sell your information or use it for anyone else's marketing.</p>
+      <p>Your enquiry is also emailed to the club's mailbox. Some of this information is processed outside the UK: Anthropic, Modal and Vercel are based in the US, and the emails are sent through Google's Gmail service. We never sell your information or use it for anyone else's marketing.</p>
 
       <h2>How long we keep it</h2>
       <ul>
@@ -95,7 +98,7 @@
         <li><strong>No advertising or tracking cookies,</strong> which is why there's no cookie banner.</li>
         <li><strong>Visitor statistics.</strong> Vercel Web Analytics counts visits so we can see which pages are used. It sets no cookies and doesn't identify you or follow you to other sites.</li>
         <li><strong>Hosting.</strong> Vercel keeps standard server logs, including your IP address, to keep the site secure and working.</li>
-        <li><strong>Page features.</strong> The fonts come from Google Fonts, the maps from Google Maps, a small animation library from Cloudflare, and the news noticeboard from our database provider. Your browser connects to each of these, so each receives your IP address. Google's use is covered by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.</li>
+        <li><strong>Page features.</strong> The fonts come from Google Fonts, the maps from Google Maps, a small animation library from Cloudflare, the news noticeboard from our database provider, the photos on the Juniors page from Wix, and some photos in older news posts from the club's previous website. Your browser connects to each of these, so each receives your IP address. Google's use is covered by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.</li>
       </ul>
 
       <h2>Your rights</h2>
@@ -114,7 +117,7 @@
     <div><div class="footer__heading">Club</div><ul class="footer__links"><li><a href="about.html">About Us</a></li><li><a href="join.html">Join the Club</a></li><li><a href="schedule.html">2026 Schedule</a></li><li><a href="juniors.html">Junior Programme</a></li><li><a href="history.html">Season History</a></li><li><a href="hall-of-fame.html">Hall of Fame</a></li><li><a href="news.html">Latest News</a></li></ul></div>
     <div><div class="footer__heading">Teams</div><ul class="footer__links"><li><a href="about.html#teams">Guildford Mavericks</a></li><li><a href="about.html#teams">Guildford Millers</a></li><li><a href="about.html#teams">Gold Cats</a></li></ul></div>
     <div><div class="footer__heading">Contact</div><ul class="footer__links"><li><a class="btn btn--primary footer__btn" href="mailto:michael.burdett1@outlook.com?subject=Club%20Enquiry">Email the club</a></li><li><a href="contact.html">Get Directions</a></li><li><a href="contact.html#hire">Hire Our Diamond</a></li></ul></div>
-  </div><div class="footer__bottom"><span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved. &middot; <a href="/privacy.html">Privacy</a></span><span class="footer__est">Est. 1992 &mdash; Guildford Mavericks</span></div></div></footer>
+  </div><div class="footer__bottom"><span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved. &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a></span><span class="footer__est">Est. 1992 · Guildford Mavericks</span></div></div></footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script><script src="js/main.js"></script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>

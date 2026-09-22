@@ -468,6 +468,9 @@
 
     .empty-state__icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
 
@@ -567,7 +570,7 @@
           </div>
 
           <div class="field">
-            <label>Cover Image <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(optional — JPG, PNG, WEBP, max 5 MB)</span></label>
+            <label>Cover Image <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(optional: JPG, PNG, WEBP, max 5 MB)</span></label>
             <div class="upload-zone" id="upload-zone">
               <input type="file" id="p-image" accept="image/*">
               <span class="upload-zone__icon">🖼️</span>
@@ -577,7 +580,7 @@
           </div>
 
           <div class="field">
-            <label for="p-content">Post content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(HTML supported — &lt;p&gt;, &lt;strong&gt;, &lt;a&gt; etc.)</span></label>
+            <label for="p-content">Post content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(HTML supported: &lt;p&gt;, &lt;strong&gt;, &lt;a&gt; etc.)</span></label>
             <textarea id="p-content" placeholder="Write your post here…"></textarea>
           </div>
 
@@ -810,7 +813,7 @@
       loading.style.display = 'none';
 
       if (!result.data || result.data.length === 0) {
-        loading.innerHTML = '<span class="empty-state__icon">📭</span>No posts yet — add one in the New Post tab.';
+        loading.innerHTML = '<span class="empty-state__icon">📭</span>No posts yet. Add one in the New Post tab.';
         loading.style.display = 'block';
         return;
       }
