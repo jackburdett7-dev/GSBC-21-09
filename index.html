@@ -131,7 +131,7 @@
        v3's band: where the season stands, the next home games, and the
        noticeboard (the live site's club news, with its pictures). */
     .now { padding-block: clamp(3rem, 5vw, 4.4rem); }
-    .now__grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+    .now__grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
     .now__kicker { margin: 0 0 .45rem; font-size: .74rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-ink-soft); }
     .now__status { margin: 0; font-size: clamp(1.15rem, 1.6vw, 1.45rem); line-height: 1.4; font-weight: 600; text-wrap: pretty; }
     .now__when { margin: .45rem 0 0; font-size: .92rem; color: var(--sc-ink-soft); }
@@ -151,6 +151,18 @@
     .posts b { font-weight: 650; font-size: 1.04rem; line-height: 1.35; }
     @media (hover: hover) and (pointer: fine) { .posts a:hover b, .posts a:hover .arrow { color: var(--sc-accent); } }
     .now__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-top: 1.4rem; }
+    /* the lead story: newest post, published from the admin */
+    .now__season { margin-top: clamp(2.2rem, 4vw, 3.4rem); padding-top: 1.4rem; border-top: 1px solid rgba(247,239,228,.16); }
+    .now__season .now__status { font-size: clamp(1rem, 1.2vw, 1.12rem); }
+    .now__season .now__links { margin-top: 1rem; }
+    .lead { display: block; color: var(--sc-ink); }
+    .lead__img { display: block; border-radius: var(--r); overflow: hidden; background: #5a0f1d; }
+    .lead__img img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+    .lead__meta { display: block; margin: 1.15rem 0 .5rem; font-size: .78rem; color: var(--sc-ink-soft); }
+    .lead__title { display: block; font-size: clamp(1.55rem, 2.5vw, 2.25rem); line-height: 1.15; font-weight: 700; text-wrap: balance; }
+    .lead__excerpt { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-top: .7rem; max-width: 54ch; font-size: 1rem; line-height: 1.55; color: var(--sc-ink-soft); }
+    .lead .go { display: inline-block; margin-top: 1.1rem; }
+    @media (hover: hover) and (pointer: fine) { .lead:hover .lead__title, .lead:hover .go { color: var(--sc-accent); } }
     .follow { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; }
     .follow > span { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sc-ink-soft); margin-right: .3rem; }
     .follow a { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .9rem; border: 1px solid rgba(247,239,228,.28); border-radius: 4px; font-size: .85rem; font-weight: 600; color: var(--sc-ink); }
@@ -406,14 +418,14 @@
   <section class="now g-900" aria-labelledby="now-h">
     <div class="cx-wrap now__grid" data-sc-in data-sc-stagger="70">
       <div>
-        <h2 class="cx-label" id="now-h">Right now</h2>
-        <div data-fixtures>
-          <p class="now__status">The season runs from April to August, with home games on Sundays at Kings College.</p>
-          <div class="now__links"><a class="link" href="schedule.html">Fixtures &amp; results <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
-        </div>
+        <h2 class="cx-label" id="now-h">Latest</h2>
+        <a class="lead" data-lead href="news.html">
+          <b class="lead__title">Club news, match reports and announcements</b>
+          <span class="go">All news <span class="arrow" aria-hidden="true">&rarr;</span></span>
+        </a>
       </div>
       <div>
-        <h2 class="cx-label">From the noticeboard</h2>
+        <h2 class="cx-label">More from the noticeboard</h2>
         <ul class="posts" data-news><li><a href="news.html"><span></span><span><b>Club news, match reports and announcements</b></span></a></li></ul>
         <div class="now__foot">
           <a class="link" href="news.html">All news <span class="arrow" aria-hidden="true">&rarr;</span></a>
@@ -423,6 +435,12 @@
           <a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24H16.17l-4.71-6.23-5.4 6.23H2.75l7.73-8.84L1.25 2.25H8.08l4.25 5.62 5.91-5.62zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg>X</a>
         </div>
         </div>
+      </div>
+    </div>
+    <div class="cx-wrap now__season">
+      <div data-fixtures>
+        <p class="now__status">The season runs from April to August, with home games on Sundays at Kings College.</p>
+        <div class="now__links"><a class="link" href="schedule.html">Fixtures &amp; results <span class="arrow" aria-hidden="true">&rarr;</span></a></div>
       </div>
     </div>
   </section>
@@ -732,16 +750,65 @@
     });
   }
 
-  /* ------------------------------------------------- the noticeboard -- */
-  fetch('data/posts.json').then(function (r) { return r.json(); }).then(function (posts) {
-    posts.sort(function (a, b) { return a.date < b.date ? 1 : -1; });
-    $('[data-news]').innerHTML = posts.slice(0, 3).map(function (p) {
-      var t = p.title.replace(/[<>&]/g, '');
-      // imageFocus: where to crop a photo that isn't landscape (a portrait keeps the face)
-      var focus = p.imageFocus ? ' style="object-position:' + p.imageFocus + '"' : '';
-      return '<li><a href="' + p.url + '"><img src="' + p.image + '" alt="" width="195" height="130" loading="lazy"' + focus + '><span><time>' + p.dateFormatted + '</time><b>' + t + '</b></span><span class="arrow" aria-hidden="true">&rarr;</span></a></li>';
-    }).join('');
-  }).catch(function () {});
+  /* ------------------------------------------------- the noticeboard --
+     Posts written in the admin live in Supabase; the older ones are built into
+     data/posts.json. Merge both, newest first: the newest becomes the lead story,
+     the next three sit beside it. Publishing a new one shifts everything down by
+     itself, so the lead is always whatever the club last posted. */
+  (function () {
+    var SB_URL = 'https://wajvgngjfwbdnitggakn.supabase.co';
+    var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhanZnbmdqZndiZG5pdGdnYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwODM2NzksImV4cCI6MjA5MTY1OTY3OX0.0-wOI9VAy6NFxnrBJEpunqPbmq2mP2D3ZEec_V5m8gk';
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) {
+        return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c];
+      });
+    }
+    function fmt(d) {
+      var x = new Date(d + 'T00:00:00');
+      return x.getDate() + ' ' + MONTHS[x.getMonth()] + ' ' + x.getFullYear();
+    }
+    // Supabase posts carry image_url + slug; the built-in ones carry image + url.
+    function img(p)  { return p.image_url ? p.image_url : p.image; }
+    function href(p) { return p.image_url ? 'news/post.html?slug=' + encodeURIComponent(p.slug) : p.url; }
+    // imageFocus: where to crop a photo that isn't landscape (a portrait keeps the face)
+    function focus(p) { return p.imageFocus ? ' style="object-position:' + esc(p.imageFocus) + '"' : ''; }
+
+    var fromDb = fetch(SB_URL + '/rest/v1/posts?select=*&order=date.desc', {
+      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }
+    }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; });
+
+    var fromFile = fetch('data/posts.json')
+      .then(function (r) { return r.json(); }).catch(function () { return []; });
+
+    Promise.all([fromDb, fromFile]).then(function (res) {
+      var all = (res[0] || []).concat(res[1] || []).sort(function (a, b) {
+        return new Date(b.date) - new Date(a.date);
+      });
+      if (!all.length) return;
+
+      var lead = all[0], a = $('[data-lead]');
+      if (a) {
+        a.href = href(lead);
+        a.innerHTML =
+          '<span class="lead__img"><img src="' + esc(img(lead)) + '" alt="" width="760" height="428" loading="lazy"' + focus(lead) + '></span>' +
+          '<span class="lead__meta">' + esc(lead.category) + ' &middot; ' + esc(lead.dateFormatted || fmt(lead.date)) + '</span>' +
+          '<b class="lead__title">' + esc(lead.title) + '</b>' +
+          (lead.excerpt ? '<span class="lead__excerpt">' + esc(lead.excerpt) + '</span>' : '') +
+          '<span class="go">Read more <span class="arrow" aria-hidden="true">&rarr;</span></span>';
+      }
+
+      var rest = all.slice(1, 4);
+      if (rest.length) {
+        $('[data-news]').innerHTML = rest.map(function (p) {
+          return '<li><a href="' + href(p) + '"><img src="' + esc(img(p)) + '" alt="" width="195" height="130" loading="lazy"' + focus(p) + '>' +
+            '<span><time>' + esc(p.dateFormatted || fmt(p.date)) + '</time><b>' + esc(p.title) + '</b></span>' +
+            '<span class="arrow" aria-hidden="true">&rarr;</span></a></li>';
+        }).join('');
+      }
+    });
+  }());
 
   /* ------------------------------------------------------- right now --
      In season: the next home game, a countdown and the three after it.
