@@ -169,6 +169,8 @@
 
     .alert--error   { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
     .alert--success { background: rgba(52,211,153,0.12); color: var(--success); border: 1px solid rgba(52,211,153,0.3); }
+    .login-alt { display: block; width: 100%; margin-top: 0.9rem; padding: 0; background: none; border: 0; font: inherit; font-size: 0.85rem; color: var(--muted); text-decoration: underline; cursor: pointer; }
+    .login-alt:hover { color: var(--text); }
 
     /* ────────────────────────────────────────
        BUTTONS
@@ -488,19 +490,21 @@
       <h1>Welcome back</h1>
       <p>Authorised club staff only.</p>
 
-      <div class="alert alert--error" id="login-error"></div>
+      <div class="alert alert--error"   id="login-error"></div>
+      <div class="alert alert--success" id="login-sent"></div>
 
       <div class="field">
         <label for="email">Email</label>
         <input type="email" id="email" placeholder="your@email.com" autocomplete="email">
       </div>
-      <div class="field">
+      <div class="field" id="password-field" style="display:none;">
         <label for="password">Password</label>
         <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
       </div>
       <button class="btn btn--primary" id="login-btn" style="width:100%;margin-top:0.75rem;">
-        Sign in &rarr;
+        Email me a sign-in link
       </button>
+      <button type="button" class="login-alt" id="mode-btn">Use a password instead</button>
     </div>
   </div>
 
@@ -630,7 +634,7 @@
       el.style.display = 'block';
     }
     function hideAlerts() {
-      ['post-error','post-success','login-error'].forEach(function(id) {
+      ['post-error','post-success','login-error','login-sent'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
@@ -648,25 +652,61 @@
       }
     });
 
-    /* ── login ── */
+    /* ── login ──
+       Default is a magic link: the club's editors don't keep a password.
+       The password form is still there as a fallback if an email doesn't arrive. */
+    var usePassword = false;
+
+    document.getElementById('mode-btn').addEventListener('click', function () {
+      usePassword = !usePassword;
+      hideAlerts();
+      document.getElementById('password-field').style.display = usePassword ? '' : 'none';
+      document.getElementById('login-btn').textContent = usePassword ? 'Sign in →' : 'Email me a sign-in link';
+      this.textContent = usePassword ? 'Email me a link instead' : 'Use a password instead';
+    });
+
     document.getElementById('login-btn').addEventListener('click', async function () {
       hideAlerts();
-      var email    = document.getElementById('email').value.trim();
-      var password = document.getElementById('password').value;
-      var btn      = this;
+      var email = document.getElementById('email').value.trim();
+      var btn   = this;
+      if (!email) { showAlert('login-error', 'Enter your email address.'); return; }
       btn.disabled = true;
-      btn.textContent = 'Signing in…';
 
-      var result = await sb.auth.signInWithPassword({ email: email, password: password });
-      if (result.error) {
-        showAlert('login-error', result.error.message);
-        btn.disabled = false;
-        btn.textContent = 'Sign in →';
-      } else {
-        await sb.auth.setSession({
-          access_token:  result.data.session.access_token,
-          refresh_token: result.data.session.refresh_token
+      if (usePassword) {
+        btn.textContent = 'Signing in…';
+        var result = await sb.auth.signInWithPassword({
+          email: email,
+          password: document.getElementById('password').value
         });
+        if (result.error) {
+          showAlert('login-error', result.error.message);
+          btn.disabled = false;
+          btn.textContent = 'Sign in →';
+        } else {
+          await sb.auth.setSession({
+            access_token:  result.data.session.access_token,
+            refresh_token: result.data.session.refresh_token
+          });
+        }
+        return;
+      }
+
+      btn.textContent = 'Sending…';
+      /* shouldCreateUser:false is what keeps this closed. Without it anyone who found
+         this page could enter their own address, get a link and post to the site. */
+      var sent = await sb.auth.signInWithOtp({
+        email: email,
+        options: {
+          shouldCreateUser: false,
+          emailRedirectTo: window.location.origin + '/admin/'
+        }
+      });
+      btn.disabled = false;
+      btn.textContent = 'Email me a sign-in link';
+      if (sent.error) {
+        showAlert('login-error', sent.error.message);
+      } else {
+        showAlert('login-sent', 'Check your email for a sign-in link. It only works once.');
       }
     });
 
