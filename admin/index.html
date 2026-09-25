@@ -469,6 +469,21 @@
     }
 
     .empty-state__icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+
+    .form-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .manage-note { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
+    .post-item__actions { display: flex; gap: 0.5rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+    .btn--small { font-size: 0.8rem; padding: 0.45rem 0.9rem; }
+    .post-item--archived { opacity: 0.6; }
+    .post-item__tag {
+      display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text); border: 1px solid var(--text-muted); border-radius: 4px; padding: 0.1rem 0.4rem; margin-left: 0.4rem;
+    }
+    @media (max-width: 560px) {
+      .post-item { flex-wrap: wrap; }
+      .post-item__actions { width: 100%; }
+      .post-item__actions .btn { flex: 1; }
+    }
   </style>
   <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
@@ -531,8 +546,8 @@
       <div class="tab-panel active" id="tab-new-post">
         <div class="form-card">
           <div class="form-card__header">
-            <h2>Add a new post</h2>
-            <p class="form-card__subtitle">Posts appear on the news page immediately after publishing.</p>
+            <h2 id="form-title">Add a new post</h2>
+            <p class="form-card__subtitle" id="form-subtitle">Posts appear on the news page immediately after publishing.</p>
           </div>
 
           <div class="alert alert--error"   id="post-error"></div>
@@ -584,16 +599,21 @@
           </div>
 
           <div class="field">
-            <label for="p-content">Post content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(HTML supported: &lt;p&gt;, &lt;strong&gt;, &lt;a&gt; etc.)</span></label>
+            <label for="p-content">Post content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(just type: leave an empty line between paragraphs, and any web address you paste becomes a link)</span></label>
             <textarea id="p-content" placeholder="Write your post here…"></textarea>
           </div>
 
-          <button class="btn btn--primary" id="publish-btn" style="min-width:180px;">Publish Post &rarr;</button>
+          <div class="form-actions">
+            <button class="btn btn--primary" id="publish-btn" style="min-width:180px;">Publish Post &rarr;</button>
+            <button class="btn btn--ghost" id="cancel-edit-btn" style="display:none;">Cancel</button>
+          </div>
         </div>
       </div>
 
       <!-- MANAGE TAB -->
       <div class="tab-panel" id="tab-manage">
+        <p class="manage-note"><strong>Archive</strong> takes a post off the home page but keeps it on the News page. <strong>Hide</strong> takes it off the whole site; it stays here so you can unhide it.</p>
+        <div class="alert alert--error" id="manage-error"></div>
         <div id="posts-list-wrap">
           <div class="empty-state" id="posts-loading">
             <span class="empty-state__icon">⏳</span>
@@ -634,7 +654,7 @@
       el.style.display = 'block';
     }
     function hideAlerts() {
-      ['post-error','post-success','login-error','login-sent'].forEach(function(id) {
+      ['post-error','post-success','login-error','login-sent','manage-error'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.style.display = 'none';
       });
@@ -722,15 +742,25 @@
     });
 
     /* ── tabs ── */
+    function showTab(name) {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.tab === name); });
+      document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById('tab-' + name).classList.add('active');
+      if (name === 'manage') loadPosts();
+    }
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
-        document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
-        btn.classList.add('active');
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-        if (btn.dataset.tab === 'manage') loadPosts();
+        // "+ New Post" always means a blank form, even halfway through an edit
+        if (btn.dataset.tab === 'new-post' && editing) resetForm();
+        showTab(btn.dataset.tab);
       });
     });
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) {
+        return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c];
+      });
+    }
 
     /* ── image preview ── */
     var uploadZone = document.getElementById('upload-zone');
@@ -756,60 +786,111 @@
       }
     });
 
-    /* ── publish ── */
+    /* ── new post / edit post ──
+       The same form does both. `editing` holds the post being edited, null for a new one. */
+    var editing = null;
+    var postsById = {};
+    var BTN_NEW  = 'Publish Post →';
+    var BTN_EDIT = 'Save changes →';
+
+    function field(id) { return document.getElementById(id); }
+
+    function resetForm() {
+      editing = null;
+      ['p-title','p-excerpt','p-content','p-author'].forEach(function(id) { field(id).value = ''; });
+      field('p-category').selectedIndex = 0;
+      field('p-date').value = new Date().toISOString().split('T')[0];
+      preview.style.display = 'none';
+      preview.removeAttribute('src');
+      fileInput.value = '';
+      field('form-title').textContent = 'Add a new post';
+      field('form-subtitle').textContent = 'Posts appear on the news page immediately after publishing.';
+      field('publish-btn').textContent = BTN_NEW;
+      field('cancel-edit-btn').style.display = 'none';
+    }
+
+    function startEdit(id) {
+      var p = postsById[id];
+      if (!p) return;
+      hideAlerts();
+      editing = p;
+      field('p-title').value   = p.title || '';
+      field('p-date').value    = p.date || '';
+      field('p-excerpt').value = p.excerpt || '';
+      field('p-content').value = p.content || '';
+      field('p-author').value  = p.author || '';
+      var sel = field('p-category');
+      if (p.category && !Array.prototype.some.call(sel.options, function(o) { return o.value === p.category; })) {
+        sel.add(new Option(p.category));
+      }
+      sel.value = p.category || sel.options[0].value;
+      fileInput.value = '';
+      if (p.image_url) { preview.src = p.image_url; preview.style.display = 'block'; }
+      else { preview.style.display = 'none'; }
+      field('form-title').textContent = 'Edit post';
+      field('form-subtitle').textContent = 'Change anything below, then save. Upload a new image only if you want to replace the current one.';
+      field('publish-btn').textContent = BTN_EDIT;
+      field('cancel-edit-btn').style.display = '';
+      showTab('new-post');
+      window.scrollTo(0, 0);
+    }
+    window.editPost = startEdit;
+
+    field('cancel-edit-btn').addEventListener('click', function() {
+      resetForm();
+      showTab('manage');
+    });
+
+    // A new post needs a slug nobody else has: add -2, -3 ... if the title was used before.
+    async function freeSlug(base) {
+      var res = await sb.from('posts').select('slug').like('slug', base + '%');
+      var taken = {};
+      (res.data || []).forEach(function(r) { taken[r.slug] = true; });
+      if (!taken[base]) return base;
+      for (var n = 2; ; n++) if (!taken[base + '-' + n]) return base + '-' + n;
+    }
+
     document.getElementById('publish-btn').addEventListener('click', async function () {
       hideAlerts();
       var btn      = this;
-      var title    = document.getElementById('p-title').value.trim();
-      var date     = document.getElementById('p-date').value;
-      var excerpt  = document.getElementById('p-excerpt').value.trim();
-      var content  = document.getElementById('p-content').value.trim();
-      var author   = document.getElementById('p-author').value.trim();
-      var category = document.getElementById('p-category').value;
+      var title    = field('p-title').value.trim();
+      var date     = field('p-date').value;
+      var excerpt  = field('p-excerpt').value.trim();
+      var content  = field('p-content').value.trim();
+      var author   = field('p-author').value.trim();
+      var category = field('p-category').value;
       var file     = fileInput.files[0];
 
       if (!title || !date || !excerpt || !content) {
         showAlert('post-error', 'Please fill in title, date, excerpt and content.');
         return;
       }
+      if (file && file.size > 5 * 1024 * 1024) {
+        showAlert('post-error', 'Image is too large. Please use an image under 5 MB.');
+        return;
+      }
 
       btn.disabled = true;
-      btn.textContent = 'Publishing…';
 
       try {
-        var imageUrl = null;
+        var imageUrl = editing ? editing.image_url : null;
 
         if (file) {
-          if (file.size > 5 * 1024 * 1024) {
-            showAlert('post-error', 'Image is too large. Please use an image under 5 MB.');
-            btn.disabled = false;
-            btn.textContent = 'Publish Post →';
-            return;
-          }
-
           btn.textContent = 'Uploading image…';
           var ext      = file.name.split('.').pop().toLowerCase();
           var fileName = slugify(title) + '-' + Date.now() + '.' + ext;
           var upload   = await sb.storage.from('post-images').upload(fileName, file, {
             contentType: file.type
           });
-
           if (upload.error) {
             console.error('Storage upload error:', upload.error);
-            showAlert('post-error', 'Image upload failed: ' + upload.error.message);
-            btn.disabled = false;
-            btn.textContent = 'Publish Post →';
-            return;
+            throw new Error('Image upload failed: ' + upload.error.message);
           }
-
-          var urlData = sb.storage.from('post-images').getPublicUrl(fileName);
-          imageUrl    = urlData.data.publicUrl;
+          imageUrl = sb.storage.from('post-images').getPublicUrl(fileName).data.publicUrl;
         }
 
         btn.textContent = 'Saving post…';
-        var slug   = slugify(title);
-        var insert = await sb.from('posts').insert([{
-          slug:      slug,
+        var fields = {
           title:     title,
           author:    author || 'Guildford Baseball',
           date:      date,
@@ -817,28 +898,32 @@
           excerpt:   excerpt,
           image_url: imageUrl,
           content:   content
-        }]);
+        };
 
-        if (insert.error) {
-          console.error('Post insert error:', insert.error);
-          throw new Error('Database error: ' + insert.error.message);
+        if (editing) {
+          // An older post links to its own fixed page (url). Once edited, it links to the
+          // live post page instead, so the changes show. The slug stays, so links keep working.
+          fields.url = null;
+          var upd = await sb.from('posts').update(fields).eq('id', editing.id).select();
+          if (upd.error) throw new Error('Database error: ' + upd.error.message);
+          if (!upd.data || !upd.data.length) throw new Error('The post was not saved. Your account may not have permission to edit posts yet: ask Jack.');
+          showAlert('post-success', '✓ Changes saved. They are on the site now.');
+          resetForm();
+        } else {
+          fields.slug = await freeSlug(slugify(title));
+          var ins = await sb.from('posts').insert([fields]).select();
+          if (ins.error) throw new Error('Database error: ' + ins.error.message);
+          showAlert('post-success', '✓ Post published! It will appear on the site now.');
+          resetForm();
         }
 
-        showAlert('post-success', '✓ Post published! It will appear on the site now.');
-        ['p-title','p-date','p-excerpt','p-content','p-author'].forEach(function(id) {
-          document.getElementById(id).value = '';
-        });
-        document.getElementById('p-category').selectedIndex = 0;
-        preview.style.display = 'none';
-        fileInput.value = '';
-
       } catch (err) {
-        console.error('Publish error:', err);
+        console.error('Save error:', err);
         showAlert('post-error', 'Error: ' + (err.message || 'Something went wrong.'));
       }
 
       btn.disabled = false;
-      btn.textContent = 'Publish Post →';
+      btn.textContent = editing ? BTN_EDIT : BTN_NEW;
     });
 
     /* ── load posts (manage tab) ── */
@@ -849,7 +934,8 @@
       loading.innerHTML  = '<span class="empty-state__icon">⏳</span>Loading posts…';
       loading.style.display = 'block';
 
-      var result = await sb.from('posts').select('*').order('date', { ascending: false });
+      var result = await sb.from('posts').select('*')
+        .order('date', { ascending: false }).order('created_at', { ascending: false });
       loading.style.display = 'none';
 
       if (!result.data || result.data.length === 0) {
@@ -858,25 +944,55 @@
         return;
       }
 
+      postsById = {};
       wrap.innerHTML = result.data.map(function(p) {
-        return '<div class="post-item" id="post-item-' + p.id + '">' +
+        postsById[p.id] = p;
+        return '<div class="post-item' + (p.archived || p.hidden ? ' post-item--archived' : '') + '" id="post-item-' + p.id + '">' +
           (p.image_url
-            ? '<img class="post-item__thumb" src="' + p.image_url + '" alt="">'
+            ? '<img class="post-item__thumb" src="' + esc(p.image_url) + '" alt="">'
             : '<div class="post-item__thumb"></div>') +
           '<div class="post-item__info">' +
-            '<div class="post-item__title">' + p.title + '</div>' +
-            '<div class="post-item__meta"><span class="post-item__cat">' + p.category + '</span>' + formatDate(p.date) + '</div>' +
+            '<div class="post-item__title">' + esc(p.title) + '</div>' +
+            '<div class="post-item__meta"><span class="post-item__cat">' + esc(p.category) + '</span>' + formatDate(p.date) +
+              (p.hidden ? '<span class="post-item__tag">Hidden</span>' : '') +
+              (p.archived ? '<span class="post-item__tag">Archived</span>' : '') + '</div>' +
           '</div>' +
-          '<button class="btn btn--danger" onclick="deletePost(' + p.id + ')">Delete</button>' +
+          '<div class="post-item__actions">' +
+            '<button class="btn btn--ghost btn--small" onclick="editPost(' + p.id + ')">Edit</button>' +
+            '<button class="btn btn--ghost btn--small" onclick="archivePost(' + p.id + ')">' + (p.archived ? 'Unarchive' : 'Archive') + '</button>' +
+            '<button class="btn btn--ghost btn--small" onclick="hidePost(' + p.id + ')">' + (p.hidden ? 'Unhide' : 'Hide') + '</button>' +
+            '<button class="btn btn--danger" onclick="deletePost(' + p.id + ')">Delete</button>' +
+          '</div>' +
         '</div>';
       }).join('');
       wrap.style.display = 'flex';
     }
 
+    /* ── archive (off the home page) and hide (off the whole site) ── */
+    async function toggle(id, flag) {
+      hideAlerts();
+      var p = postsById[id];
+      if (!p) return;
+      var change = {}; change[flag] = !p[flag];
+      var res = await sb.from('posts').update(change).eq('id', id).select();
+      if (res.error || !res.data || !res.data.length) {
+        showAlert('manage-error', 'That did not save. ' + (res.error ? res.error.message : 'Your account may not have permission to edit posts yet: ask Jack.'));
+        return;
+      }
+      loadPosts();
+    }
+    window.archivePost = function(id) { toggle(id, 'archived'); };
+    window.hidePost    = function(id) { toggle(id, 'hidden'); };
+
     /* ── delete post ── */
     window.deletePost = async function(id) {
-      if (!confirm('Delete this post? This cannot be undone.')) return;
-      await sb.from('posts').delete().eq('id', id);
+      hideAlerts();
+      if (!confirm('Delete this post? This cannot be undone.\n\nTo take it off the site but keep it here, use Hide instead.')) return;
+      var res = await sb.from('posts').delete().eq('id', id).select();
+      if (res.error || !res.data || !res.data.length) {
+        showAlert('manage-error', 'That post was not deleted. ' + (res.error ? res.error.message : 'Your account may not have permission: ask Jack.'));
+        return;
+      }
       var el = document.getElementById('post-item-' + id);
       if (el) el.remove();
     };

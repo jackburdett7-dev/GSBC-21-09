@@ -157,7 +157,10 @@
     .now__season .now__links { margin-top: 1rem; }
     .lead { display: block; color: var(--sc-ink); }
     .lead__img { display: block; border-radius: var(--r); overflow: hidden; background: #5a0f1d; }
-    .lead__img img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+    /* the lead is usually a poster: never crop it. It keeps its own shape; a tall one
+       is capped in height and sits whole on the maroon. */
+    .lead__img img { display: block; width: 100%; height: auto; max-height: 34rem; object-fit: contain; }
+    .posts img.whole { object-fit: contain; }
     .lead__meta { display: block; margin: 1.15rem 0 .5rem; font-size: .78rem; color: var(--sc-ink-soft); }
     .lead__title { display: block; font-size: clamp(1.55rem, 2.5vw, 2.25rem); line-height: 1.15; font-weight: 700; text-wrap: balance; }
     .lead__excerpt { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-top: .7rem; max-width: 54ch; font-size: 1rem; line-height: 1.55; color: var(--sc-ink-soft); }
@@ -751,10 +754,10 @@
   }
 
   /* ------------------------------------------------- the noticeboard --
-     Posts written in the admin live in Supabase; the older ones are built into
-     data/posts.json. Merge both, newest first: the newest becomes the lead story,
-     the next three sit beside it. Publishing a new one shifts everything down by
-     itself, so the lead is always whatever the club last posted. */
+     Every post lives in Supabase (the older ones were imported and keep their own
+     static page in `url`). Newest first: the newest becomes the lead story, the next
+     three sit beside it. Archived posts stay on the News page but never show here.
+     data/posts.json is only a fallback for when Supabase can't be reached. */
   (function () {
     var SB_URL = 'https://wajvgngjfwbdnitggakn.supabase.co';
     var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndhanZnbmdqZndiZG5pdGdnYWtuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwODM2NzksImV4cCI6MjA5MTY1OTY3OX0.0-wOI9VAy6NFxnrBJEpunqPbmq2mP2D3ZEec_V5m8gk';
@@ -769,23 +772,25 @@
       var x = new Date(d + 'T00:00:00');
       return x.getDate() + ' ' + MONTHS[x.getMonth()] + ' ' + x.getFullYear();
     }
-    // Supabase posts carry image_url + slug; the built-in ones carry image + url.
-    function img(p)  { return p.image_url ? p.image_url : p.image; }
-    function href(p) { return p.image_url ? 'news/post.html?slug=' + encodeURIComponent(p.slug) : p.url; }
-    // imageFocus: where to crop a photo that isn't landscape (a portrait keeps the face)
-    function focus(p) { return p.imageFocus ? ' style="object-position:' + esc(p.imageFocus) + '"' : ''; }
+    // Supabase rows carry image_url (+ url when the post has its own page); posts.json rows carry image + url.
+    function img(p)  { return (p.image_url || p.image || '').replace(/^\//, ''); }
+    function href(p) { return p.url ? p.url : 'news/post.html?slug=' + encodeURIComponent(p.slug); }
+    // image focus: where to crop a photo that isn't landscape (a portrait keeps the face).
+    // Without one, a portrait image (a poster) is shown whole instead of cropped.
+    function focus(p) {
+      var f = p.image_focus || p.imageFocus;
+      return f ? ' style="object-position:' + esc(f) + '"' : ' onload="if(this.naturalHeight>this.naturalWidth)this.classList.add(\'whole\')"';
+    }
 
-    var fromDb = fetch(SB_URL + '/rest/v1/posts?select=*&order=date.desc', {
+    var fromDb = fetch(SB_URL + '/rest/v1/posts?select=*&archived=eq.false&hidden=eq.false&order=date.desc,created_at.desc', {
       headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }
-    }).then(function (r) { return r.ok ? r.json() : []; }).catch(function () { return []; });
+    }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
 
-    var fromFile = fetch('data/posts.json')
-      .then(function (r) { return r.json(); }).catch(function () { return []; });
-
-    Promise.all([fromDb, fromFile]).then(function (res) {
-      var all = (res[0] || []).concat(res[1] || []).sort(function (a, b) {
-        return new Date(b.date) - new Date(a.date);
-      });
+    fromDb.then(function (rows) {
+      if (rows && rows.length) return rows;
+      return fetch('data/posts.json').then(function (r) { return r.json(); }).catch(function () { return []; });
+    }).then(function (all) {
+      all = (all || []).slice().sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
       if (!all.length) return;
 
       var lead = all[0], a = $('[data-lead]');

@@ -1,6 +1,9 @@
 /* ============================================================
-   SUPABASE POSTS — fetch new posts from Supabase + merge with
-   existing posts.json, render into news-grid containers.
+   SUPABASE POSTS: every post lives in Supabase (the older ones
+   were imported and keep their own static page in `url`), render
+   into news-grid containers. Archived posts still show here; they
+   only drop off the home page. data/posts.json is a fallback for
+   when Supabase can't be reached.
    ============================================================ */
 (function () {
   var SUPABASE_URL      = 'https://wajvgngjfwbdnitggakn.supabase.co';
@@ -8,7 +11,13 @@
 
   var inNewsDir = window.location.pathname.replace(/\\/g, '/').indexOf('/news') !== -1;
   var postsPath = inNewsDir ? '../data/posts.json' : 'data/posts.json';
-  var imgBase   = inNewsDir ? '../' : '';
+  var base      = inNewsDir ? '../' : '';
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) {
+      return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c];
+    });
+  }
 
   function formatDate(dateStr) {
     var d = new Date(dateStr + 'T00:00:00');
@@ -17,22 +26,31 @@
     return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
   }
 
+  function imgSrc(p) {
+    var s = p.image_url || p.image || '';
+    return /^https?:/.test(s) ? s : base + s.replace(/^\//, '');
+  }
+  function href(p) {
+    return p.url ? base + p.url : base + 'news/post.html?slug=' + encodeURIComponent(p.slug);
+  }
+  // A set focus crops to it; without one, a portrait image (a poster) is shown whole.
+  function focus(p) {
+    var f = p.image_focus || p.imageFocus;
+    return f ? ' style="object-position:' + esc(f) + '"'
+             : ' onload="if(this.naturalHeight>this.naturalWidth)this.classList.add(\'whole\')"';
+  }
+
   function renderPostCards(posts, containerId, limit) {
     var el = document.getElementById(containerId);
     if (!el) return;
     var items = limit ? posts.slice(0, limit) : posts;
     el.innerHTML = items.map(function (p) {
-      // Supabase posts use image_url (full URL) and link to dynamic post.html
-      var imgSrc = p.image_url ? p.image_url : (imgBase + p.image);
-      var url    = p.image_url
-        ? (inNewsDir ? 'post.html?slug=' : 'news/post.html?slug=') + encodeURIComponent(p.slug)
-        : (imgBase + p.url);
-      return '<a href="' + url + '" class="post-card stagger-child">' +
-        '<div class="post-card__img"><img src="' + imgSrc + '" alt="' + p.title + '" loading="lazy"' + (p.imageFocus ? ' style="object-position:' + p.imageFocus + '"' : '') + '></div>' +
+      return '<a href="' + href(p) + '" class="post-card stagger-child">' +
+        '<div class="post-card__img"><img src="' + esc(imgSrc(p)) + '" alt="' + esc(p.title) + '" loading="lazy"' + focus(p) + '></div>' +
         '<div class="post-card__body">' +
-          '<div class="post-card__meta">' + p.category + ' &middot; ' + (p.dateFormatted || formatDate(p.date)) + '</div>' +
-          '<h3 class="post-card__title">' + p.title + '</h3>' +
-          '<p class="post-card__excerpt">' + p.excerpt + '</p>' +
+          '<div class="post-card__meta">' + esc(p.category) + ' &middot; ' + (p.dateFormatted || formatDate(p.date)) + '</div>' +
+          '<h3 class="post-card__title">' + esc(p.title) + '</h3>' +
+          '<p class="post-card__excerpt">' + esc(p.excerpt) + '</p>' +
           '<span class="post-card__link">Read more &rarr;</span>' +
         '</div>' +
       '</a>';
@@ -48,27 +66,19 @@
   }
 
   function fetchSupabasePosts() {
-    return fetch(SUPABASE_URL + '/rest/v1/posts?select=*&order=date.desc', {
+    return fetch(SUPABASE_URL + '/rest/v1/posts?select=*&hidden=eq.false&order=date.desc,created_at.desc', {
       headers: {
         'apikey': SUPABASE_ANON_KEY,
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
       }
     })
     .then(function (r) {
-      if (!r.ok) {
-        console.warn('Supabase posts fetch failed — status:', r.status,
-          '— Check that RLS on the posts table has a public SELECT policy enabled.');
-        return [];
-      }
+      if (!r.ok) { console.warn('Supabase posts fetch failed, status:', r.status); return null; }
       return r.json();
-    })
-    .then(function (data) {
-      console.log('Supabase posts loaded:', data.length, 'posts');
-      return data;
     })
     .catch(function (err) {
       console.warn('Supabase posts fetch error:', err);
-      return [];
+      return null;
     });
   }
 
@@ -78,16 +88,10 @@
       .catch(function () { return []; });
   }
 
-  Promise.all([fetchSupabasePosts(), fetchJsonPosts()])
-    .then(function (results) {
-      var supabasePosts = results[0] || [];
-      var jsonPosts     = results[1] || [];
-
-      // Merge and sort newest first
-      var all = supabasePosts.concat(jsonPosts).sort(function (a, b) {
-        return new Date(b.date) - new Date(a.date);
-      });
-
+  fetchSupabasePosts()
+    .then(function (rows) { return rows && rows.length ? rows : fetchJsonPosts(); })
+    .then(function (all) {
+      all = (all || []).slice().sort(function (a, b) { return new Date(b.date) - new Date(a.date); });
       renderPostCards(all, 'latest-posts', 3);
       renderPostCards(all, 'all-posts', 0);
     });

@@ -8,6 +8,10 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
   <link rel="stylesheet" href="../css/theme.css">
+  <style>
+    /* show the whole image, uncropped: posts are often portrait posters */
+    #post-img { width: auto; max-width: 100%; height: auto; max-height: none; object-fit: initial; margin-inline: auto; }
+  </style>
   <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -72,6 +76,17 @@
       return d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
     }
 
+    function toHtml(text) {
+      if (/<[a-z][\s\S]*>/i.test(text)) return text;
+      var safe = text.replace(/[<>&"]/g, function (c) {
+        return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c];
+      });
+      safe = safe.replace(/\b(https?:\/\/[^\s<]+[^\s<.,;:!?)])/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+      return safe.split(/\r?\n\s*\r?\n/).map(function (block) {
+        return block.trim() ? '<p>' + block.trim().replace(/\r?\n/g, '<br>') + '</p>' : '';
+      }).join('');
+    }
+
     var params = new URLSearchParams(window.location.search);
     var slug   = params.get('slug');
 
@@ -80,7 +95,7 @@
       return;
     }
 
-    fetch(SUPABASE_URL + '/rest/v1/posts?slug=eq.' + encodeURIComponent(slug) + '&select=*&limit=1', {
+    fetch(SUPABASE_URL + '/rest/v1/posts?slug=eq.' + encodeURIComponent(slug) + '&hidden=eq.false&select=*&limit=1', {
       headers: {
         'apikey': SUPABASE_ANON_KEY,
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
@@ -112,8 +127,9 @@
         img.style.display = '';
       }
 
-      // Body content
-      document.getElementById('post-content').innerHTML = post.content || '';
+      // Body content. Posts typed in the admin are usually plain text: turn blank lines into
+      // paragraphs, single line breaks into <br> and web addresses into links. HTML is used as is.
+      document.getElementById('post-content').innerHTML = toHtml(post.content || '');
     })
     .catch(function () {
       document.getElementById('post-title').textContent = 'Failed to load post.';
