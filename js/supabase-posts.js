@@ -46,12 +46,15 @@
     var items = limit ? posts.slice(0, limit) : posts;
     el.innerHTML = items.map(function (p) {
       return '<a href="' + href(p) + '" class="post-card stagger-child">' +
-        '<div class="post-card__img"><img src="' + esc(imgSrc(p)) + '" alt="' + esc(p.title) + '" loading="lazy"' + focus(p) + '></div>' +
+        '<div class="post-card__img"><img src="' + esc(imgSrc(p)) + '" alt="' + esc(p.title) + '" loading="lazy"' + focus(p) + '>' +
+          (p.signup_enabled ? '<span class="post-card__flag">Sign-ups open</span>' : '') + '</div>' +
         '<div class="post-card__body">' +
           '<div class="post-card__meta">' + esc(p.category) + ' &middot; ' + (p.dateFormatted || formatDate(p.date)) + '</div>' +
           '<h3 class="post-card__title">' + esc(p.title) + '</h3>' +
           '<p class="post-card__excerpt">' + esc(p.excerpt) + '</p>' +
-          '<span class="post-card__link">Read more &rarr;</span>' +
+          (p.signup_enabled
+            ? '<span class="post-card__link post-card__link--signup">Details &amp; sign up &rarr;</span>'
+            : '<span class="post-card__link">Read more &rarr;</span>') +
         '</div>' +
       '</a>';
     }).join('');

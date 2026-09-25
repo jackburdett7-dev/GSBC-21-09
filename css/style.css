@@ -1752,6 +1752,10 @@ p  { max-width: 65ch; }
 /* a portrait poster sits whole on the card, with no panel behind it */
 .post-card__img:has(img.whole) { background: none; }
 .post-card__img img.whole { object-fit: contain; }
+.post-card__img { position: relative; }
+.post-card__flag { position: absolute; top: .75rem; left: .75rem; padding: .35rem .6rem; border-radius: 4px;
+  background: var(--red); color: #fff; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.post-card__link.post-card__link--signup { display: inline-block; align-self: flex-start; padding: .6rem 1rem; border-radius: 4px; background: var(--red); color: #fff; }
 .post-card__body { padding: 1.5rem; display: flex; flex-direction: column; flex: 1; }
 .post-card__meta { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: 0.1em; color: var(--red); margin-bottom: 0.5rem; }

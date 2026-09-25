@@ -139,6 +139,8 @@
       var err = document.getElementById('signup-error'), btn = document.getElementById('signup-btn');
       box.hidden = false;
       document.getElementById('signup-jump').hidden = false;
+      // the form only appears once the post has loaded, so a #signup link has to be followed by hand
+      if (location.hash === '#signup') requestAnimationFrame(function () { box.scrollIntoView({ block: 'start' }); });
       var price = document.getElementById('signup-price');
       if (post.signup_price) price.textContent = post.signup_price; else price.hidden = true;
 
