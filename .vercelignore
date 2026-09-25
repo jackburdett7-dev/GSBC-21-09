@@ -1,3 +1,5 @@
 # Local-only files: not part of the public site
 README-CONCEPT.md
 _preview/
+# Full-size roster originals (~155 MB). The site uses assets/roster-sm/*.webp
+assets/roster/
