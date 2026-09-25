@@ -485,6 +485,29 @@
       display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
       color: var(--text); border: 1px solid var(--text-muted); border-radius: 4px; padding: 0.1rem 0.4rem; margin-left: 0.4rem;
     }
+    /* gallery */
+    .lbl-note { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-muted); }
+    .gal-drop { padding: 1.6rem; }
+    .gal-drop p { margin: 0; }
+    .gal-drop__or { margin: .5rem 0 !important; font-size: .8rem; }
+    .gal-drop__btns { display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap; }
+    .gal-drop__btns .btn { position: relative; z-index: 1; }
+    .gal-drop__count { margin-top: .9rem !important; font-weight: 700; color: var(--text); }
+    .gal-progress { margin: 0 0 1.2rem; }
+    .gal-progress__bar { height: 8px; border-radius: 99px; background: var(--navy); border: 1px solid var(--cyan-border); overflow: hidden; }
+    .gal-progress__bar span { display: block; height: 100%; width: 0; background: var(--cyan); transition: width .25s ease; }
+    .gal-progress p { margin-top: .5rem; font-size: .85rem; color: var(--text-muted); }
+    .gal-season { margin: 1.4rem 0 .2rem; font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; }
+    .gal-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: .6rem; }
+    .gal-photo { position: relative; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; background: var(--navy-light); border: 2px solid transparent; }
+    .gal-photo.is-cover { border-color: var(--cyan); }
+    .gal-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gal-photo__badge { position: absolute; top: .4rem; left: .4rem; padding: .15rem .45rem; border-radius: 4px; background: var(--cyan); color: #fff; font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .gal-photo__tools { position: absolute; inset: auto 0 0; display: flex; gap: .3rem; justify-content: center; padding: .4rem; background: linear-gradient(transparent, rgba(0,0,0,.75)); opacity: 0; transition: opacity .15s; }
+    .gal-photo:hover .gal-photo__tools, .gal-photo:focus-within .gal-photo__tools { opacity: 1; }
+    .gal-photo__tools .btn { padding: .3rem .5rem; font-size: .7rem; white-space: nowrap; }
+    @media (hover: none) { .gal-photo__tools { opacity: 1; } }
+
     @media (max-width: 560px) {
       .post-item { flex-wrap: wrap; }
       .post-item__actions { width: 100%; }
@@ -546,6 +569,7 @@
       <div class="admin-tabs">
         <button class="tab-btn active" data-tab="new-post">&#43; New Post</button>
         <button class="tab-btn" data-tab="manage">&#9776; Manage Posts</button>
+        <button class="tab-btn" data-tab="gallery">&#9635; Gallery</button>
       </div>
 
       <!-- NEW POST TAB -->
@@ -645,6 +669,109 @@
             Loading posts…
           </div>
           <div class="posts-list" id="posts-list" style="display:none;"></div>
+        </div>
+      </div>
+
+
+      <!-- GALLERY TAB -->
+      <div class="tab-panel" id="tab-gallery">
+
+        <!-- the list of albums -->
+        <div id="gal-home">
+          <div class="form-card" style="margin-bottom:1.5rem;">
+            <div class="form-card__header">
+              <h2>New album</h2>
+              <p class="form-card__subtitle">Name it, then drop in a whole folder of photos. They're shrunk to web size on this computer before uploading, so big camera files are fine.</p>
+            </div>
+            <div class="alert alert--error" id="gal-new-error"></div>
+            <div class="form-row">
+              <div class="field" style="grid-column:1/-1">
+                <label for="g-title">Album name</label>
+                <input type="text" id="g-title" placeholder="e.g. Millers at Bracknell">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="g-date">Date <span class="lbl-note">(optional)</span></label>
+                <input type="date" id="g-date">
+              </div>
+              <div class="field">
+                <label for="g-season">Season <span class="lbl-note">(the year it's filed under)</span></label>
+                <input type="number" id="g-season" min="1992" max="2100">
+              </div>
+            </div>
+            <div class="field">
+              <label>Photos</label>
+              <div class="upload-zone gal-drop" id="g-drop">
+                <p><strong>Drag a folder of photos here</strong></p>
+                <p class="gal-drop__or">or</p>
+                <div class="gal-drop__btns">
+                  <label class="btn btn--ghost btn--small">Choose a folder<input type="file" id="g-folder" webkitdirectory multiple hidden></label>
+                  <label class="btn btn--ghost btn--small">Choose photos<input type="file" id="g-files" accept="image/*" multiple hidden></label>
+                </div>
+                <p class="gal-drop__count" id="g-count"></p>
+              </div>
+            </div>
+            <div class="gal-progress" id="g-progress" hidden>
+              <div class="gal-progress__bar"><span id="g-bar"></span></div>
+              <p id="g-status"></p>
+            </div>
+            <button class="btn btn--primary" id="g-create" style="min-width:220px;">Create album &amp; upload &rarr;</button>
+          </div>
+
+          <p class="manage-note"><strong>Hide</strong> takes an album off the Gallery page; it stays here so you can unhide it. <strong>Open</strong> an album to rename it, add more photos, pick the cover or remove photos.</p>
+          <div class="alert alert--error" id="gal-error"></div>
+          <div class="posts-list" id="gal-list"></div>
+        </div>
+
+        <!-- one album -->
+        <div id="gal-album" hidden>
+          <button class="btn btn--ghost btn--small" id="ga-back" style="margin-bottom:1.2rem;">&larr; All albums</button>
+          <div class="form-card" style="margin-bottom:1.5rem;">
+            <div class="alert alert--error" id="ga-error"></div>
+            <div class="alert alert--success" id="ga-success"></div>
+            <div class="form-row">
+              <div class="field" style="grid-column:1/-1">
+                <label for="ga-title">Album name</label>
+                <input type="text" id="ga-title">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="ga-date">Date <span class="lbl-note">(optional)</span></label>
+                <input type="date" id="ga-date">
+              </div>
+              <div class="field">
+                <label for="ga-season">Season</label>
+                <input type="number" id="ga-season" min="1992" max="2100">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn--primary" id="ga-save">Save changes &rarr;</button>
+              <a class="btn btn--ghost" id="ga-view" target="_blank" rel="noopener">View on the site &#8599;</a>
+            </div>
+          </div>
+
+          <div class="form-card" style="margin-bottom:1.5rem;">
+            <div class="field" style="margin:0">
+              <label>Add more photos</label>
+              <div class="upload-zone gal-drop" id="ga-drop">
+                <p><strong>Drag photos or a folder here</strong></p>
+                <p class="gal-drop__or">or</p>
+                <div class="gal-drop__btns">
+                  <label class="btn btn--ghost btn--small">Choose a folder<input type="file" id="ga-folder" webkitdirectory multiple hidden></label>
+                  <label class="btn btn--ghost btn--small">Choose photos<input type="file" id="ga-files" accept="image/*" multiple hidden></label>
+                </div>
+              </div>
+              <div class="gal-progress" id="ga-progress" hidden>
+                <div class="gal-progress__bar"><span id="ga-bar"></span></div>
+                <p id="ga-status"></p>
+              </div>
+            </div>
+          </div>
+
+          <p class="manage-note" id="ga-count"></p>
+          <div class="gal-photos" id="ga-photos"></div>
         </div>
       </div>
 
@@ -772,6 +899,7 @@
       document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
       document.getElementById('tab-' + name).classList.add('active');
       if (name === 'manage') loadPosts();
+      if (name === 'gallery') loadAlbums();
     }
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -1046,6 +1174,294 @@
       var el = document.getElementById('post-item-' + id);
       if (el) el.remove();
     };
+
+    /* ── gallery ──
+       Albums of photos for the Gallery page. Photos are shrunk in the browser (about 2000px
+       for viewing, 600px thumbnails, WebP) before they're uploaded to the 'gallery' bucket,
+       so camera originals are never stored. Re-encoding also drops EXIF, including GPS.
+       Paths starting with '/' are the older photos that live in the site's own files. */
+    var GAL_BUCKET = 'gallery';
+    var galAlbums = [], galCurrent = null, galPhotos = [];
+
+    function galSrc(p) { return !p ? '' : p.charAt(0) === '/' ? p : sb.storage.from(GAL_BUCKET).getPublicUrl(p).data.publicUrl; }
+    function galFmt(a) {
+      var n = (a.gallery_photos && a.gallery_photos[0]) ? a.gallery_photos[0].count : 0;
+      var d = a.date ? formatDate(a.date).replace(/^\d+ /, '') : '';
+      return (d ? d + ' · ' : '') + n + (n === 1 ? ' photo' : ' photos');
+    }
+    function galAlert(id, msg) { showAlert(id, msg); }
+    function galHide() { ['gal-new-error','gal-error','ga-error','ga-success'].forEach(function(id) { field(id).style.display = 'none'; }); }
+
+    // ---- reading photos from a drop, a folder or a file picker
+    function isImage(f) { return /^image\//.test(f.type) || /\.(jpe?g|png|webp|heic|heif)$/i.test(f.name); }
+    function byName(a, b) { return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }); }
+
+    function readEntry(entry, out) {
+      return new Promise(function(resolve) {
+        if (entry.isFile) { entry.file(function(f) { out.push(f); resolve(); }, function() { resolve(); }); return; }
+        if (!entry.isDirectory) return resolve();
+        var reader = entry.createReader(), all = [];
+        (function more() {
+          reader.readEntries(function(batch) {
+            if (!batch.length) return Promise.all(all.map(function(e) { return readEntry(e, out); })).then(resolve);
+            all = all.concat(Array.prototype.slice.call(batch)); more();
+          }, function() { resolve(); });
+        })();
+      });
+    }
+    async function filesFromDrop(e) {
+      var items = e.dataTransfer.items, entries = [], folder = '';
+      if (items && items.length && items[0].webkitGetAsEntry) {
+        for (var i = 0; i < items.length; i++) {
+          var en = items[i].webkitGetAsEntry();
+          if (en) { entries.push(en); if (en.isDirectory && !folder) folder = en.name; }
+        }
+        var out = [];
+        for (var j = 0; j < entries.length; j++) await readEntry(entries[j], out);
+        return { files: out.filter(isImage).sort(byName), folder: folder };
+      }
+      return { files: Array.prototype.filter.call(e.dataTransfer.files, isImage).sort(byName), folder: '' };
+    }
+    function filesFromInput(input) {
+      var files = Array.prototype.filter.call(input.files, isImage).sort(byName);
+      var rel = input.files[0] && input.files[0].webkitRelativePath;
+      return { files: files, folder: rel ? rel.split('/')[0] : '' };
+    }
+    function wireDrop(zoneId, folderId, filesId, onFiles) {
+      var zone = field(zoneId);
+      zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', function() { zone.classList.remove('dragover'); });
+      zone.addEventListener('drop', async function(e) { e.preventDefault(); zone.classList.remove('dragover'); onFiles(await filesFromDrop(e)); });
+      [folderId, filesId].forEach(function(id) {
+        field(id).addEventListener('change', function() { onFiles(filesFromInput(this)); this.value = ''; });
+      });
+    }
+
+    // ---- shrinking and uploading
+    async function shrink(file, max, quality) {
+      var bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
+      var k = Math.min(1, max / Math.max(bmp.width, bmp.height));
+      var w = Math.round(bmp.width * k), h = Math.round(bmp.height * k);
+      var c = document.createElement('canvas'); c.width = w; c.height = h;
+      var ctx = c.getContext('2d'); ctx.imageSmoothingQuality = 'high'; ctx.drawImage(bmp, 0, 0, w, h);
+      bmp.close && bmp.close();
+      var blob = await new Promise(function(r) { c.toBlob(r, 'image/webp', quality); });
+      if (!blob) throw new Error('could not convert');
+      return { blob: blob, w: w, h: h };
+    }
+
+    // Upload files into an album, three at a time. Returns { done, failed: [names] }.
+    async function uploadInto(album, files, bar, status) {
+      var startSort = galPhotos.length ? Math.max.apply(null, galPhotos.map(function(p) { return p.sort; })) + 1 : 0;
+      if (!galPhotos.length && album.id) {
+        var s = await sb.from('gallery_photos').select('sort').eq('album_id', album.id).order('sort', { ascending: false }).limit(1);
+        if (s.data && s.data[0]) startSort = s.data[0].sort + 1;
+      }
+      var done = 0, failed = [], next = 0, cover = album.cover_path;
+      function tick() {
+        bar.style.width = Math.round(100 * (done + failed.length) / files.length) + '%';
+        status.textContent = 'Uploaded ' + done + ' of ' + files.length + (failed.length ? ' (' + failed.length + ' could not be read)' : '') + '. Keep this page open.';
+      }
+      async function one(i) {
+        var f = files[i];
+        try {
+          var full = await shrink(f, 2000, 0.84), thumb = await shrink(f, 600, 0.78);
+          var base = 'a' + album.id + '/' + Date.now().toString(36) + '-' + i + '-' + Math.random().toString(36).slice(2, 7);
+          var up1 = await sb.storage.from(GAL_BUCKET).upload(base + '.webp', full.blob, { contentType: 'image/webp' });
+          if (up1.error) throw up1.error;
+          var up2 = await sb.storage.from(GAL_BUCKET).upload(base + '-t.webp', thumb.blob, { contentType: 'image/webp' });
+          if (up2.error) throw up2.error;
+          var ins = await sb.from('gallery_photos').insert([{ album_id: album.id, path: base + '.webp', thumb_path: base + '-t.webp', width: full.w, height: full.h, sort: startSort + i }]).select();
+          if (ins.error || !ins.data || !ins.data.length) throw (ins.error || new Error('not saved'));
+          if (!cover) {
+            cover = base + '-t.webp';
+            await sb.from('gallery_albums').update({ cover_path: cover }).eq('id', album.id);
+            album.cover_path = cover;
+          }
+          done++;
+        } catch (err) {
+          console.error('Upload failed:', f.name, err);
+          failed.push(f.name + (/heic|heif/i.test(f.name) ? ' (iPhone HEIC: export as JPEG first)' : ''));
+        }
+        tick();
+      }
+      tick();
+      await Promise.all([0, 1, 2].map(async function() { while (next < files.length) await one(next++); }));
+      bar.style.width = '100%';
+      return { done: done, failed: failed };
+    }
+
+    // ---- new album
+    var galPending = [];
+    field('g-season').value = new Date().getFullYear();
+    field('g-date').addEventListener('change', function() { if (this.value) field('g-season').value = this.value.slice(0, 4); });
+    wireDrop('g-drop', 'g-folder', 'g-files', function(r) {
+      galPending = r.files;
+      field('g-count').textContent = r.files.length ? r.files.length + (r.files.length === 1 ? ' photo' : ' photos') + ' ready' + (r.folder ? ' from "' + r.folder + '"' : '') : 'No photos found there.';
+      if (r.folder && !field('g-title').value.trim()) field('g-title').value = r.folder;
+    });
+
+    field('g-create').addEventListener('click', async function() {
+      galHide();
+      var btn = this, title = field('g-title').value.trim(), season = parseInt(field('g-season').value, 10), date = field('g-date').value || null;
+      if (!title) return galAlert('gal-new-error', 'Give the album a name.');
+      if (!(season >= 1992 && season <= 2100)) return galAlert('gal-new-error', 'Enter the season (a year, e.g. ' + new Date().getFullYear() + ').');
+      if (!galPending.length) return galAlert('gal-new-error', 'Add some photos first: drag a folder in, or use Choose a folder.');
+      btn.disabled = true; btn.textContent = 'Creating album…';
+      try {
+        var base = slugify(title + ' ' + season), taken = {};
+        var ex = await sb.from('gallery_albums').select('slug').like('slug', base + '%');
+        (ex.data || []).forEach(function(r) { taken[r.slug] = true; });
+        var slug = base; for (var n = 2; taken[slug]; n++) slug = base + '-' + n;
+        var ins = await sb.from('gallery_albums').insert([{ slug: slug, title: title, season: season, date: date }]).select();
+        if (ins.error || !ins.data || !ins.data.length) throw new Error(ins.error ? ins.error.message : 'The album was not saved. Your account may not have permission yet: ask Jack.');
+        var album = ins.data[0];
+        galPhotos = [];
+        field('g-progress').hidden = false;
+        btn.textContent = 'Uploading…';
+        var res = await uploadInto(album, galPending, field('g-bar'), field('g-status'));
+        field('g-status').textContent = '✓ "' + title + '" is on the Gallery page with ' + res.done + (res.done === 1 ? ' photo.' : ' photos.') +
+          (res.failed.length ? ' These could not be read: ' + res.failed.join(', ') : '');
+        galPending = [];
+        ['g-title','g-date'].forEach(function(id) { field(id).value = ''; });
+        field('g-count').textContent = '';
+        loadAlbums();
+      } catch (err) {
+        galAlert('gal-new-error', 'Error: ' + (err.message || 'Something went wrong.'));
+      }
+      btn.disabled = false; btn.innerHTML = 'Create album &amp; upload &rarr;';
+    });
+
+    // ---- the album list
+    async function loadAlbums() {
+      var list = field('gal-list');
+      list.innerHTML = '<div class="empty-state">Loading albums…</div>';
+      var r = await sb.from('gallery_albums').select('*, gallery_photos(count)')
+        .order('season', { ascending: false }).order('date', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false });
+      galAlbums = r.data || [];
+      if (!galAlbums.length) { list.innerHTML = '<div class="empty-state">No albums yet.</div>'; return; }
+      var season = null;
+      list.innerHTML = galAlbums.map(function(a) {
+        var head = a.season !== season ? '<h3 class="gal-season">' + a.season + '</h3>' : '';
+        season = a.season;
+        return head + '<div class="post-item' + (a.hidden ? ' post-item--archived' : '') + '" id="gal-item-' + a.id + '">' +
+          (a.cover_path ? '<img class="post-item__thumb" src="' + esc(galSrc(a.cover_path)) + '" alt="">' : '<div class="post-item__thumb"></div>') +
+          '<div class="post-item__info"><div class="post-item__title">' + esc(a.title) + '</div>' +
+          '<div class="post-item__meta">' + esc(galFmt(a)) + (a.hidden ? '<span class="post-item__tag">Hidden</span>' : '') + '</div></div>' +
+          '<div class="post-item__actions">' +
+            '<button class="btn btn--ghost btn--small" onclick="galOpen(' + a.id + ')">Open</button>' +
+            '<button class="btn btn--ghost btn--small" onclick="galToggleHide(' + a.id + ')">' + (a.hidden ? 'Unhide' : 'Hide') + '</button>' +
+            '<button class="btn btn--danger" onclick="galDeleteAlbum(' + a.id + ')">Delete</button>' +
+          '</div></div>';
+      }).join('');
+    }
+
+    window.galToggleHide = async function(id) {
+      galHide();
+      var a = galAlbums.find(function(x) { return x.id === id; }); if (!a) return;
+      var r = await sb.from('gallery_albums').update({ hidden: !a.hidden }).eq('id', id).select();
+      if (r.error || !r.data || !r.data.length) return galAlert('gal-error', 'That did not save. Your account may not have permission yet: ask Jack.');
+      loadAlbums();
+    };
+
+    // storage files for a set of photos (the older site-file photos have none)
+    function storagePaths(photos) {
+      var out = [];
+      photos.forEach(function(p) { [p.path, p.thumb_path].forEach(function(x) { if (x && x.charAt(0) !== '/' && out.indexOf(x) < 0) out.push(x); }); });
+      return out;
+    }
+    async function removeFiles(paths) {
+      for (var i = 0; i < paths.length; i += 100) await sb.storage.from(GAL_BUCKET).remove(paths.slice(i, i + 100));
+    }
+
+    window.galDeleteAlbum = async function(id) {
+      galHide();
+      var a = galAlbums.find(function(x) { return x.id === id; }); if (!a) return;
+      if (!confirm('Delete the album "' + a.title + '" and all its photos? This cannot be undone.\n\nTo take it off the site but keep it, use Hide instead.')) return;
+      var ph = await sb.from('gallery_photos').select('path, thumb_path').eq('album_id', id);
+      var del = await sb.from('gallery_albums').delete().eq('id', id).select();
+      if (del.error || !del.data || !del.data.length) return galAlert('gal-error', 'That album was not deleted. Your account may not have permission: ask Jack.');
+      await removeFiles(storagePaths(ph.data || []));
+      loadAlbums();
+    };
+
+    // ---- one album
+    window.galOpen = async function(id) {
+      galHide();
+      var a = galAlbums.find(function(x) { return x.id === id; }); if (!a) return;
+      galCurrent = a;
+      field('gal-home').hidden = true; field('gal-album').hidden = false;
+      field('ga-title').value = a.title; field('ga-date').value = a.date || ''; field('ga-season').value = a.season;
+      field('ga-view').href = '/album.html?slug=' + encodeURIComponent(a.slug);
+      field('ga-progress').hidden = true;
+      window.scrollTo(0, 0);
+      await loadPhotos();
+    };
+    field('ga-back').addEventListener('click', function() {
+      galCurrent = null; galPhotos = [];
+      field('gal-album').hidden = true; field('gal-home').hidden = false; loadAlbums();
+    });
+    field('ga-date').addEventListener('change', function() { if (this.value) field('ga-season').value = this.value.slice(0, 4); });
+
+    async function loadPhotos() {
+      var r = await sb.from('gallery_photos').select('*').eq('album_id', galCurrent.id).order('sort').order('id');
+      galPhotos = r.data || [];
+      field('ga-count').textContent = galPhotos.length + (galPhotos.length === 1 ? ' photo.' : ' photos.') + ' Hover a photo to make it the cover or remove it.';
+      field('ga-photos').innerHTML = galPhotos.map(function(p) {
+        var isCover = p.thumb_path === galCurrent.cover_path;
+        return '<div class="gal-photo' + (isCover ? ' is-cover' : '') + '">' +
+          '<img src="' + esc(galSrc(p.thumb_path)) + '" alt="" loading="lazy">' +
+          (isCover ? '<span class="gal-photo__badge">Cover</span>' : '') +
+          '<div class="gal-photo__tools">' +
+            (isCover ? '' : '<button class="btn btn--ghost btn--small" onclick="galSetCover(' + p.id + ')">Make cover</button>') +
+            '<button class="btn btn--danger" onclick="galDeletePhoto(' + p.id + ')">Remove</button>' +
+          '</div></div>';
+      }).join('');
+    }
+
+    field('ga-save').addEventListener('click', async function() {
+      galHide();
+      var title = field('ga-title').value.trim(), season = parseInt(field('ga-season').value, 10);
+      if (!title) return galAlert('ga-error', 'Give the album a name.');
+      if (!(season >= 1992 && season <= 2100)) return galAlert('ga-error', 'Enter the season as a year.');
+      var r = await sb.from('gallery_albums').update({ title: title, season: season, date: field('ga-date').value || null }).eq('id', galCurrent.id).select();
+      if (r.error || !r.data || !r.data.length) return galAlert('ga-error', 'That did not save. Your account may not have permission yet: ask Jack.');
+      Object.assign(galCurrent, r.data[0]);
+      galAlert('ga-success', '✓ Saved.');
+    });
+
+    window.galSetCover = async function(pid) {
+      galHide();
+      var p = galPhotos.find(function(x) { return x.id === pid; }); if (!p) return;
+      var r = await sb.from('gallery_albums').update({ cover_path: p.thumb_path }).eq('id', galCurrent.id).select();
+      if (r.error || !r.data || !r.data.length) return galAlert('ga-error', 'That did not save. Your account may not have permission yet: ask Jack.');
+      galCurrent.cover_path = p.thumb_path; loadPhotos();
+    };
+
+    window.galDeletePhoto = async function(pid) {
+      galHide();
+      var p = galPhotos.find(function(x) { return x.id === pid; }); if (!p) return;
+      if (!confirm('Remove this photo from the album?')) return;
+      var r = await sb.from('gallery_photos').delete().eq('id', pid).select();
+      if (r.error || !r.data || !r.data.length) return galAlert('ga-error', 'That photo was not removed. Your account may not have permission: ask Jack.');
+      await removeFiles(storagePaths([p]));
+      if (p.thumb_path === galCurrent.cover_path) {
+        var rest = galPhotos.filter(function(x) { return x.id !== pid; });
+        var cover = rest[0] ? rest[0].thumb_path : null;
+        await sb.from('gallery_albums').update({ cover_path: cover }).eq('id', galCurrent.id);
+        galCurrent.cover_path = cover;
+      }
+      loadPhotos();
+    };
+
+    wireDrop('ga-drop', 'ga-folder', 'ga-files', async function(r) {
+      galHide();
+      if (!r.files.length) return galAlert('ga-error', 'No photos found there.');
+      field('ga-progress').hidden = false;
+      var res = await uploadInto(galCurrent, r.files, field('ga-bar'), field('ga-status'));
+      field('ga-status').textContent = '✓ Added ' + res.done + (res.done === 1 ? ' photo.' : ' photos.') + (res.failed.length ? ' These could not be read: ' + res.failed.join(', ') : '');
+      loadPhotos();
+    });
 
     /* set today's date as default */
     document.getElementById('p-date').value = new Date().toISOString().split('T')[0];

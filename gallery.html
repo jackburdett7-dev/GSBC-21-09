@@ -77,6 +77,14 @@
     }
     .gallery-item:hover .gallery-item__caption { opacity: 1; }
 
+    .album-card { display: block; color: var(--ink); text-decoration: none; }
+    .album-card__img { display: block; aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; background: var(--cream); }
+    .album-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+    .album-card:hover .album-card__img img { transform: scale(1.04); }
+    .album-card__title { display: block; margin-top: .7rem; font-weight: 700; font-size: 1rem; line-height: 1.3; }
+    .album-card__meta { display: block; margin-top: .2rem; font-size: .82rem; color: var(--muted); }
+    .album-card:hover .album-card__title { color: var(--red); }
+
     #lightbox {
       display: none; position: fixed; inset: 0; z-index: 9999;
       background: rgba(10,15,25,0.96); align-items: center;
@@ -224,7 +232,7 @@
       <div class="section-header fade-up" style="margin-bottom: 1.5rem;">
         <span class="label">Photo Archive</span>
         <h2><span class="heading-underline">Moments from the diamond</span></h2>
-        <p style="color: var(--muted); margin-top: 0.5rem;">Click a year to expand. Click any photo to view full size.</p>
+        <p style="color: var(--muted); margin-top: 0.5rem;">Pick a season, then open an album to see every photo from the day.</p>
       </div>
 
       <!-- ══ 2025 (6 photos) ══ -->
@@ -551,17 +559,59 @@
   
   <script src="js/main.js"></script>
   <script>
-    document.querySelectorAll('.year-trigger').forEach(trigger => {
-      const section = trigger.closest('.year-section');
-      const body = section.querySelector('.year-body');
-      if (section.classList.contains('open')) body.style.maxHeight = body.scrollHeight + 'px';
-      trigger.addEventListener('click', () => {
-        const isOpen = section.classList.contains('open');
-        section.classList.toggle('open', !isOpen);
-        trigger.setAttribute('aria-expanded', String(!isOpen));
-        body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
-      });
+    // One listener for every season, including the ones built from the albums below.
+    document.addEventListener('click', e => {
+      const trigger = e.target.closest('.year-trigger'); if (!trigger) return;
+      const section = trigger.closest('.year-section'), body = section.querySelector('.year-body');
+      const isOpen = section.classList.contains('open');
+      section.classList.toggle('open', !isOpen);
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+      body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
     });
+
+    /* Albums, from the club admin. Each season lists its albums; an album opens its own page
+       (album.html?slug=) with every photo. The photos written into this page stay as the
+       fallback if the album list can't be loaded. */
+    (function () {
+      var SB = 'https://wajvgngjfwbdnitggakn.supabase.co', KEY = 'sb_publishable_mEmH5g_TkaFzUmatVZ6hzg_CVQzUwQV';
+      var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      function esc(s) { return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) { return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]; }); }
+      function src(p) { return !p ? '' : p.charAt(0) === '/' ? p.slice(1) : SB + '/storage/v1/object/public/gallery/' + p; }
+      fetch(SB + '/rest/v1/gallery_albums?select=slug,title,season,date,cover_path,gallery_photos(count)&hidden=eq.false&order=season.desc,date.desc.nullslast,created_at.desc',
+        { headers: { apikey: KEY, Authorization: 'Bearer ' + KEY } })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (albums) {
+          albums = (albums || []).filter(function (a) { return a.gallery_photos && a.gallery_photos[0] && a.gallery_photos[0].count > 0; });
+          if (!albums.length) return;
+          var seasons = [];
+          albums.forEach(function (a) { var s = seasons[seasons.length - 1]; if (!s || s.year !== a.season) seasons.push(s = { year: a.season, albums: [] }); s.albums.push(a); });
+          var wrap = document.querySelector('#archive .container');
+          wrap.querySelectorAll('.year-section').forEach(function (el) { el.remove(); });
+          wrap.insertAdjacentHTML('beforeend', seasons.map(function (s, i) {
+            var photos = s.albums.reduce(function (n, a) { return n + a.gallery_photos[0].count; }, 0);
+            return '<div class="year-section' + (i === 0 ? ' open' : '') + '" id="year-' + s.year + '">' +
+              '<button class="year-trigger" aria-expanded="' + (i === 0) + '" aria-controls="body-' + s.year + '"><div class="year-trigger__left">' +
+              '<span class="year-trigger__num">' + s.year + '</span><span class="year-trigger__count">' + s.albums.length + (s.albums.length === 1 ? ' album' : ' albums') + ' &middot; ' + photos + (photos === 1 ? ' photo' : ' photos') + '</span></div>' +
+              '<span class="year-trigger__arrow">&#9660;</span></button>' +
+              '<div class="year-body" id="body-' + s.year + '"><div class="year-body__inner">' +
+              s.albums.map(function (a) {
+                var n = a.gallery_photos[0].count, d = a.date ? new Date(a.date + 'T12:00:00') : null;
+                return '<a class="album-card" href="album.html?slug=' + encodeURIComponent(a.slug) + '">' +
+                  '<span class="album-card__img"><img src="' + esc(src(a.cover_path)) + '" alt="" loading="lazy"></span>' +
+                  '<span class="album-card__title">' + esc(a.title) + '</span>' +
+                  '<span class="album-card__meta">' + (d ? MONTHS[d.getMonth()] + ' ' + d.getFullYear() + ' &middot; ' : '') + n + (n === 1 ? ' photo' : ' photos') + '</span></a>';
+              }).join('') + '</div></div></div>';
+          }).join(''));
+          var first = wrap.querySelector('.year-section.open .year-body');
+          if (first) first.style.maxHeight = first.scrollHeight + 'px';
+          // photos load after the height was measured: keep an open season's height right
+          wrap.addEventListener('load', function (e) {
+            var body = e.target.closest && e.target.closest('.year-section.open .year-body');
+            if (body) body.style.maxHeight = body.scrollHeight + 'px';
+          }, true);
+        })
+        .catch(function () {});
+    })();
 
     let allItems = [], current = 0;
     function buildList() { allItems = Array.from(document.querySelectorAll('.gallery-item')); }

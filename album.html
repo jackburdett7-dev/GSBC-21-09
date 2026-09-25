@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery | Guildford Mavericks Baseball</title>
+  <meta name="description" content="Photos from Guildford Baseball &amp; Softball Club games and events.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..800;1,400..700&family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="css/theme.css">
+  <style>
+    .album-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; }
+    @media (max-width: 900px) { .album-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .album-grid { grid-template-columns: repeat(2, 1fr); gap: .4rem; } }
+    .album-grid__item { display: block; padding: 0; border: 0; border-radius: 6px; overflow: hidden; aspect-ratio: 4 / 3; background: var(--cream); cursor: zoom-in; }
+    .album-grid__item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+    .album-grid__item:hover img { transform: scale(1.04); }
+    .album-grid__item:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+    .lb { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: rgba(12,4,7,.96); padding: 1rem; }
+    .lb[hidden] { display: none; }
+    .lb__fig { margin: 0; text-align: center; }
+    .lb__fig img { max-width: min(92vw, 1400px); max-height: 84vh; object-fit: contain; border-radius: 6px; }
+    .lb__fig figcaption { margin-top: .8rem; color: rgba(255,255,255,.62); font-size: .85rem; }
+    .lb__close { position: fixed; top: 1rem; right: 1.2rem; background: none; border: 0; color: rgba(255,255,255,.7); font-size: 2.2rem; line-height: 1; cursor: pointer; }
+    .lb__nav { position: fixed; top: 50%; transform: translateY(-50%); width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.08); color: #fff; font-size: 1.6rem; cursor: pointer; }
+    .lb__nav:hover { background: rgba(200,0,37,.8); }
+    .lb__nav--prev { left: 1rem; } .lb__nav--next { right: 1rem; }
+    @media (max-width: 560px) { .lb__nav { top: auto; bottom: 1.2rem; transform: none; } }
+  </style>
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+</head>
+<body>
+  <nav class="nav">
+    <div class="container"><div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="assets/logo.jpg" alt="Guildford Mavericks logo"><div class="nav__logo-text">Guildford Mavericks<span>Baseball &amp; Softball</span></div></a>
+      <ul class="nav__links"><li><a href="about.html">About</a></li><li><a href="schedule.html">Schedule</a></li><li><a href="roster.html">Roster</a></li><li><a href="juniors.html">Juniors</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="history.html">History</a></li><li><a href="contact.html">Contact</a></li></ul>
+      <a href="join.html" class="btn btn--primary btn--pulse nav__cta">Try it free</a>
+      <button class="nav__hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div></div>
+  </nav>
+  <div class="nav__mobile"><a href="about.html">About</a><a href="schedule.html">Schedule</a><a href="roster.html">Roster</a><a href="juniors.html">Juniors</a><a href="gallery.html">Gallery</a><a href="history.html">History</a><a href="contact.html">Contact</a><a href="join.html" class="btn btn--primary">Try it free</a></div>
+
+  <div class="page-hero page-hero--banner">
+    <div class="container fade-up">
+      <span class="overline" style="color:var(--orange);" id="album-season">Gallery</span>
+      <h1 id="album-title">Loading&hellip;</h1>
+      <p id="album-meta"></p>
+    </div>
+  </div>
+
+  <section class="section section--white">
+    <div class="container">
+      <div class="album-grid" id="album-grid"></div>
+      <a href="gallery.html" class="post-back" style="margin-top:2.5rem;">&larr; All albums</a>
+    </div>
+  </section>
+
+  <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <button class="lb__close" id="lb-close" aria-label="Close">&times;</button>
+    <button class="lb__nav lb__nav--prev" id="lb-prev" aria-label="Previous photo">&#8249;</button>
+    <figure class="lb__fig"><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+    <button class="lb__nav lb__nav--next" id="lb-next" aria-label="Next photo">&#8250;</button>
+  </div>
+
+  <footer class="footer"><div class="container"><div class="footer__grid">
+    <div class="footer__brand"><img src="assets/logo.jpg" alt="Guildford Mavericks"><p>Guildford's only baseball and softball club, playing and coaching since 1992 at Kings College, Surrey.</p><div class="footer__social"><a href="https://www.facebook.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.514c-1.491 0-1.956.93-1.956 1.883v2.27h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg></a><a href="https://x.com/GuildfordMavs" target="_blank" rel="noopener" aria-label="Twitter/X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a href="https://www.instagram.com/guildfordmavs/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a><a href="https://www.youtube.com/channel/UCzcyfif9NStUezIT4YeLSVA" target="_blank" rel="noopener" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a></div></div>
+    <div><div class="footer__heading">Club</div><ul class="footer__links"><li><a href="about.html">About Us</a></li><li><a href="join.html">Join the Club</a></li><li><a href="schedule.html">2026 Schedule</a></li><li><a href="juniors.html">Junior Programme</a></li><li><a href="history.html">Season History</a></li><li><a href="hall-of-fame.html">Hall of Fame</a></li><li><a href="news.html">Latest News</a></li></ul></div>
+    <div><div class="footer__heading">Teams</div><ul class="footer__links"><li><a href="about.html#teams">Guildford Mavericks</a></li><li><a href="about.html#teams">Guildford Millers</a></li><li><a href="about.html#teams">Gold Cats</a></li></ul></div>
+    <div><div class="footer__heading">Contact</div><ul class="footer__links"><li><a class="btn btn--primary footer__btn" href="mailto:michael.burdett1@outlook.com?subject=Club%20Enquiry">Email the club</a></li><li><a href="contact.html">Get Directions</a></li><li><a href="contact.html#hire">Hire Our Diamond</a></li></ul></div>
+  </div><div class="footer__bottom"><span>&copy; 2026 Guildford Baseball &amp; Softball Club. All rights reserved. &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a></span><span class="footer__est">Est. 1992 · Guildford Mavericks</span></div></div></footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <script src="js/main.js"></script>
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script>
+  /* One album from the club admin: every photo as a thumbnail grid, and a full-screen viewer
+     (arrows, keyboard, swipe on a phone). ?slug= picks the album; #3 opens photo 3. */
+  (function () {
+    var SB = 'https://wajvgngjfwbdnitggakn.supabase.co', KEY = 'sb_publishable_mEmH5g_TkaFzUmatVZ6hzg_CVQzUwQV';
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var H = { apikey: KEY, Authorization: 'Bearer ' + KEY };
+    function src(p) { return !p ? '' : p.charAt(0) === '/' ? p.slice(1) : SB + '/storage/v1/object/public/gallery/' + p; }
+    var slug = new URLSearchParams(location.search).get('slug');
+    var title = document.getElementById('album-title'), grid = document.getElementById('album-grid');
+    var photos = [], album = null, at = 0;
+
+    function notFound() { title.textContent = 'Album not found.'; grid.innerHTML = '<p>It may have been moved. <a href="gallery.html">See all albums</a>.</p>'; }
+    if (!slug) return notFound();
+
+    fetch(SB + '/rest/v1/gallery_albums?slug=eq.' + encodeURIComponent(slug) + '&hidden=eq.false&select=id,title,season,date,gallery_photos(id,path,thumb_path,width,height,sort)&gallery_photos.order=sort.asc,id.asc', { headers: H })
+      .then(function (r) { return r.json(); })
+      .then(function (rows) {
+        album = rows && rows[0];
+        if (!album) return notFound();
+        photos = album.gallery_photos || [];
+        var d = album.date ? new Date(album.date + 'T12:00:00') : null;
+        document.title = album.title + ' | Gallery | Guildford Mavericks Baseball';
+        title.textContent = album.title;
+        document.getElementById('album-season').textContent = 'Gallery · ' + album.season;
+        document.getElementById('album-meta').textContent = (d ? MONTHS[d.getMonth()] + ' ' + d.getFullYear() + ' · ' : '') + photos.length + (photos.length === 1 ? ' photo' : ' photos');
+        grid.innerHTML = photos.map(function (p, i) {
+          return '<button class="album-grid__item" data-i="' + i + '" aria-label="Open photo ' + (i + 1) + ' of ' + photos.length + '">' +
+            '<img src="' + src(p.thumb_path) + '" alt="" loading="lazy"' + (p.width ? ' width="' + p.width + '" height="' + p.height + '"' : '') + '></button>';
+        }).join('');
+        var n = parseInt(location.hash.slice(1), 10);
+        if (n >= 1 && n <= photos.length) open(n - 1);
+      })
+      .catch(notFound);
+
+    var lb = document.getElementById('lb'), img = document.getElementById('lb-img'), cap = document.getElementById('lb-cap'), opener = null;
+    function show(i) {
+      at = (i + photos.length) % photos.length;
+      img.src = src(photos[at].path);
+      img.alt = album.title + ', photo ' + (at + 1);
+      cap.textContent = album.title + ' · ' + (at + 1) + ' of ' + photos.length;
+      history.replaceState(null, '', '#' + (at + 1));
+      // fetch the neighbours so arrowing through feels instant
+      [at + 1, at - 1].forEach(function (j) { var p = photos[(j + photos.length) % photos.length]; if (p) new Image().src = src(p.path); });
+    }
+    function open(i) { opener = document.activeElement; lb.hidden = false; document.body.style.overflow = 'hidden'; show(i); document.getElementById('lb-close').focus(); }
+    function close() { lb.hidden = true; document.body.style.overflow = ''; history.replaceState(null, '', location.pathname + location.search); if (opener && opener.focus) opener.focus(); }
+
+    grid.addEventListener('click', function (e) { var b = e.target.closest('.album-grid__item'); if (b) open(+b.dataset.i); });
+    document.getElementById('lb-close').addEventListener('click', close);
+    document.getElementById('lb-prev').addEventListener('click', function () { show(at - 1); });
+    document.getElementById('lb-next').addEventListener('click', function () { show(at + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowRight') show(at + 1);
+      if (e.key === 'ArrowLeft') show(at - 1);
+    });
+    var x0 = null;
+    lb.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) show(at + (dx < 0 ? 1 : -1));
+    });
+  })();
+  </script>
+
+<script src="js/theme.js" defer></script>
+</body>
+</html>
