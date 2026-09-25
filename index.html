@@ -157,10 +157,11 @@
     .now__season .now__links { margin-top: 1rem; }
     .lead { display: block; color: var(--sc-ink); }
     .lead__img { display: block; border-radius: var(--r); overflow: hidden; background: #5a0f1d; }
-    /* the lead is usually a poster: never crop it. It keeps its own shape; a tall one
-       is capped in height and sits whole on the maroon. */
-    .lead__img img { display: block; width: 100%; height: auto; max-height: 34rem; object-fit: contain; }
-    .posts img.whole { object-fit: contain; }
+    /* the lead is usually a poster: never crop it, and no panel behind it. It keeps its
+       own shape; a tall one is capped in height and sits on the page as it is. */
+    .lead__img { width: fit-content; max-width: 100%; background: none; }
+    .lead__img img { width: auto; max-width: 100%; height: auto; max-height: 34rem; }
+    .posts img.whole { object-fit: contain; background: none; }
     .lead__meta { display: block; margin: 1.15rem 0 .5rem; font-size: .78rem; color: var(--sc-ink-soft); }
     .lead__title { display: block; font-size: clamp(1.55rem, 2.5vw, 2.25rem); line-height: 1.15; font-weight: 700; text-wrap: balance; }
     .lead__excerpt { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-top: .7rem; max-width: 54ch; font-size: 1rem; line-height: 1.55; color: var(--sc-ink-soft); }
