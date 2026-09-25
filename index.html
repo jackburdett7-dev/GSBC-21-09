@@ -94,7 +94,7 @@
        v3's full-bleed composition, without its pinned pitch. On load the photo
        settles and the headline rises out of its masks; on the way out the
        planes separate (background slowest, pitcher fastest, headline between). */
-    .hero6 { position: relative; height: 100vh; height: 100svh; min-height: 34rem; overflow: hidden; background: #2b2622; }
+    .hero6 { position: relative; z-index: 0; height: 100vh; height: 100svh; min-height: 34rem; overflow: hidden; background: #2b2622; } /* z 0: under the page grain, so the texture runs on into the news */
     .hero6__stage { position: absolute; inset: 0; overflow: hidden; }
     .hero__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transition: opacity 300ms var(--sc-ease-out); }
     .is-live .hero__poster { opacity: 0; }
@@ -103,6 +103,9 @@
       background: radial-gradient(110% 80% at 0% 0%, rgba(46,8,19,.86) 0%, rgba(46,8,19,.66) 30%, rgba(46,8,19,.28) 50%, rgba(46,8,19,0) 64%); }
     .hero__scrim-low { position: absolute; inset: 0; z-index: 6; pointer-events: none;
       background: radial-gradient(100% 76% at 0% 100%, rgba(46,8,19,.92) 0%, rgba(46,8,19,.74) 36%, rgba(46,8,19,0) 64%); }
+    /* the photo melts into the noticeboard's maroon, so the news reads as the hero continuing */
+    .hero__fade { position: absolute; inset: auto 0 0; height: 42%; z-index: 6; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(46,8,19,0) 0%, rgba(46,8,19,.5) 38%, rgba(46,8,19,.88) 66%, #2e0813 86%); }
     .hero__title { position: absolute; z-index: 7; left: var(--sc-gutter); top: clamp(6.5rem, 15vh, 9rem); text-align: left; will-change: transform; }
     .hero__h1 { margin: 0; font-size: clamp(3.6rem, 7.4vw, 8.6rem); color: #f7efe4; }
     .hero__h1 .ln { display: block; overflow: hidden; padding-bottom: .05em; }
@@ -118,14 +121,6 @@
       html.js .hero6.is-in .ln > span { transform: none; transition: transform 1000ms cubic-bezier(.22,1,.36,1) var(--d, 0ms); }
       html.js .hero6.is-in .hero__lower > * { opacity: 1; transform: none; transition: opacity 700ms var(--sc-ease-out) var(--d, 0ms), transform 700ms var(--sc-ease-out) var(--d, 0ms); }
     }
-
-    /* --------------------------------------------------------- stat bar -- */
-    .stats { background: #2e0813; border-top: 4px solid var(--sc-accent); }
-    .stats__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .stat { padding: 2rem 1.5rem 1.8rem; border-right: 1px solid rgba(247,239,228,.1); }
-    .stat:last-child { border-right: 0; }
-    .stat b { display: block; font-family: var(--sc-font-display); font-weight: 900; font-size: clamp(3rem, 5vw, 4.4rem); line-height: .9; color: var(--sc-accent); font-variant-numeric: lining-nums tabular-nums; }
-    .stat span { display: block; margin-top: .5rem; font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sc-ink-soft); }
 
     /* ---------------------------------------------------------- right now --
        v3's band: where the season stands, the next home games, and the
@@ -316,9 +311,6 @@
       .cm-rest { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 860px) {
-      .stats__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .stat:nth-child(2) { border-right: 0; }
-      .stat:nth-child(-n+2) { border-bottom: 1px solid rgba(247,239,228,.1); }
       .path { grid-template-columns: 1fr; gap: .5rem; }
       .s25__grid { grid-template-columns: 1fr; grid-template-rows: none; }
       .s25__grid figure:first-child { grid-row: auto; }
@@ -400,6 +392,7 @@
       <img class="ball ball--hero" src="assets/v2/hero-ball.webp" alt="" width="144" height="144" aria-hidden="true">
       <div class="plane plane--pitcher" aria-hidden="true"><img src="assets/v2/hero-pitcher.webp" alt="" width="806" height="1228"></div>
       <div class="hero__scrim-low" aria-hidden="true"></div>
+      <div class="hero__fade" aria-hidden="true"></div>
       <div class="hero__lower">
         <p class="hero__sub" style="--d:480ms">Join Guildford's only baseball club: two adult teams, Saturday junior sessions, and your first training session is free.</p>
         <div class="hero__ctas" style="--d:580ms">
@@ -412,14 +405,6 @@
   </section>
 
   <!-- ========================================================= STAT BAR -->
-  <section class="stats" aria-label="The club in numbers">
-    <div class="cx-wrap stats__grid">
-      <div class="stat"><b data-sc-count="0 34">34</b><span>Years playing</span></div>
-      <div class="stat"><b>2</b><span>Adult teams</span></div>
-      <div class="stat"><b data-sc-count="0 39">39</b><span>Players on the 2026 roster</span></div>
-      <div class="stat"><b>1</b><span>Diamond of our own</span></div>
-    </div>
-  </section>
 
   <!-- ======================================================== RIGHT NOW -->
   <section class="now g-900" aria-labelledby="now-h">
