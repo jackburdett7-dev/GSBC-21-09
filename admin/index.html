@@ -471,6 +471,12 @@
     .empty-state__icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
 
     .form-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .signup-field { padding: 1.1rem 1.2rem; border: 1px solid var(--cyan-border); border-radius: 10px; background: var(--navy); }
+    .field label.check { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; letter-spacing: 0; text-transform: none; color: var(--text); cursor: pointer; margin: 0; }
+    .field label.check input { width: 1.15rem; height: 1.15rem; padding: 0; appearance: auto; accent-color: var(--cyan); }
+    .signup-hint { font-size: 0.8rem; color: var(--text-muted); margin: 0.5rem 0 0; line-height: 1.5; }
+    #signup-extra { margin-top: 1rem; }
+    #signup-extra .field { margin-bottom: 0; }
     .manage-note { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
     .post-item__actions { display: flex; gap: 0.5rem; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
     .btn--small { font-size: 0.8rem; padding: 0.45rem 0.9rem; }
@@ -601,6 +607,21 @@
           <div class="field">
             <label for="p-content">Post content <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(just type: leave an empty line between paragraphs, and any web address you paste becomes a link)</span></label>
             <textarea id="p-content" placeholder="Write your post here…"></textarea>
+          </div>
+
+          <div class="field signup-field">
+            <label class="check" for="p-signup"><input type="checkbox" id="p-signup"> Add a sign-up form to this post</label>
+            <p class="signup-hint">People give their name, email, mobile and anything about themselves. They're emailed the club's bank details and a payment reference straight away. You get an email for each one, and it goes in the lead dashboard.</p>
+            <div class="form-row" id="signup-extra" style="display:none;">
+              <div class="field">
+                <label for="p-price">Price <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(goes in their email)</span></label>
+                <input type="text" id="p-price" placeholder="e.g. £10 for all 4 sessions">
+              </div>
+              <div class="field">
+                <label for="p-code">Reference word <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-muted)">(+ their surname, e.g. BEGINNERS SMITH)</span></label>
+                <input type="text" id="p-code" placeholder="e.g. BEGINNERS" maxlength="9">
+              </div>
+            </div>
           </div>
 
           <div class="form-actions">
@@ -797,7 +818,9 @@
 
     function resetForm() {
       editing = null;
-      ['p-title','p-excerpt','p-content','p-author'].forEach(function(id) { field(id).value = ''; });
+      ['p-title','p-excerpt','p-content','p-author','p-price','p-code'].forEach(function(id) { field(id).value = ''; });
+      field('p-signup').checked = false;
+      syncSignup();
       field('p-category').selectedIndex = 0;
       field('p-date').value = new Date().toISOString().split('T')[0];
       preview.style.display = 'none';
@@ -819,6 +842,10 @@
       field('p-excerpt').value = p.excerpt || '';
       field('p-content').value = p.content || '';
       field('p-author').value  = p.author || '';
+      field('p-signup').checked = !!p.signup_enabled;
+      field('p-price').value   = p.signup_price || '';
+      field('p-code').value    = p.signup_code || '';
+      syncSignup();
       var sel = field('p-category');
       if (p.category && !Array.prototype.some.call(sel.options, function(o) { return o.value === p.category; })) {
         sel.add(new Option(p.category));
@@ -841,6 +868,18 @@
       showTab('manage');
     });
 
+    function syncSignup() {
+      field('signup-extra').style.display = field('p-signup').checked ? '' : 'none';
+    }
+    field('p-signup').addEventListener('change', function() {
+      syncSignup();
+      // suggest a reference word from the title
+      if (field('p-signup').checked && !field('p-code').value) {
+        var w = field('p-title').value.split(/\s+/).filter(function(x) { return x.length > 3; })[0] || '';
+        field('p-code').value = w.replace(/[^A-Za-z0-9]/g, '').toUpperCase().slice(0, 9);
+      }
+    });
+
     // A new post needs a slug nobody else has: add -2, -3 ... if the title was used before.
     async function freeSlug(base) {
       var res = await sb.from('posts').select('slug').like('slug', base + '%');
@@ -860,6 +899,7 @@
       var author   = field('p-author').value.trim();
       var category = field('p-category').value;
       var file     = fileInput.files[0];
+      var signupOn = field('p-signup').checked;
 
       if (!title || !date || !excerpt || !content) {
         showAlert('post-error', 'Please fill in title, date, excerpt and content.');
@@ -897,7 +937,10 @@
           category:  category,
           excerpt:   excerpt,
           image_url: imageUrl,
-          content:   content
+          content:   content,
+          signup_enabled: signupOn,
+          signup_price:   signupOn ? (field('p-price').value.trim() || null) : (editing ? editing.signup_price : null),
+          signup_code:    signupOn ? (field('p-code').value.replace(/[^A-Za-z0-9]/g, '').toUpperCase() || null) : (editing ? editing.signup_code : null)
         };
 
         if (editing) {
@@ -954,6 +997,7 @@
           '<div class="post-item__info">' +
             '<div class="post-item__title">' + esc(p.title) + '</div>' +
             '<div class="post-item__meta"><span class="post-item__cat">' + esc(p.category) + '</span>' + formatDate(p.date) +
+              (p.signup_enabled ? '<span class="post-item__tag">Sign-ups on</span>' : '') +
               (p.hidden ? '<span class="post-item__tag">Hidden</span>' : '') +
               (p.archived ? '<span class="post-item__tag">Archived</span>' : '') + '</div>' +
           '</div>' +

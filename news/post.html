@@ -11,6 +11,28 @@
   <style>
     /* show the whole image, uncropped: posts are often portrait posters */
     #post-img { width: auto; max-width: 100%; height: auto; max-height: none; object-fit: initial; margin-inline: auto; }
+
+    /* course sign-up form (posts with signup_enabled) */
+    [hidden] { display: none !important; }
+    .signup { margin-top: 3rem; padding: 2rem; background: var(--off-white); border: 1px solid var(--border); border-top: 4px solid var(--red); border-radius: var(--radius-lg); scroll-margin-top: 6rem; }
+    .signup__title { margin: 0 0 .4rem; font-size: 1.6rem; color: var(--ink); }
+    .signup__price { margin: 0 0 .5rem; font-weight: 700; color: var(--red); }
+    .signup__lede { margin: 0 0 1.5rem; color: var(--muted); line-height: 1.6; }
+    .signup form { display: grid; gap: 1rem; }
+    .signup__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 640px) { .signup { padding: 1.4rem 1.1rem; } .signup__row { grid-template-columns: 1fr; } }
+    .signup label { display: grid; gap: .35rem; font-weight: 600; font-size: .92rem; color: var(--ink); }
+    .signup label span { font-weight: 400; color: var(--muted); }
+    .signup input, .signup textarea { width: 100%; padding: .75rem .9rem; font: inherit; font-weight: 400; color: var(--ink); background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); }
+    .signup input:focus, .signup textarea:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(200,0,37,.12); }
+    .signup .btn { justify-self: start; }
+    .signup .btn[disabled] { opacity: .6; cursor: wait; }
+    .signup__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .signup__error { margin: 0; color: var(--red); font-weight: 600; }
+    .signup__small { margin: 0; font-size: .82rem; color: var(--muted); }
+    .signup__small a { color: var(--red); }
+    .signup__done { font-size: 1.05rem; line-height: 1.6; color: var(--ink); }
+    .signup__done b { display: block; font-size: 1.3rem; margin-bottom: .3rem; }
   </style>
   <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
@@ -32,6 +54,7 @@
       <span class="overline" style="color:var(--orange);" id="post-category">Club News</span>
       <h1 id="post-title">Loading&hellip;</h1>
       <p id="post-meta"></p>
+      <a class="btn btn--primary" id="signup-jump" href="#signup" hidden style="margin-top:1.2rem;">Sign up</a>
     </div>
   </div>
 
@@ -40,6 +63,25 @@
       <div class="post-layout fade-up" id="post-body-wrap">
         <img src="" alt="" class="post-layout__img" id="post-img" style="display:none;">
         <div class="post-layout__content" id="post-content"></div>
+
+        <div class="signup" id="signup" hidden>
+          <h2 class="signup__title">Sign up</h2>
+          <p class="signup__price" id="signup-price"></p>
+          <p class="signup__lede">Fill this in and we'll email you straight away with the club's bank details and a payment reference.</p>
+          <form id="signup-form" novalidate>
+            <div class="signup__row">
+              <label>Your name<input name="name" autocomplete="name" required></label>
+              <label>Email<input name="email" type="email" autocomplete="email" required></label>
+            </div>
+            <label>Mobile<input name="phone" type="tel" autocomplete="tel" required></label>
+            <label>Anything we should know about you? <span>(optional: experience, injuries, questions)</span><textarea name="notes" rows="4"></textarea></label>
+            <label class="signup__hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+            <p class="signup__error" id="signup-error" role="alert" hidden></p>
+            <button class="btn btn--primary" type="submit" id="signup-btn">Sign up</button>
+            <p class="signup__small">We use your details to book your place and contact you about this course. <a href="/privacy.html">Privacy notice</a></p>
+          </form>
+          <div class="signup__done" id="signup-done" hidden></div>
+        </div>
       </div>
     </div>
   </section>
@@ -87,6 +129,55 @@
       }).join('');
     }
 
+    /* Course sign-up: the club's assistant backend looks the course up again, saves the
+       sign-up to the club's enquiry dashboard and emails the bank details to the person.
+       The bank details are never on this page. */
+    var SIGNUP_URL = 'https://jackburdett7-dev--guildford-chatbot-fastapi-app.modal.run/signup';
+
+    function setupSignup(post) {
+      var box = document.getElementById('signup'), form = document.getElementById('signup-form');
+      var err = document.getElementById('signup-error'), btn = document.getElementById('signup-btn');
+      box.hidden = false;
+      document.getElementById('signup-jump').hidden = false;
+      var price = document.getElementById('signup-price');
+      if (post.signup_price) price.textContent = post.signup_price; else price.hidden = true;
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        err.hidden = true;
+        var f = form.elements;
+        var data = { slug: post.slug, name: f.name.value.trim(), email: f.email.value.trim(), phone: f.phone.value.trim(), notes: f.notes.value.trim(), website: f.website.value };
+        var problem = !data.name ? 'Please enter your name.'
+          : !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email) ? 'Please enter a valid email address.'
+          : data.phone.replace(/\D/g, '').length < 10 ? 'Please enter your mobile number.' : '';
+        if (problem) { err.textContent = problem; err.hidden = false; return; }
+
+        btn.disabled = true; btn.textContent = 'Sending…';
+        fetch(SIGNUP_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+          .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (!res.ok) throw new Error(res.j && res.j.detail || 'Sorry, that didn\'t go through.');
+            form.hidden = true;
+            var done = document.getElementById('signup-done');
+            done.innerHTML = '<b>Thanks' + (res.j.first_name ? ', ' + esc(res.j.first_name) : '') + '. You\'re signed up.</b>' +
+              'We\'ve emailed you the bank details and your payment reference. If it isn\'t there in a few minutes, check your junk folder.';
+            done.hidden = false;
+            box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          })
+          .catch(function (x) {
+            err.innerHTML = esc(x.message || 'Sorry, that didn\'t go through.') + ' If it keeps happening, <a href="mailto:michael.burdett1@outlook.com?subject=' + encodeURIComponent('Sign up: ' + post.title) + '">email the club</a>.';
+            err.hidden = false;
+            btn.disabled = false; btn.textContent = 'Sign up';
+          });
+      });
+    }
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[<>&"]/g, function (c) {
+        return { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c];
+      });
+    }
+
     var params = new URLSearchParams(window.location.search);
     var slug   = params.get('slug');
 
@@ -130,6 +221,8 @@
       // Body content. Posts typed in the admin are usually plain text: turn blank lines into
       // paragraphs, single line breaks into <br> and web addresses into links. HTML is used as is.
       document.getElementById('post-content').innerHTML = toHtml(post.content || '');
+
+      if (post.signup_enabled) setupSignup(post);
     })
     .catch(function () {
       document.getElementById('post-title').textContent = 'Failed to load post.';
