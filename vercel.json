@@ -45,6 +45,10 @@
     {
       "source": "/beginners",
       "destination": "/beginners.html"
+    },
+    {
+      "source": "/strength",
+      "destination": "/strength.html"
     }
   ],
   "redirects": [
