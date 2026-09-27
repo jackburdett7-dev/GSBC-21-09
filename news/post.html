@@ -139,8 +139,14 @@
       var err = document.getElementById('signup-error'), btn = document.getElementById('signup-btn');
       box.hidden = false;
       document.getElementById('signup-jump').hidden = false;
-      // the form only appears once the post has loaded, so a #signup link has to be followed by hand
-      if (location.hash === '#signup') requestAnimationFrame(function () { box.scrollIntoView({ block: 'start' }); });
+      // the form only appears once the post has loaded, so a #signup link has to be followed by hand,
+      // and again once the poster above it has loaded and pushed it down
+      if (location.hash === '#signup') {
+        var jump = function () { box.scrollIntoView({ block: 'start' }); };
+        requestAnimationFrame(jump);
+        var img = document.getElementById('post-img');
+        if (!formOnly && img.src && !img.complete) img.addEventListener('load', jump, { once: true });
+      }
       var price = document.getElementById('signup-price');
       if (post.signup_price) price.textContent = post.signup_price; else price.hidden = true;
 
@@ -182,6 +188,9 @@
 
     var params = new URLSearchParams(window.location.search);
     var slug   = params.get('slug');
+    // ?form: just the title and the sign-up form, for links shared on Facebook etc.
+    // where people have already read the details
+    var formOnly = params.has('form');
 
     if (!slug) {
       document.getElementById('post-title').textContent = 'Post not found.';
@@ -211,6 +220,14 @@
       document.getElementById('post-title').textContent    = post.title;
       document.getElementById('post-meta').innerHTML =
         'By ' + (post.author || 'Guildford Baseball') + ' &middot; ' + formatDate(post.date);
+
+      if (formOnly && post.signup_enabled) {
+        document.getElementById('post-content').innerHTML =
+          '<p><a href="post.html?slug=' + encodeURIComponent(post.slug) + '">Read the full details</a></p>';
+        setupSignup(post);
+        document.getElementById('signup-jump').hidden = true;
+        return;
+      }
 
       // Image
       if (post.image_url) {

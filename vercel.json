@@ -41,6 +41,10 @@
     {
       "source": "/admin",
       "destination": "/admin/index.html"
+    },
+    {
+      "source": "/beginners",
+      "destination": "/beginners.html"
     }
   ],
   "redirects": [
