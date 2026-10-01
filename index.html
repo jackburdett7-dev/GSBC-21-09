@@ -336,6 +336,19 @@
       .posts img { width: 5rem; }
       .posts .arrow { display: none; }
     }
+    /* portrait phones: the whole photograph, full width, between the headline and the copy */
+    .hero__band { display: contents; }
+    @media (max-width: 860px) and (orientation: portrait) {
+      .hero6 { background: #2e0813; }
+      .hero6__stage { display: flex; flex-direction: column; justify-content: safe center; gap: 1.4rem; padding: 5.5rem 0 1.6rem; }
+      .hero__title, .hero__lower { position: relative; inset: auto; margin: 0 var(--sc-gutter); }
+      .hero__band { display: block; position: relative; flex: none; width: 100%; aspect-ratio: 2560 / 1702; }
+      .hero__band::before, .hero__band::after { content: ""; position: absolute; left: 0; right: 0; z-index: 6; height: 3rem; pointer-events: none; }
+      .hero__band::before { top: -1.75rem; background: linear-gradient(180deg, #2e0813 0%, #2e0813 58%, rgba(46,8,19,0) 100%); }
+      .hero__band::after { bottom: -1.75rem; background: linear-gradient(0deg, #2e0813 0%, #2e0813 58%, rgba(46,8,19,0) 100%); }
+      .hero__poster { object-position: 50% 50%; }
+      .hero__scrim-top, .hero__scrim-low, .hero__fade { display: none; }
+    }
     html.no-js .plane, html.no-js .ball, html.no-js .joinbar { display: none; }
   </style>
   <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
@@ -383,11 +396,14 @@
   <!-- ============================================================= HERO -->
   <section id="home" class="hero6" aria-labelledby="h1">
     <div class="hero6__stage">
-      <img class="hero__poster" src="assets/v2/hero-poster.webp" alt="A Guildford pitcher follows through, the ball in the air on its way to the batter and catcher at home plate" width="1920" height="1277" fetchpriority="high">
       <div class="plane plane--plate" aria-hidden="true"><img src="assets/v2/hero-plate.webp" alt="" width="2560" height="1702"></div>
       <div class="hero__scrim-top" aria-hidden="true"></div>
       <div class="hero__title">
         <h1 class="sc-display hero__h1" id="h1"><span class="ln"><span style="--d:120ms">Play baseball</span></span> <span class="ln"><span style="--d:230ms">in <span class="gold">Surrey.</span></span></span></h1>
+      </div>
+      <!-- on a portrait phone this is a box the photo fills whole; elsewhere it isn't a box at all -->
+      <div class="hero__band">
+        <img class="hero__poster" src="assets/v2/hero-poster.webp" alt="A Guildford pitcher follows through, the ball in the air on its way to the batter and catcher at home plate" width="1920" height="1277" fetchpriority="high">
       </div>
       <img class="ball ball--hero" src="assets/v2/hero-ball.webp" alt="" width="144" height="144" aria-hidden="true">
       <div class="plane plane--pitcher" aria-hidden="true"><img src="assets/v2/hero-pitcher.webp" alt="" width="806" height="1228"></div>
@@ -707,10 +723,16 @@
   var FOOT = [734, 1476];
   var hero = $('#home'), heroStage = $('.hero6__stage'), plate = $('.plane--plate'), pitcher = $('.plane--pitcher'), ball = $('.ball--hero'), title = $('.hero__title');
   var tIn = CX.reduce ? 1 : 0, mx = 0, mxT = 0, tilting = false;
-  function heroCam() { return CX.small.matches ? CX.cover(0.55, 0.5) : CX.cover(0.5, 0.3); }
+  // portrait phones show the photograph whole inside .hero__band; everything else covers the screen
+  var banded = matchMedia('(max-width: 860px) and (orientation: portrait)'), band = $('.hero__band');
+  function heroCam() {
+    if (banded.matches) return { s: band.offsetWidth / CX.IMG.W, ox: band.offsetLeft, oy: band.offsetTop };
+    return CX.small.matches ? CX.cover(0.55, 0.5) : CX.cover(0.5, 0.3);
+  }
   function heroFrame(y) {
     var cam = heroCam(), s = cam.s, e = CX.easeOut(tIn);
-    var yy = CX.reduce ? 0 : Math.min(Math.max(y, 0), innerHeight), k = yy / innerHeight;
+    // in the band the photo stays put on scroll, so it never slides out of its frame
+    var yy = CX.reduce || banded.matches ? 0 : Math.min(Math.max(y, 0), innerHeight), k = yy / innerHeight;
     var zp = 1 + 0.07 * (1 - e) + 0.05 * k;
     CX.place(plate, cam, CX.PIV, zp, -mx * 5 / s, yy * 0.34 / s);
     CX.place(pitcher, cam, FOOT, 1 + 0.14 * (1 - e) + 0.08 * k, (60 * (1 - e) - mx * 16) / s, yy * 0.14 / s);
